@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Five Letter Words — UnscrambleX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Nav -->
+  <nav style="display:flex; align-items:center; justify-content:space-between; padding:20px 0; border-bottom:1px solid rgba(15,23,42,0.08); flex-wrap:wrap; gap:12px;">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <img src="images/logo.png" alt="UnscrambleX" style="width:36px; height:36px; border-radius:8px;">
+      <span style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; letter-spacing:-0.02em; color:#1e2a5e;">UnscrambleX</span>
+    </div>
+    <div class="nav-links">
+      <a href="#tools" class="hide-sm" style="color:#334155; text-decoration:none;">Tools</a>
+      <a href="#games" class="hide-sm" style="color:#334155; text-decoration:none;">Games</a>
+      <a href="#categories" class="hide-sm" style="color:#334155; text-decoration:none;">Categories</a>
+      <a href="#patterns" class="hide-sm" style="color:#334155; text-decoration:none;">Patterns</a>
+      <a href="#tools" style="background:#1e2a5e; color:#faf7f2; padding:10px 18px; border-radius:6px; text-decoration:none;">Word Finder</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-copy">
+      <div style="display:inline-flex; align-items:center; gap:8px; padding:6px 12px; background:rgba(30,42,94,0.06); border-radius:100px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#1e2a5e; margin-bottom:20px; letter-spacing:0.02em;">
+        <span style="width:6px; height:6px; background:#c9a961; border-radius:50%;"></span>
+        158,390 five-letter words indexed
+      </div>
+      <h1 class="hero-title">
+        Five Letter <span style="color:#1e2a5e; font-style:italic;">Words.</span>
+      </h1>
+      <p class="hero-lede">
+        The complete reference for five-letter words for Wordle, crosswords, Scrabble, and vocabulary work. Definitions, categories, patterns, and finders in one place.
+      </p>
+      <div class="cta-row">
+        <a href="#tools" style="background:#1e2a5e; color:#faf7f2; padding:14px 24px; border-radius:8px; text-decoration:none; font-weight:600; font-size:15px;">Open Word Finder →</a>
+        <a href="#categories" style="background:transparent; color:#1e2a5e; padding:14px 24px; border-radius:8px; text-decoration:none; font-weight:600; font-size:15px; border:1.5px solid rgba(30,42,94,0.2);">Browse Categories</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats strip -->
+  <section class="stats">
+    <div style="background:#faf7f2; padding:24px 28px;">
+      <div style="font-family:'Fraunces',serif; font-size:34px; font-weight:600; color:#1e2a5e; letter-spacing:-0.02em;">158K+</div>
+      <div style="font-size:13px; color:#64748b; margin-top:4px;">Words indexed</div>
+    </div>
+    <div style="background:#faf7f2; padding:24px 28px;">
+      <div style="font-family:'Fraunces',serif; font-size:34px; font-weight:600; color:#1e2a5e; letter-spacing:-0.02em;">26</div>
+      <div style="font-size:13px; color:#64748b; margin-top:4px;">Starting-letter groups</div>
+    </div>
+    <div style="background:#faf7f2; padding:24px 28px;">
+      <div style="font-family:'Fraunces',serif; font-size:34px; font-weight:600; color:#1e2a5e; letter-spacing:-0.02em;">12</div>
+      <div style="font-size:13px; color:#64748b; margin-top:4px;">Special patterns</div>
+    </div>
+    <div style="background:#faf7f2; padding:24px 28px;">
+      <div style="font-family:'Fraunces',serif; font-size:34px; font-weight:600; color:#1e2a5e; letter-spacing:-0.02em;">4</div>
+      <div style="font-size:13px; color:#64748b; margin-top:4px;">Dictionary sources</div>
+    </div>
+  </section>
+
+  <!-- What are 5LW -->
+  <section class="two-col">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 01 — Definition</div>
+      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">What are five-letter words?</h2>
+    </div>
+    <div>
+      <p style="font-size:17px; line-height:1.65; color:#334155; margin:0 0 20px;">
+        A five-letter word is exactly what it says: a word composed of five alphabetic characters, no more and no fewer. That fixed length is what makes them the backbone of modern word games — long enough to carry meaning, short enough to guess.
+      </p>
+      <p style="font-size:17px; line-height:1.65; color:#334155; margin:0 0 32px;">
+        You'll find them everywhere in daily writing: <em style="color:#1e2a5e;">house</em>, <em style="color:#1e2a5e;">bread</em>, <em style="color:#1e2a5e;">quiet</em>, <em style="color:#1e2a5e;">clean</em>. And you'll find them everywhere in daily play: Wordle, crosswords, Scrabble bingos, spelling bees.
+      </p>
+
+      <!-- Dictionary card -->
+      <div style="background:#0f172a; border-radius:12px; padding:28px 32px; color:#faf7f2;">
+        <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:12px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase;">Per Merriam-Webster</span>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:12px;">
+          <span style="font-family:'Fraunces',serif; font-size:36px; font-weight:600;">word</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#94a3b8;">/wərd/</span>
+          <span style="font-size:13px; color:#c9a961; font-style:italic;">noun</span>
+        </div>
+        <p style="margin:0; font-size:15px; line-height:1.6; color:#cbd5e1;">
+          "A speech sound, or series of them, having meaning and used as a unit of language." A five-letter word simply constrains that unit to a run of five letters — the exact size Wordle grids, crossword rows, and the standard vocabulary drills happen to measure.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Word games -->
+  <section id="games" style="padding:8px 0 96px;">
+    <div style="max-width:720px; margin-bottom:56px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 02 — Word games</div>
+      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">Where five-letter words earn their keep.</h2>
+      <p style="font-size:18px; line-height:1.6; color:#475569; margin:0;">Their fixed length is a feature, not an accident. It anchors guessing, gives clues a stable shape, and turns vocabulary into a solvable puzzle.</p>
+    </div>
+
+    <div class="cards-2">
+      <!-- Wordle card -->
+      <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:36px;">
+        <div style="display:flex; gap:6px; margin-bottom:24px;">
+          <div style="width:36px; height:36px; background:#1e2a5e; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; color:#faf7f2; font-size:20px;">S</div>
+          <div style="width:36px; height:36px; background:#c9a961; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; color:#faf7f2; font-size:20px;">L</div>
+          <div style="width:36px; height:36px; background:#1e2a5e; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; color:#faf7f2; font-size:20px;">A</div>
+          <div style="width:36px; height:36px; background:#e2e8f0; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; color:#0f172a; font-size:20px;">T</div>
+          <div style="width:36px; height:36px; background:#e2e8f0; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; color:#0f172a; font-size:20px;">E</div>
+        </div>
+        <h3 style="font-family:'Fraunces',serif; font-size:28px; font-weight:600; letter-spacing:-0.02em; margin:0 0 12px; color:#0f172a;">Daily guessing games</h3>
+        <p style="font-size:15px; line-height:1.6; color:#475569; margin:0 0 20px;">Six guesses, five letters, one answer. The fixed grid is the whole game — each row narrows the field by placement, presence, and elimination.</p>
+        <div style="border-top:1px solid rgba(15,23,42,0.08); padding-top:16px; display:grid; grid-template-columns:auto 1fr; gap:8px 16px; font-size:14px;">
+          <span style="color:#64748b;">Grid</span><span style="color:#0f172a;">6 rows × 5 letters</span>
+          <span style="color:#64748b;">Strategy</span><span style="color:#0f172a;">Vowel-heavy openers, position tracking</span>
+          <span style="color:#64748b;">Common starters</span><span style="color:#0f172a; font-family:'JetBrains Mono',monospace;">crane · slate · adieu</span>
+        </div>
+      </div>
+
+      <!-- Crossword card -->
+      <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:36px;">
+        <div style="display:grid; grid-template-columns:repeat(5,20px); gap:2px; margin-bottom:24px;">
+          <div style="width:20px; height:20px; background:#0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#c9a961; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#c9a961; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
+        </div>
+        <h3 style="font-family:'Fraunces',serif; font-size:28px; font-weight:600; letter-spacing:-0.02em; margin:0 0 12px; color:#0f172a;">Crossword puzzles</h3>
+        <p style="font-size:15px; line-height:1.6; color:#475569; margin:0 0 20px;">Five-letter answers are the most common length in American-style grids. Crossings give you letters; the clue and the length do the rest.</p>
+        <div style="border-top:1px solid rgba(15,23,42,0.08); padding-top:16px; display:grid; grid-template-columns:auto 1fr; gap:8px 16px; font-size:14px;">
+          <span style="color:#64748b;">Prevalence</span><span style="color:#0f172a;">~30% of Monday NYT entries</span>
+          <span style="color:#64748b;">Approach</span><span style="color:#0f172a;">Fill crossings, match pattern</span>
+          <span style="color:#64748b;">Reliable crossings</span><span style="color:#0f172a; font-family:'JetBrains Mono',monospace;">oreo · eerie · irate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section id="categories" style="padding:8px 0 96px;">
+    <div style="max-width:720px; margin-bottom:48px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 03 — Categories</div>
+      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">Three ways to slice the list.</h2>
+      <p style="font-size:18px; line-height:1.6; color:#475569; margin:0;">By starting letter, by repeated letters, by symmetry. Pick the axis that matches the puzzle in front of you.</p>
+    </div>
+
+    <div class="cards-3">
+      <!-- Starts with A -->
+      <div style="background:#0f172a; color:#faf7f2; border-radius:16px; padding:32px; position:relative; overflow:hidden;">
+        <div style="font-family:'Fraunces',serif; font-size:120px; font-weight:600; line-height:1; color:#c9a961; position:absolute; right:-8px; top:-16px; opacity:0.2;">A</div>
+        <div style="position:relative;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#c9a961; margin-bottom:12px;">By starting letter</div>
+          <h3 style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; margin:0 0 12px;">Words starting with A</h3>
+          <p style="font-size:14px; line-height:1.55; color:#cbd5e1; margin:0 0 20px;">The most opened letter in guessing games — great for anchoring your first two positions.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <span style="padding:5px 10px; background:rgba(250,247,242,0.1); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">apple</span>
+            <span style="padding:5px 10px; background:rgba(250,247,242,0.1); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">aisle</span>
+            <span style="padding:5px 10px; background:rgba(250,247,242,0.1); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">adorn</span>
+            <span style="padding:5px 10px; background:rgba(250,247,242,0.1); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">alarm</span>
+            <span style="padding:5px 10px; background:rgba(250,247,242,0.1); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">agile</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Double letters -->
+      <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:32px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#c9a961; margin-bottom:12px;">Repeated letters</div>
+        <h3 style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; margin:0 0 12px; color:#0f172a;">Double-letter words</h3>
+        <p style="font-size:14px; line-height:1.55; color:#475569; margin:0 0 20px;">A single letter used twice — often the trick answer that survives elimination rounds.</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:rgba(30,42,94,0.04); border-radius:6px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#0f172a;">sh<mark style="background:#c9a961; color:#faf7f2; padding:0 2px; border-radius:2px;">ee</mark>p</span>
+            <span style="font-size:12px; color:#64748b; margin-left:auto;">EE</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:rgba(30,42,94,0.04); border-radius:6px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#0f172a;">s<mark style="background:#c9a961; color:#faf7f2; padding:0 2px; border-radius:2px;">ee</mark>dy</span>
+            <span style="font-size:12px; color:#64748b; margin-left:auto;">EE</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:rgba(30,42,94,0.04); border-radius:6px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#0f172a;">cli<mark style="background:#c9a961; color:#faf7f2; padding:0 2px; border-radius:2px;">ff</mark></span>
+            <span style="font-size:12px; color:#64748b; margin-left:auto;">FF</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:rgba(30,42,94,0.04); border-radius:6px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#0f172a;">ha<mark style="background:#c9a961; color:#faf7f2; padding:0 2px; border-radius:2px;">pp</mark>y</span>
+            <span style="font-size:12px; color:#64748b; margin-left:auto;">PP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Palindromes -->
+      <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:32px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#c9a961; margin-bottom:12px;">Symmetry</div>
+        <h3 style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; margin:0 0 12px; color:#0f172a;">Palindromes</h3>
+        <p style="font-size:14px; line-height:1.55; color:#475569; margin:0 0 20px;">Read the same forwards and backwards. There are only a handful in English at length five — memorize them all.</p>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; gap:4px; justify-content:center;">
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">L</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">E</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#c9a961; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">V</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">E</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">L</span>
+          </div>
+          <div style="display:flex; gap:4px; justify-content:center;">
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">R</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">A</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#c9a961; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">D</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">A</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">R</span>
+          </div>
+          <div style="display:flex; gap:4px; justify-content:center;">
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">R</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">O</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#c9a961; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">T</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">O</span>
+            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">R</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools -->
+  <section id="tools" style="padding:8px 0 96px;">
+    <div style="max-width:720px; margin-bottom:48px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 04 — Finders</div>
+      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">Two ways to find the word.</h2>
+      <p style="font-size:18px; line-height:1.6; color:#475569; margin:0;">Type what you know, get what fits. Both tools narrow 158K entries into the handful that could actually be your answer.</p>
+    </div>
+
+    <!-- Comparison table -->
+    <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:32px 36px;">
+      <h3 style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; letter-spacing:-0.02em; margin:0 0 4px; color:#0f172a;">UnscrambleX vs. Unscramble.me</h3>
+      <p style="font-size:14px; color:#64748b; margin:0 0 24px;">Both find words. They differ in how tightly you can constrain the search.</p>
+      <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:1px; background:rgba(15,23,42,0.08); border:1px solid rgba(15,23,42,0.08); border-radius:8px; overflow:hidden; font-size:14px;">
+        <div style="background:#0f172a; color:#faf7f2; padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.05em;">Filter</div>
+        <div style="background:#0f172a; color:#faf7f2; padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.05em;">UnscrambleX</div>
+        <div style="background:#0f172a; color:#faf7f2; padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.05em;">Unscramble.me</div>
+
+        <div style="background:#faf7f2; padding:14px 16px; color:#334155;">Position match</div>
+        <div style="background:#faf7f2; padding:14px 16px; color:#1e2a5e; font-weight:600;">Per-slot wildcards</div>
+        <div style="background:#faf7f2; padding:14px 16px; color:#64748b;">Starts / ends only</div>
+
+        <div style="background:#f5f0e8; padding:14px 16px; color:#334155;">Contains letters</div>
+        <div style="background:#f5f0e8; padding:14px 16px; color:#1e2a5e; font-weight:600;">Yes, with excludes</div>
+        <div style="background:#f5f0e8; padding:14px 16px; color:#0f172a;">Yes</div>
+
+        <div style="background:#faf7f2; padding:14px 16px; color:#334155;">Dictionary picker</div>
+        <div style="background:#faf7f2; padding:14px 16px; color:#1e2a5e; font-weight:600;">NWL, SOWPODS, Wordle</div>
+        <div style="background:#faf7f2; padding:14px 16px; color:#0f172a;">TWL only</div>
+
+        <div style="background:#f5f0e8; padding:14px 16px; color:#334155;">Best for</div>
+        <div style="background:#f5f0e8; padding:14px 16px; color:#1e2a5e; font-weight:600;">Wordle-style deduction</div>
+        <div style="background:#f5f0e8; padding:14px 16px; color:#0f172a;">Quick anagram lookup</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Patterns -->
+  <section id="patterns" style="padding:8px 0 96px;">
+    <div style="max-width:720px; margin-bottom:48px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 05 — Patterns</div>
+      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">Words with special patterns.</h2>
+      <p style="font-size:18px; line-height:1.6; color:#475569; margin:0;">Recognizable shapes worth memorizing — they show up more often than the odds suggest.</p>
+    </div>
+
+    <div class="cards-2">
+      <!-- No vowels -->
+      <div style="background:#1e2a5e; color:#faf7f2; border-radius:16px; padding:36px;">
+        <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:24px;">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#c9a961; margin-bottom:8px;">Zero vowels</div>
+            <h3 style="font-family:'Fraunces',serif; font-size:28px; font-weight:600; margin:0; letter-spacing:-0.02em;">Words with no vowels</h3>
+          </div>
+          <div style="font-family:'Fraunces',serif; font-size:42px; font-weight:600; color:#c9a961; letter-spacing:-0.02em; font-style:italic;">y?</div>
+        </div>
+        <p style="font-size:14px; line-height:1.6; color:#cbd5e1; margin:0 0 24px;">Yes — if you count Y as a consonant. A handful of English words carry five letters with no A, E, I, O, or U. Perfect for that impossible Wordle guess.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">nymph</div>
+          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">crypt</div>
+          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">lymph</div>
+          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">glyph</div>
+          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">tryst</div>
+          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">pygmy</div>
+        </div>
+      </div>
+
+      <!-- Consecutive doubles -->
+      <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:36px;">
+        <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:24px;">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#c9a961; margin-bottom:8px;">Consecutive repeats</div>
+            <h3 style="font-family:'Fraunces',serif; font-size:28px; font-weight:600; margin:0; letter-spacing:-0.02em; color:#0f172a;">Side-by-side doubles</h3>
+          </div>
+          <div style="font-family:'Fraunces',serif; font-size:42px; font-weight:600; color:#c9a961; letter-spacing:-0.02em; font-style:italic;">xx</div>
+        </div>
+        <p style="font-size:14px; line-height:1.6; color:#475569; margin:0 0 24px;">Two of the same letter, touching. They anchor a solve fast because both positions collapse into one guess.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">bo<span style="color:#c9a961; font-weight:700;">oo</span>k</div>
+          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">pi<span style="color:#c9a961; font-weight:700;">zz</span>a</div>
+          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">fu<span style="color:#c9a961; font-weight:700;">zz</span>y</div>
+          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">ha<span style="color:#c9a961; font-weight:700;">pp</span>y</div>
+          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">be<span style="color:#c9a961; font-weight:700;">tt</span>a</div>
+          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">ki<span style="color:#c9a961; font-weight:700;">tt</span>y</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why they matter -->
+  <section style="padding:8px 0 96px;">
+    <div style="max-width:720px; margin-bottom:48px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 06 — Why they matter</div>
+      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">Beyond the game.</h2>
+      <p style="font-size:18px; line-height:1.6; color:#475569; margin:0;">Five-letter words are a compact unit of English — small enough to memorize in sets, big enough to matter for reading, spelling, and vocabulary work.</p>
+    </div>
+
+    <div class="cards-3">
+      <div style="border-top:2px solid #1e2a5e; padding-top:20px;">
+        <div style="font-family:'Fraunces',serif; font-size:44px; font-weight:600; color:#1e2a5e; letter-spacing:-0.02em; line-height:1; margin-bottom:12px;">01</div>
+        <h3 style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; margin:0 0 8px; color:#0f172a;">Vocabulary building</h3>
+        <p style="font-size:14px; line-height:1.6; color:#475569; margin:0;">Learning words in fixed-length sets creates retrievable groups — spelling patterns and meanings reinforce each other through repetition.</p>
+      </div>
+      <div style="border-top:2px solid #c9a961; padding-top:20px;">
+        <div style="font-family:'Fraunces',serif; font-size:44px; font-weight:600; color:#c9a961; letter-spacing:-0.02em; line-height:1; margin-bottom:12px;">02</div>
+        <h3 style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; margin:0 0 8px; color:#0f172a;">Classroom use</h3>
+        <p style="font-size:14px; line-height:1.6; color:#475569; margin:0;">Teachers use five-letter word drills for spelling bees, phonics work, and warm-up activities that fit inside a class period.</p>
+      </div>
+      <div style="border-top:2px solid #0f172a; padding-top:20px;">
+        <div style="font-family:'Fraunces',serif; font-size:44px; font-weight:600; color:#0f172a; letter-spacing:-0.02em; line-height:1; margin-bottom:12px;">03</div>
+        <h3 style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; margin:0 0 8px; color:#0f172a;">Pattern recognition</h3>
+        <p style="font-size:14px; line-height:1.6; color:#475569; margin:0;">Common endings — <em>-ight</em>, <em>-ound</em>, <em>-orch</em> — become instant footholds for readers and puzzle solvers alike.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding:8px 0 96px;">
+    <div class="cta-box">
+      <div>
+        <h2 style="font-family:'Fraunces',serif; font-size:clamp(28px,4.5vw,44px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 16px;">Stuck on today's Wordle?</h2>
+        <p style="font-size:17px; line-height:1.55; color:#cbd5e1; margin:0 0 28px; max-width:480px;">Type the letters you know. We'll return every five-letter word that fits — filtered by position, contents, and dictionary.</p>
+        <a href="#tools" style="display:inline-block; background:#c9a961; color:#0f172a; padding:14px 24px; border-radius:8px; text-decoration:none; font-weight:600; font-size:15px;">Open the finder →</a>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:6px;">
+        <div style="aspect-ratio:1; background:rgba(250,247,242,0.06); border:1.5px solid rgba(250,247,242,0.15); border-radius:6px;"></div>
+        <div style="aspect-ratio:1; background:#c9a961; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; font-size:24px;">O</div>
+        <div style="aspect-ratio:1; background:rgba(250,247,242,0.06); border:1.5px solid rgba(250,247,242,0.15); border-radius:6px;"></div>
+        <div style="aspect-ratio:1; background:#1e2a5e; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; font-size:24px;">S</div>
+        <div style="aspect-ratio:1; background:rgba(250,247,242,0.06); border:1.5px solid rgba(250,247,242,0.15); border-radius:6px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="border-top:1px solid rgba(15,23,42,0.08); padding:32px 0 48px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:#64748b;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <img src="images/logo.png" style="width:24px; height:24px; border-radius:5px;">
+      <span>© UnscrambleX · Five-letter word reference</span>
+    </div>
+    <div style="display:flex; gap:24px;">
+      <a href="#" style="color:#64748b; text-decoration:none;">Word finder</a>
+      <a href="#" style="color:#64748b; text-decoration:none;">Categories</a>
+      <a href="#" style="color:#64748b; text-decoration:none;">Dictionary</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
