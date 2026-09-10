@@ -44,6 +44,15 @@
         ],
         "createdAt": "2026-09-10T12:31:32.112Z",
         "reason": "user explicitly requested marquee-style scrolling sections in three consecutive briefs (word-game energy/rhythm), not an unintentional pattern"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-10T13:37:09.476Z",
+        "reason": "user explicitly requested marquee text run edge-to-edge (no inset/fade) this session; deliberate full-bleed design, not an oversight"
       }
     ]
   }

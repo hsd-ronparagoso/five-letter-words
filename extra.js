@@ -924,7 +924,7 @@
       btn.innerHTML = '<span class="label">Show more</span><span class="chev" aria-hidden="true">&#9660;</span>';
 
       sec.appendChild(wrap);
-      sec.insertBefore(btn, wrap);
+      sec.appendChild(btn);
 
       btn.addEventListener("click", function () {
         var collapsed = wrap.getAttribute("data-collapsed") === "true";
@@ -1013,6 +1013,33 @@
       }
     }
     input.value = "";
+  }
+
+  /* ============================================================
+     Marquee — repeats its one phrase-set enough times that the
+     track always spans well past any viewport width (no trailing
+     blank gap on wide screens), then duplicates that whole run
+     once more so a plain -50% translate loops seamlessly. Speed
+     is derived from the built width so it reads the same pace
+     regardless of how many repeats that took.
+     ============================================================ */
+  function initMarquee() {
+    var track = qs("#marquee-track");
+    if (!track) return;
+    var setHtml = track.innerHTML;
+    var minWidth = Math.max(window.innerWidth, document.documentElement.clientWidth) * 2.2;
+
+    track.innerHTML = setHtml;
+    var setWidth = track.scrollWidth || 1;
+    var repeats = Math.max(1, Math.ceil(minWidth / setWidth));
+
+    var run = "";
+    for (var i = 0; i < repeats; i++) run += setHtml;
+    track.innerHTML = run + run;
+
+    var runWidth = track.scrollWidth / 2;
+    var duration = Math.max(12, runWidth / 70);
+    track.style.animationDuration = duration + "s";
   }
 
   /* ============================================================
@@ -1187,11 +1214,18 @@
     initWeeklyChallenge();
     initAccordion();
     initCarousel();
+    initMarquee();
     renderChallenges();
     renderAchievements();
     updateStatsUI();
     checkAchievements();
     initShowMore();
     initScrollFX();
+
+    var marqueeResize = null;
+    window.addEventListener("resize", function () {
+      clearTimeout(marqueeResize);
+      marqueeResize = setTimeout(initMarquee, 200);
+    });
   });
 })();
