@@ -939,6 +939,68 @@
   }
 
   /* ============================================================
+     Reference-content interactivity: shuffle word-tile grids, fill
+     the inline finder from a clicked word chip, and the Wordle
+     opener demo board.
+     ============================================================ */
+  function shuffleArray(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function initWordShuffle() {
+    qsa("[data-shuffle]").forEach(function (btn) {
+      var list = document.getElementById(btn.getAttribute("data-shuffle"));
+      if (!list) return;
+      btn.addEventListener("click", function () {
+        var items = shuffleArray(qsa("li", list));
+        items.forEach(function (li) { list.appendChild(li); });
+        var svg = btn.querySelector("svg");
+        if (svg) {
+          btn.classList.remove("is-spinning");
+          void btn.offsetWidth;
+          btn.classList.add("is-spinning");
+        }
+      });
+    });
+  }
+
+  function initWordChipFill() {
+    var target = qs("#finder-input-2");
+    qsa(".word-chip[data-fill]").forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        if (!target) return;
+        target.value = chip.getAttribute("data-fill");
+        target.focus();
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    });
+  }
+
+  function initWordleDemo() {
+    var board = qs("#wordle-board");
+    var openers = qs("#wordle-openers");
+    if (!board || !openers) return;
+    var tiles = qsa(".letter", board);
+    qsa(".opener-chip", openers).forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        qsa(".opener-chip", openers).forEach(function (c) { c.classList.remove("is-active"); });
+        chip.classList.add("is-active");
+        var word = (chip.getAttribute("data-word") || "").split("");
+        var colors = (chip.getAttribute("data-colors") || "").split(",");
+        tiles.forEach(function (tile, i) {
+          tile.textContent = word[i] || "";
+          tile.classList.remove("correct", "wrong-position", "incorrect");
+          if (colors[i]) tile.classList.add(colors[i]);
+        });
+      });
+    });
+  }
+
+  /* ============================================================
      Mini-game 5: Weekly Challenge — a tougher word, missing-
      letter mechanic, resettable once a week for bonus XP.
      ============================================================ */
@@ -1220,6 +1282,9 @@
     updateStatsUI();
     checkAchievements();
     initShowMore();
+    initWordShuffle();
+    initWordChipFill();
+    initWordleDemo();
     initScrollFX();
 
     var marqueeResize = null;

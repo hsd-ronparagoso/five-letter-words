@@ -280,65 +280,47 @@
 
 <main>
 
-  <!-- ============ How to Play accordion ============ -->
+  <!-- ============ How to Play: numbered step tiles ============ -->
   <section class="mini-game-section" id="how-to-play">
     <div class="wrap-hero">
-      <div class="how-split">
-        <div class="how-media" data-reveal-item>
-          <img src="https://images.unsplash.com/photo-1564501676519-a269052d3a83?auto=format&fit=crop&w=900&q=80"
-               alt="Scrabble tiles spelling HOPE, surrounded by loose letter tiles on a table" loading="lazy" width="900" height="675">
-        </div>
-        <div data-reveal-item>
-          <span class="kicker">Before you play</span>
-          <h2 class="mg-title">How It Works</h2>
-          <p class="mg-sub" style="margin-bottom:20px;">Four game modes, one streak. Tap a question to see how each one is scored.</p>
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Before you play</span>
+        <h2 class="mg-title">How It Works</h2>
+        <p class="mg-sub">Four game modes, one streak. Here's how each one is scored.</p>
+      </div>
 
-          <div class="accordion" id="how-accordion">
-            <div class="accordion-item">
-              <button class="accordion-trigger" type="button" aria-expanded="true" aria-controls="acc-1">
-                How does Today's Challenge work?
-                <i class="ph-bold ph-caret-down accordion-chev" aria-hidden="true"></i>
-              </button>
-              <div class="accordion-panel" id="acc-1" data-open="true">
-                <div class="accordion-panel-in">
-                  <p>Drag the Scrabble-style tiles from the tray into the five answer slots. Rearrange them as many times as you like, then hit Submit Answer. Solve it to earn XP and lock in today's streak.</p>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-2">
-                How do XP and levels work?
-                <i class="ph-bold ph-caret-down accordion-chev" aria-hidden="true"></i>
-              </button>
-              <div class="accordion-panel" id="acc-2">
-                <div class="accordion-panel-in">
-                  <p>Every challenge you finish earns XP &mdash; more for a correct solve, a little for trying. XP adds up into your level, shown in the stats strip below. There's no cap, so every game you play moves the needle.</p>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-3">
-                How does the streak work?
-                <i class="ph-bold ph-caret-down accordion-chev" aria-hidden="true"></i>
-              </button>
-              <div class="accordion-panel" id="acc-3">
-                <div class="accordion-panel-in">
-                  <p>Complete at least one challenge today and your streak continues; miss a full day and it resets. The flame in the top bar always shows your current streak, stored on this device.</p>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-4">
-                What's the Weekly Challenge?
-                <i class="ph-bold ph-caret-down accordion-chev" aria-hidden="true"></i>
-              </button>
-              <div class="accordion-panel" id="acc-4">
-                <div class="accordion-panel-in">
-                  <p>A tougher five-letter word that changes once a week instead of once a day. Solve it once per week for a bigger XP bonus &mdash; find it near the bottom of the challenge carousel above.</p>
-                </div>
-              </div>
-            </div>
+      <div class="how-grid">
+        <div class="how-card" data-reveal-item>
+          <div class="how-card-top">
+            <span class="how-num">01</span>
+            <span class="how-icon"><i class="ph-fill ph-target" aria-hidden="true"></i></span>
           </div>
+          <h3 class="how-card-title">Today's Challenge</h3>
+          <p class="how-card-text">Drag the Scrabble-style tiles from the tray into the five answer slots, rearrange them as many times as you like, then hit Submit Answer. Solve it to earn XP and lock in today's streak.</p>
+        </div>
+        <div class="how-card" data-reveal-item>
+          <div class="how-card-top">
+            <span class="how-num">02</span>
+            <span class="how-icon"><i class="ph-fill ph-trend-up" aria-hidden="true"></i></span>
+          </div>
+          <h3 class="how-card-title">XP &amp; Levels</h3>
+          <p class="how-card-text">Every challenge you finish earns XP &mdash; more for a correct solve, a little for trying. XP adds up into your level, shown in the stats strip below. There's no cap, so every game you play moves the needle.</p>
+        </div>
+        <div class="how-card" data-reveal-item>
+          <div class="how-card-top">
+            <span class="how-num">03</span>
+            <span class="how-icon"><i class="ph-fill ph-fire" aria-hidden="true"></i></span>
+          </div>
+          <h3 class="how-card-title">Daily Streak</h3>
+          <p class="how-card-text">Complete at least one challenge today and your streak continues; miss a full day and it resets. The flame in the top bar always shows your current streak, stored on this device.</p>
+        </div>
+        <div class="how-card" data-reveal-item>
+          <div class="how-card-top">
+            <span class="how-num">04</span>
+            <span class="how-icon"><i class="ph-fill ph-trophy" aria-hidden="true"></i></span>
+          </div>
+          <h3 class="how-card-title">Weekly Challenge</h3>
+          <p class="how-card-text">A tougher five-letter word that changes once a week instead of once a day. Solve it once per week for a bigger XP bonus &mdash; find it near the bottom of the challenge carousel above.</p>
         </div>
       </div>
     </div>
@@ -462,65 +444,103 @@
         <h2>What Are 5 Letter Words?</h2>
       </div>
 
-      <div class="prose">
-        <p>
-          A 5 letter word is any word made of exactly five letters — no more, no fewer. Length is
-          the only rule: <span class="w">bread</span>, <span class="w">quiet</span> and
-          <span class="w">stone</span> all qualify regardless of what they mean, because each one
-          is built from five alphabetic characters.
-        </p>
-        <p>
-          That length sits in a useful middle band. Four-letter words flip into something
-          unrelated after a single swapped letter, while seven- and eight-letter words carry so
-          much information that a puzzle can only offer a handful of them. Five letters leaves
-          room for a recognizable vowel-consonant skeleton — usually two vowels against three
-          consonants — which is exactly what makes a five-letter word guessable from partial
-          information.
-        </p>
+      <div class="split">
+        <div class="split-main">
+          <div class="prose">
+            <p>
+              A 5 letter word is any word made of exactly five letters — no more, no fewer. Length is
+              the only rule: <span class="w">bread</span>, <span class="w">quiet</span> and
+              <span class="w">stone</span> all qualify regardless of what they mean, because each one
+              is built from five alphabetic characters.
+            </p>
+            <p>
+              That length sits in a useful middle band. Four-letter words flip into something
+              unrelated after a single swapped letter, while seven- and eight-letter words carry so
+              much information that a puzzle can only offer a handful of them. Five letters leaves
+              room for a recognizable vowel-consonant skeleton — usually two vowels against three
+              consonants — which is exactly what makes a five-letter word guessable from partial
+              information.
+            </p>
+          </div>
+        </div>
+        <div class="split-aside">
+          <div class="anatomy-card">
+            <span class="kicker">Anatomy of a 5-letter word</span>
+            <div class="tile-row anatomy-row">
+              <div class="anatomy-letter"><span class="letter">B</span><span class="anatomy-tag is-c">C</span></div>
+              <div class="anatomy-letter"><span class="letter">R</span><span class="anatomy-tag is-c">C</span></div>
+              <div class="anatomy-letter"><span class="letter">E</span><span class="anatomy-tag is-v">V</span></div>
+              <div class="anatomy-letter"><span class="letter">A</span><span class="anatomy-tag is-v">V</span></div>
+              <div class="anatomy-letter"><span class="letter">D</span><span class="anatomy-tag is-c">C</span></div>
+            </div>
+            <p class="anatomy-caption">
+              A typical five-letter skeleton: two vowels against three consonants —
+              <span class="anatomy-legend"><i class="dot is-v"></i>vowel</span>
+              <span class="anatomy-legend"><i class="dot is-c"></i>consonant</span>
+            </p>
+          </div>
+        </div>
       </div>
 
       <div class="subsec">
         <h3>What Are Some Common 5 Letter Words?</h3>
         <div class="prose">
           <p>
-            You meet 5 letter words constantly in ordinary writing and speech —
-            <span class="w">house</span>, <span class="w">water</span>, <span class="w">think</span>,
-            <span class="w">world</span>, <span class="w">happy</span> and <span class="w">green</span>
-            are among the most frequent. That same balance of length and structure is why Wordle,
-            crossword grids, Scrabble racks and spelling drills all lean on this band so heavily.
+            You meet 5 letter words constantly in ordinary writing and speech. That same balance of
+            length and structure is why Wordle, crossword grids, Scrabble racks and spelling drills
+            all lean on this band so heavily.
           </p>
         </div>
 
-        <div class="panel">
-          <div class="panel-rail"><span class="rail-sm">A&ndash;Z</span></div>
-          <div class="panel-body">
-            <p class="panel-title">Common 5 letter words</p>
-            <ul class="words">
-              <li><span class="w-item">house</span></li>
-              <li><span class="w-item">water</span></li>
-              <li><span class="w-item">think</span></li>
-              <li><span class="w-item">world</span></li>
-              <li><span class="w-item">happy</span></li>
-              <li><span class="w-item">green</span></li>
-              <li><span class="w-item">bread</span></li>
-              <li><span class="w-item">chair</span></li>
-              <li><span class="w-item">plant</span></li>
-              <li><span class="w-item">smile</span></li>
-              <li><span class="w-item">quiet</span></li>
-              <li><span class="w-item">stone</span></li>
-            </ul>
+        <div class="chip-panel">
+          <div class="chip-panel-head">
+            <p class="chip-panel-title">Common 5 letter words</p>
+            <button type="button" class="btn-secondary btn-shuffle" data-shuffle="common-words">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h4l3 4M21 6h-4l-3 4M3 18h4l3-4M21 18h-4l-3-4"/></svg>
+              Shuffle
+            </button>
           </div>
+          <ul class="word-tiles word-tiles--grid" id="common-words">
+            <li><button type="button" class="word-chip" data-fill="house">house</button></li>
+            <li><button type="button" class="word-chip" data-fill="water">water</button></li>
+            <li><button type="button" class="word-chip" data-fill="think">think</button></li>
+            <li><button type="button" class="word-chip" data-fill="world">world</button></li>
+            <li><button type="button" class="word-chip" data-fill="happy">happy</button></li>
+            <li><button type="button" class="word-chip" data-fill="green">green</button></li>
+            <li><button type="button" class="word-chip" data-fill="bread">bread</button></li>
+            <li><button type="button" class="word-chip" data-fill="chair">chair</button></li>
+            <li><button type="button" class="word-chip" data-fill="plant">plant</button></li>
+            <li><button type="button" class="word-chip" data-fill="smile">smile</button></li>
+            <li><button type="button" class="word-chip" data-fill="quiet">quiet</button></li>
+            <li><button type="button" class="word-chip" data-fill="stone">stone</button></li>
+          </ul>
         </div>
 
-        <h4>Which 5 Letter Words Are Useful for Word Games?</h4>
-        <div class="prose">
-          <p>
-            The common words above double as reliable word-game vocabulary. They use high-frequency
-            letters, follow ordinary vowel-consonant patterns, and appear often enough in a
-            dictionary that a solver can lean on them as safe openers or fallback guesses — in
-            Wordle, in a crossword grid, or on a Scrabble rack when you need a dependable five-tile
-            play.
-          </p>
+        <div class="split">
+          <div class="split-main">
+            <h4>Which 5 Letter Words Are Useful for Word Games?</h4>
+            <div class="prose">
+              <p>
+                The common words above double as reliable word-game vocabulary. They use high-frequency
+                letters, follow ordinary vowel-consonant patterns, and appear often enough in a
+                dictionary that a solver can lean on them as safe openers or fallback guesses — in
+                Wordle, in a crossword grid, or on a Scrabble rack when you need a dependable five-tile
+                play.
+              </p>
+            </div>
+          </div>
+          <div class="split-aside">
+            <div class="mini-card">
+              <span class="kicker">Try these first</span>
+              <ul class="word-tiles">
+                <li><button type="button" class="word-chip" data-fill="house">house</button></li>
+                <li><button type="button" class="word-chip" data-fill="chair">chair</button></li>
+                <li><button type="button" class="word-chip" data-fill="plant">plant</button></li>
+                <li><button type="button" class="word-chip" data-fill="stone">stone</button></li>
+              </ul>
+              <p class="mini-card-text">Dependable openers — common letters, no rare tiles.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -530,76 +550,108 @@
         <h2>How Can You Find 5 Letter Words With a Word Finder?</h2>
       </div>
 
-      <div class="prose">
-        <p>
-          A word finder turns the letters you already have into a finished shortlist. Type what
-          you know into the box below, and <a href="https://unscramblex.com/" rel="noopener">UnscrambleX</a>
-          checks its full game dictionary and returns every five-letter word that fits — grouped
-          so the five-letter results are visible without scrolling.
-        </p>
-      </div>
-
-      <form class="finder-box finder-box--inline" action="https://unscramblex.com/" method="get">
-        <label class="finder-label" for="finder-input-2">Letters you know, or a pattern</label>
-        <div class="finder-row">
-          <input class="finder-input" id="finder-input-2" name="q" type="text" maxlength="5"
-                 placeholder="e.g. cr?ne" autocomplete="off" spellcheck="false">
-          <button class="finder-go" type="submit">
-            Find words
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-          </button>
+      <div class="split">
+        <div class="split-main">
+          <div class="prose">
+            <p>
+              A word finder turns the letters you already have into a finished shortlist. Type what
+              you know into the box, and <a href="https://unscramblex.com/" rel="noopener">UnscrambleX</a>
+              checks its full game dictionary and returns every five-letter word that fits — grouped
+              so the five-letter results are visible without scrolling.
+            </p>
+          </div>
         </div>
-      </form>
+        <div class="split-aside">
+          <form class="finder-box finder-box--inline" action="https://unscramblex.com/" method="get">
+            <label class="finder-label" for="finder-input-2">Letters you know, or a pattern</label>
+            <div class="finder-row">
+              <input class="finder-input" id="finder-input-2" name="q" type="text" maxlength="5"
+                     placeholder="e.g. cr?ne" autocomplete="off" spellcheck="false">
+              <button class="finder-go" type="submit">
+                Find words
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
 
       <div class="subsec">
         <h3>How Does a 5 Letter Word Finder Work?</h3>
         <div class="prose">
           <p>
             A five-letter word finder checks every entry in a dictionary against the constraints
-            you give it, then returns only the matches. The steps below are the same ones the box
+            you give it, then returns only the matches. The five steps below are what the box
             above runs through on UnscrambleX.
           </p>
         </div>
 
-        <ol class="steps">
-          <li>
-            <b>Enter the letters you know</b>
-            <span>Type your confirmed letters in. Order matters when you know the positions, so
-            enter them where they actually sit in the word.</span>
-          </li>
-          <li>
-            <b>Use wildcards for the gaps</b>
-            <span>Replace each unknown position with a question mark. Searching
-            <span class="w">c?a?e</span> returns crane, chase, clave and every other word matching
-            that exact shape.</span>
-          </li>
-          <li>
-            <b>Filter by pattern</b>
-            <span>Narrow further with <em>starts with</em>, <em>ends with</em> and <em>contains
-            letters</em>. Combining a known first letter with a known ending usually leaves only a
-            few candidates.</span>
-          </li>
-          <li>
-            <b>Pick the right dictionary</b>
-            <span>Switch between Scrabble US, Scrabble UK and Words with Friends so the results
-            match the game you are actually playing.</span>
-          </li>
-          <li>
-            <b>Read the results by length</b>
-            <span>Results arrive grouped by word length with a score beside each entry, so you can
-            jump straight to the five-letter block and take the highest-scoring play.</span>
-          </li>
-        </ol>
+        <div class="how-grid how-grid--tight">
+          <div class="how-card">
+            <div class="how-card-top">
+              <span class="how-num">01</span>
+              <span class="how-icon"><i class="ph-fill ph-keyboard" aria-hidden="true"></i></span>
+            </div>
+            <h4 class="how-card-title">Enter the letters you know</h4>
+            <p class="how-card-text">Type your confirmed letters in. Order matters when you know the positions, so enter them where they actually sit in the word.</p>
+          </div>
+          <div class="how-card">
+            <div class="how-card-top">
+              <span class="how-num">02</span>
+              <span class="how-icon"><i class="ph-fill ph-question" aria-hidden="true"></i></span>
+            </div>
+            <h4 class="how-card-title">Use wildcards for the gaps</h4>
+            <p class="how-card-text">Replace each unknown position with a question mark. Searching <span class="w">c?a?e</span> returns crane, chase, clave and every other word matching that exact shape.</p>
+          </div>
+          <div class="how-card">
+            <div class="how-card-top">
+              <span class="how-num">03</span>
+              <span class="how-icon"><i class="ph-fill ph-funnel" aria-hidden="true"></i></span>
+            </div>
+            <h4 class="how-card-title">Filter by pattern</h4>
+            <p class="how-card-text">Narrow further with <em>starts with</em>, <em>ends with</em> and <em>contains letters</em>. Combining a known first letter with a known ending usually leaves only a few candidates.</p>
+          </div>
+          <div class="how-card">
+            <div class="how-card-top">
+              <span class="how-num">04</span>
+              <span class="how-icon"><i class="ph-fill ph-books" aria-hidden="true"></i></span>
+            </div>
+            <h4 class="how-card-title">Pick the right dictionary</h4>
+            <p class="how-card-text">Switch between Scrabble US, Scrabble UK and Words with Friends so the results match the game you are actually playing.</p>
+          </div>
+          <div class="how-card">
+            <div class="how-card-top">
+              <span class="how-num">05</span>
+              <span class="how-icon"><i class="ph-fill ph-list-numbers" aria-hidden="true"></i></span>
+            </div>
+            <h4 class="how-card-title">Read the results by length</h4>
+            <p class="how-card-text">Results arrive grouped by word length with a score beside each entry, so you can jump straight to the five-letter block and take the highest-scoring play.</p>
+          </div>
+        </div>
 
-        <h4>Can You Find 5 Letter Words Using Specific Letters?</h4>
-        <div class="prose">
-          <p>
-            Yes. A finder built around a game dictionary lets you search two ways at once: by the
-            exact letters you know are in the word, and by the ones you know are not. Marking a
-            letter as included tells the finder every result must contain it; marking one as
-            excluded removes every result that does. Combined, those two filters usually collapse
-            a five-letter search to a short, workable list.
-          </p>
+        <div class="split">
+          <div class="split-main">
+            <h4>Can You Find 5 Letter Words Using Specific Letters?</h4>
+            <div class="prose">
+              <p>
+                Yes. A finder built around a game dictionary lets you search two ways at once: by the
+                exact letters you know are in the word, and by the ones you know are not. Marking a
+                letter as included tells the finder every result must contain it; marking one as
+                excluded removes every result that does. Combined, those two filters usually collapse
+                a five-letter search to a short, workable list.
+              </p>
+            </div>
+          </div>
+          <div class="split-aside">
+            <div class="mini-card">
+              <span class="kicker">Two filters at once</span>
+              <div class="callout-chips">
+                <span class="callout-chip is-include"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i>include "r"</span>
+                <span class="callout-chip is-exclude"><i class="ph-bold ph-minus-circle" aria-hidden="true"></i>exclude "x"</span>
+              </div>
+              <p class="mini-card-text">Combine include and exclude filters to collapse a search fast.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -609,38 +661,69 @@
         <h2>How Can You Find 5 Letter Words With These Letters?</h2>
       </div>
 
-      <div class="prose">
-        <p>
-          "5 letter words with these letters" is an anagram-style search: you hold a set of
-          letters — a Scrabble rack, a Wordle guess, a set of tiles — and want every five-letter
-          word that can be built from them, regardless of order. A finder built for this treats
-          your letters as a pool rather than a fixed sequence.
-        </p>
-      </div>
-
-      <div class="subsec">
-        <h3>How Can You Search for 5 Letter Words Containing Certain Letters?</h3>
-        <div class="prose">
-          <p>
-            Enter the letters you hold and let the finder solve for every valid word that uses
-            some or all of them, sorted by length. This is the natural fit for a Scrabble rack or
-            a leftover set of tiles, where position is not yet fixed and order doesn't matter —
-            you just need to know what five-letter word your letters can make.
-          </p>
+      <div class="split">
+        <div class="split-main">
+          <div class="prose">
+            <p>
+              "5 letter words with these letters" is an anagram-style search: you hold a set of
+              letters — a Scrabble rack, a Wordle guess, a set of tiles — and want every five-letter
+              word that can be built from them, regardless of order. A finder built for this treats
+              your letters as a pool rather than a fixed sequence.
+            </p>
+          </div>
+          <h3>How Can You Search for 5 Letter Words Containing Certain Letters?</h3>
+          <div class="prose">
+            <p>
+              Enter the letters you hold and let the finder solve for every valid word that uses
+              some or all of them, sorted by length. This is the natural fit for a Scrabble rack or
+              a leftover set of tiles, where position is not yet fixed and order doesn't matter —
+              you just need to know what five-letter word your letters can make.
+            </p>
+          </div>
+        </div>
+        <div class="split-aside">
+          <div class="demo-card">
+            <span class="kicker">Anagram search — any order</span>
+            <div class="tile-row">
+              <span class="letter is-loose">R</span>
+              <span class="letter is-loose">C</span>
+              <span class="letter is-loose">E</span>
+              <span class="letter is-loose">N</span>
+              <span class="letter is-loose">A</span>
+            </div>
+            <p class="demo-card-text">A pool of letters, no fixed order — every match that can be built from them.</p>
+          </div>
+          <div class="demo-card demo-card--pattern">
+            <span class="kicker">Pattern search — fixed slots</span>
+            <div class="tile-row">
+              <span class="letter">C</span>
+              <span class="letter wildcard">?</span>
+              <span class="letter">A</span>
+              <span class="letter wildcard">?</span>
+              <span class="letter">E</span>
+            </div>
+            <h4>Can You Search for 5 Letter Words With Letters in Specific Positions?</h4>
+            <p class="demo-card-text">
+              Yes — write known letters into their positions and leave the rest blank, so a known
+              first and fourth letter becomes <span class="w">c???e</span>. A position-aware finder
+              like UnscrambleX's supports both at once: hold your letters as a pool for an anagram
+              search, or lock them into slots for a pattern search, whichever matches the clue you
+              actually have.
+            </p>
+          </div>
         </div>
       </div>
 
-      <div class="subsec">
-        <h4>Can You Search for 5 Letter Words With Letters in Specific Positions?</h4>
-        <div class="prose">
-          <p>
-            Yes — that's a pattern search rather than a pool search. Write the known letters into
-            their positions and leave the rest blank, so a known first and fourth letter becomes
-            <span class="w">c???e</span>. A position-aware finder like UnscrambleX's supports both
-            at once: hold your letters as a pool for an anagram search, or lock them into slots for
-            a pattern search, whichever matches the clue you actually have.
-          </p>
-        </div>
+      <div class="table-scroll">
+        <table class="cmp">
+          <thead>
+            <tr><th>Search type</th><th>What you provide</th><th>Order matters?</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Anagram search</th><td>A pool of letters</td><td>No</td><td>A Scrabble rack or leftover tiles</td></tr>
+            <tr><th scope="row">Pattern search</th><td>Letters in fixed slots</td><td>Yes</td><td>A Wordle guess or crossword clue</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
@@ -649,26 +732,79 @@
         <h2>How Can You Find 5 Letter Words Starting With a Specific Letter?</h2>
       </div>
 
-      <div class="prose">
-        <p>
-          Browsing
-          <a href="https://unscramblex.com/words-start-with" rel="noopener">5 letter words starting with</a>
-          a known first letter is often the fastest route into a puzzle, because a crossword clue
-          or a Wordle guess frequently confirms the opening letter before anything else. Once that
-          letter is fixed, the remaining search space shrinks fast.
-        </p>
+      <div class="split">
+        <div class="split-main">
+          <div class="prose">
+            <p>
+              Browsing
+              <a href="https://unscramblex.com/words-start-with" rel="noopener">5 letter words starting with</a>
+              a known first letter is often the fastest route into a puzzle, because a crossword clue
+              or a Wordle guess frequently confirms the opening letter before anything else. Once that
+              letter is fixed, the remaining search space shrinks fast.
+            </p>
+          </div>
+        </div>
+        <div class="split-aside">
+          <div class="letter-strip-wrap">
+            <span class="kicker">Browse by starting letter</span>
+            <div class="letter-strip">
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/a">A</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/b">B</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/c">C</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/d">D</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/e">E</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/f">F</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/g">G</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/h">H</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/i">I</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/j">J</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/k">K</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/l">L</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/m">M</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/n">N</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/o">O</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/p">P</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/q">Q</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/r">R</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/s">S</a>
+              <a class="letter-chip is-active" href="https://unscramblex.com/words-start-with/t">T</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/u">U</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/v">V</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/w">W</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/x">X</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/y">Y</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/z">Z</a>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="subsec">
-        <h3>How Do You Find 5 Letter Words That Start With Specific Letters?</h3>
-        <div class="prose">
-          <p>
-            Set the starting letter as a fixed first position and let everything else stay open.
-            On UnscrambleX that means using the <em>starts with</em> filter directly, or writing the
-            letter followed by four wildcards — <span class="w">t????</span> — into the finder
-            above. Either way, the results are every five-letter word that opens with that letter,
-            ready to narrow further with a second known letter or ending.
-          </p>
+        <div class="split">
+          <div class="split-main">
+            <h3>How Do You Find 5 Letter Words That Start With Specific Letters?</h3>
+            <div class="prose">
+              <p>
+                Set the starting letter as a fixed first position and let everything else stay open.
+                On UnscrambleX that means using the <em>starts with</em> filter directly, or writing the
+                letter followed by four wildcards — <span class="w">t????</span> — into the finder
+                above. Either way, the results are every five-letter word that opens with that letter,
+                ready to narrow further with a second known letter or ending.
+              </p>
+            </div>
+          </div>
+          <div class="split-aside">
+            <div class="demo-card">
+              <span class="kicker">Locked first letter</span>
+              <div class="tile-row">
+                <span class="letter">T</span>
+                <span class="letter wildcard">?</span>
+                <span class="letter wildcard">?</span>
+                <span class="letter wildcard">?</span>
+                <span class="letter wildcard">?</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <h4>Can You Find 5 Letter Words That Start With &ldquo;TO&rdquo;?</h4>
@@ -681,21 +817,24 @@
           </p>
         </div>
 
-        <div class="panel">
-          <div class="panel-rail"><span class="rail-sm">TO&ndash;</span></div>
-          <div class="panel-body">
-            <p class="panel-title">5 letter words starting with "to"</p>
-            <ul class="words">
-              <li><span class="w-item">today</span></li>
-              <li><span class="w-item">tonic</span></li>
-              <li><span class="w-item">toxic</span></li>
-              <li><span class="w-item">torch</span></li>
-              <li><span class="w-item">total</span></li>
-              <li><span class="w-item">touch</span></li>
-              <li><span class="w-item">tours</span></li>
-              <li><span class="w-item">towel</span></li>
-              <li><span class="w-item">tower</span></li>
-              <li><span class="w-item">toast</span></li>
+        <div class="mock-finder">
+          <div class="mock-finder-bar">
+            <span class="mock-finder-label"><i class="ph-bold ph-magnifying-glass" aria-hidden="true"></i>starts with</span>
+            <span class="mock-finder-value">to???</span>
+          </div>
+          <div class="mock-finder-results">
+            <p class="chip-panel-title">5 letter words starting with "to"</p>
+            <ul class="word-tiles word-tiles--grid">
+              <li><button type="button" class="word-chip" data-fill="today">today</button></li>
+              <li><button type="button" class="word-chip" data-fill="tonic">tonic</button></li>
+              <li><button type="button" class="word-chip" data-fill="toxic">toxic</button></li>
+              <li><button type="button" class="word-chip" data-fill="torch">torch</button></li>
+              <li><button type="button" class="word-chip" data-fill="total">total</button></li>
+              <li><button type="button" class="word-chip" data-fill="touch">touch</button></li>
+              <li><button type="button" class="word-chip" data-fill="tours">tours</button></li>
+              <li><button type="button" class="word-chip" data-fill="towel">towel</button></li>
+              <li><button type="button" class="word-chip" data-fill="tower">tower</button></li>
+              <li><button type="button" class="word-chip" data-fill="toast">toast</button></li>
             </ul>
           </div>
         </div>
@@ -707,13 +846,26 @@
         <h2>How Can You Use a 5 Letter Words List?</h2>
       </div>
 
-      <div class="prose">
-        <p>
-          A <a href="#word-list" rel="noopener">5 letter words list</a> is a pre-sorted reference
-          you can scan instead of search — useful when you want to browse a whole category at once
-          rather than run a single lookup. The starting-letter list above and the common-words list
-          higher up the page are both examples of the format.
-        </p>
+      <div class="split">
+        <div class="split-main">
+          <div class="prose">
+            <p>
+              A <a href="#word-list" rel="noopener">5 letter words list</a> is a pre-sorted reference
+              you can scan instead of search — useful when you want to browse a whole category at once
+              rather than run a single lookup.
+            </p>
+          </div>
+        </div>
+        <div class="split-aside">
+          <div class="mini-card">
+            <span class="kicker">Already on this page</span>
+            <ul class="jump-list">
+              <li><a href="#what-are"><i class="ph-bold ph-arrow-right" aria-hidden="true"></i>Common 5 letter words</a></li>
+              <li><a href="#starting-with"><i class="ph-bold ph-arrow-right" aria-hidden="true"></i>Words starting with "to"</a></li>
+              <li><a href="#wordle"><i class="ph-bold ph-arrow-right" aria-hidden="true"></i>Strong Wordle openers</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div class="subsec">
@@ -724,32 +876,42 @@
           </p>
         </div>
 
-        <div class="points">
-          <div>
-            <p class="points-title">By starting or ending letter</p>
-            <p>Every five-letter word that opens or closes on a given letter — the fastest list to
-            scan once a clue confirms one end of the word.</p>
+        <div class="icon-cards">
+          <div class="icon-card">
+            <span class="icon-card-icon"><i class="ph-fill ph-sort-ascending" aria-hidden="true"></i></span>
+            <p class="icon-card-title">By starting or ending letter</p>
+            <p class="icon-card-text">Every five-letter word that opens or closes on a given letter — the fastest list to scan once a clue confirms one end of the word.</p>
           </div>
-          <div>
-            <p class="points-title">By letter pattern</p>
-            <p>Words matching a fixed shape, such as a known second and fourth letter, for when a
-            puzzle gives you scattered confirmed positions.</p>
+          <div class="icon-card">
+            <span class="icon-card-icon"><i class="ph-fill ph-squares-four" aria-hidden="true"></i></span>
+            <p class="icon-card-title">By letter pattern</p>
+            <p class="icon-card-text">Words matching a fixed shape, such as a known second and fourth letter, for when a puzzle gives you scattered confirmed positions.</p>
           </div>
-          <div>
-            <p class="points-title">By special feature</p>
-            <p>Double letters, no vowels, or palindromes — categories that break the ordinary
-            five-letter rhythm and are worth memorizing outright.</p>
+          <div class="icon-card">
+            <span class="icon-card-icon"><i class="ph-fill ph-sparkle" aria-hidden="true"></i></span>
+            <p class="icon-card-title">By special feature</p>
+            <p class="icon-card-text">Double letters, no vowels, or palindromes — categories that break the ordinary five-letter rhythm and are worth memorizing outright.</p>
           </div>
         </div>
 
-        <h4>How Can a 5 Letter Word List Help With Word Games?</h4>
-        <div class="prose">
-          <p>
-            A list turns recall into recognition. Instead of generating a word from memory, you
-            scan a short, pre-filtered set and pick the one that fits — faster than a live search
-            when you already know roughly which category the answer falls into, and a good warm-up
-            for building the vocabulary a live finder later confirms.
-          </p>
+        <div class="split">
+          <div class="split-main">
+            <h4>How Can a 5 Letter Word List Help With Word Games?</h4>
+            <div class="prose">
+              <p>
+                A list turns recall into recognition. Instead of generating a word from memory, you
+                scan a short, pre-filtered set and pick the one that fits — faster than a live search
+                when you already know roughly which category the answer falls into, and a good warm-up
+                for building the vocabulary a live finder later confirms.
+              </p>
+            </div>
+          </div>
+          <div class="split-aside">
+            <div class="callout callout--icon">
+              <i class="ph-fill ph-brain" aria-hidden="true"></i>
+              <p>Recognition beats recall under time pressure — a good list is a shortcut, not a shortcut around learning.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -759,19 +921,36 @@
         <h2>How Can 5 Letter Word Games Support Memory and Brain Skills?</h2>
       </div>
 
-      <div class="prose">
-        <p>
-          Fixed-length word games are a form of everyday
-          <strong>brain exercises and games to improve memory</strong>: recalling a five-letter
-          word under a constraint — a known letter, a used-up guess, a ticking clock — exercises
-          working memory and word retrieval the same way a deliberate memory drill does, just
-          disguised as play.
-        </p>
-        <p>
-          Because every answer is the same length, the constraint is fixed and the effort goes into
-          retrieval rather than figuring out how long the word even is — which is precisely what
-          keeps the exercise light enough to repeat daily.
-        </p>
+      <div class="split">
+        <div class="split-main">
+          <div class="prose">
+            <p>
+              Fixed-length word games are a form of everyday
+              <strong>brain exercises and games to improve memory</strong>: recalling a five-letter
+              word under a constraint — a known letter, a used-up guess, a ticking clock — exercises
+              working memory and word retrieval the same way a deliberate memory drill does, just
+              disguised as play.
+            </p>
+            <p>
+              Because every answer is the same length, the constraint is fixed and the effort goes into
+              retrieval rather than figuring out how long the word even is — which is precisely what
+              keeps the exercise light enough to repeat daily.
+            </p>
+          </div>
+        </div>
+        <div class="split-aside">
+          <div class="demo-card demo-card--center">
+            <span class="kicker">Same 5 slots, every time</span>
+            <div class="tile-row" style="justify-content:center;">
+              <span class="letter wildcard">?</span>
+              <span class="letter wildcard">?</span>
+              <span class="letter wildcard">?</span>
+              <span class="letter wildcard">?</span>
+              <span class="letter wildcard">?</span>
+            </div>
+            <p class="demo-card-text">A fixed constraint keeps the drill quick enough to repeat daily.</p>
+          </div>
+        </div>
       </div>
 
       <div class="subsec">
@@ -783,34 +962,52 @@
           </p>
         </div>
 
-        <ol class="steps">
-          <li>
-            <b>Learn in families, not singles</b>
-            <span>Group words that share a shape — <span class="w">crane</span>,
-            <span class="w">crate</span>, <span class="w">crave</span> — so one pattern carries
-            several meanings.</span>
-          </li>
-          <li>
-            <b>Say the word as you write it</b>
-            <span>Pairing sound with spelling fixes both, and is how doubled letters and silent
-            endings stop being surprises.</span>
-          </li>
-          <li>
-            <b>Revisit on a spaced schedule</b>
-            <span>Come back to a list after a day, then a week. Spacing the repetitions is what
-            turns recognition into recall.</span>
-          </li>
-        </ol>
+        <div class="how-grid how-grid--tight">
+          <div class="how-card">
+            <div class="how-card-top">
+              <span class="how-num">01</span>
+              <span class="how-icon"><i class="ph-fill ph-stack" aria-hidden="true"></i></span>
+            </div>
+            <h4 class="how-card-title">Learn in families, not singles</h4>
+            <p class="how-card-text">Group words that share a shape — <span class="w">crane</span>, <span class="w">crate</span>, <span class="w">crave</span> — so one pattern carries several meanings.</p>
+          </div>
+          <div class="how-card">
+            <div class="how-card-top">
+              <span class="how-num">02</span>
+              <span class="how-icon"><i class="ph-fill ph-speaker-high" aria-hidden="true"></i></span>
+            </div>
+            <h4 class="how-card-title">Say the word as you write it</h4>
+            <p class="how-card-text">Pairing sound with spelling fixes both, and is how doubled letters and silent endings stop being surprises.</p>
+          </div>
+          <div class="how-card">
+            <div class="how-card-top">
+              <span class="how-num">03</span>
+              <span class="how-icon"><i class="ph-fill ph-calendar-check" aria-hidden="true"></i></span>
+            </div>
+            <h4 class="how-card-title">Revisit on a spaced schedule</h4>
+            <p class="how-card-text">Come back to a list after a day, then a week. Spacing the repetitions is what turns recognition into recall.</p>
+          </div>
+        </div>
 
-        <h4>Can Creative Thinking Activities Improve Word Game Skills?</h4>
-        <div class="prose">
-          <p>
-            Yes. <strong>Creative thinking activities</strong> — inventing alternate words that fit
-            a pattern, building sentences around a day's answer, or brainstorming every word you
-            can think of that starts with a given letter — build the same flexible letter
-            association a puzzle rewards, and they train pattern recognition from a different angle
-            than straight memorization does.
-          </p>
+        <div class="split">
+          <div class="split-main">
+            <h4>Can Creative Thinking Activities Improve Word Game Skills?</h4>
+            <div class="prose">
+              <p>
+                Yes. <strong>Creative thinking activities</strong> — inventing alternate words that fit
+                a pattern, building sentences around a day's answer, or brainstorming every word you
+                can think of that starts with a given letter — build the same flexible letter
+                association a puzzle rewards, and they train pattern recognition from a different angle
+                than straight memorization does.
+              </p>
+            </div>
+          </div>
+          <div class="split-aside">
+            <div class="callout callout--icon">
+              <i class="ph-fill ph-lightbulb-filament" aria-hidden="true"></i>
+              <p>Try it: pick today's answer and brainstorm three more words that start the same way.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -820,47 +1017,80 @@
         <h2>How Can 5 Letter Words Help With Wordle?</h2>
       </div>
 
-      <div class="prose">
-        <p>
-          Wordle is built entirely around <strong>5 letter words for Wordle</strong>: every answer
-          is five letters, which keeps the puzzle solvable in six guesses without making it
-          trivial. A shorter word collapses the answer space so far that luck decides the round; a
-          longer one leaves too many candidates standing after six attempts.
-        </p>
+      <div class="split">
+        <div class="split-main">
+          <div class="prose">
+            <p>
+              Wordle is built entirely around <strong>5 letter words for Wordle</strong>: every answer
+              is five letters, which keeps the puzzle solvable in six guesses without making it
+              trivial. A shorter word collapses the answer space so far that luck decides the round; a
+              longer one leaves too many candidates standing after six attempts.
+            </p>
+          </div>
+          <h3>What 5 Letter Words Are Useful for Wordle?</h3>
+          <div class="prose">
+            <p>
+              An opener that tests common, distinct letters gathers the most information from a
+              single guess. Tap a word to preview it on the board:
+            </p>
+          </div>
+        </div>
+        <div class="split-aside">
+          <div class="wordle-demo">
+            <div class="wordle-board" id="wordle-board">
+              <span class="letter correct">C</span>
+              <span class="letter wrong-position">R</span>
+              <span class="letter incorrect">A</span>
+              <span class="letter incorrect">N</span>
+              <span class="letter correct">E</span>
+            </div>
+            <div class="wordle-legend">
+              <span class="wordle-legend-item"><i class="dot correct"></i>correct spot</span>
+              <span class="wordle-legend-item"><i class="dot present"></i>wrong spot</span>
+              <span class="wordle-legend-item"><i class="dot absent"></i>not in word</span>
+            </div>
+            <div class="wordle-openers" id="wordle-openers">
+              <button type="button" class="opener-chip is-active" data-word="crane" data-colors="correct,wrong-position,incorrect,incorrect,correct">crane</button>
+              <button type="button" class="opener-chip" data-word="slate" data-colors="incorrect,correct,wrong-position,incorrect,correct">slate</button>
+              <button type="button" class="opener-chip" data-word="adieu" data-colors="wrong-position,incorrect,incorrect,correct,incorrect">adieu</button>
+              <button type="button" class="opener-chip" data-word="arose" data-colors="correct,incorrect,wrong-position,incorrect,correct">arose</button>
+              <button type="button" class="opener-chip" data-word="irate" data-colors="incorrect,correct,incorrect,wrong-position,correct">irate</button>
+              <button type="button" class="opener-chip" data-word="stare" data-colors="correct,incorrect,correct,wrong-position,incorrect">stare</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="subsec">
-        <h3>What 5 Letter Words Are Useful for Wordle?</h3>
-        <div class="prose">
-          <p>
-            An opener that tests common, distinct letters gathers the most information from a
-            single guess. The words below are frequently recommended starting guesses:
-          </p>
-        </div>
-
-        <div class="panel">
-          <div class="panel-rail"><span class="rail-sm">1st</span></div>
-          <div class="panel-body">
-            <p class="panel-title">Strong Wordle openers</p>
-            <ul class="words">
-              <li><span class="w-item">crane</span></li>
-              <li><span class="w-item">slate</span></li>
-              <li><span class="w-item">adieu</span></li>
-              <li><span class="w-item">arose</span></li>
-              <li><span class="w-item">irate</span></li>
-              <li><span class="w-item">stare</span></li>
-            </ul>
+        <div class="split">
+          <div class="split-main">
+            <h4>Can a 5 Letter Word Finder Narrow Wordle Possibilities?</h4>
+            <div class="prose">
+              <p>
+                Yes. After a guess, Wordle marks each letter correct, present or absent. Feed those
+                results into the finder at the top of this page as known letters, excluded letters and
+                a pattern of confirmed positions, and it returns every remaining word that still fits —
+                turning the guesses left into a shortlist instead of a guess.
+              </p>
+            </div>
           </div>
-        </div>
-
-        <h4>Can a 5 Letter Word Finder Narrow Wordle Possibilities?</h4>
-        <div class="prose">
-          <p>
-            Yes. After a guess, Wordle marks each letter correct, present or absent. Feed those
-            results into the finder at the top of this page as known letters, excluded letters and
-            a pattern of confirmed positions, and it returns every remaining word that still fits —
-            turning the guesses left into a shortlist instead of a guess.
-          </p>
+          <div class="split-aside">
+            <div class="mock-narrow">
+              <div class="tile-row">
+                <span class="letter correct">C</span>
+                <span class="letter wrong-position">R</span>
+                <span class="letter incorrect">A</span>
+                <span class="letter incorrect">N</span>
+                <span class="letter correct">E</span>
+              </div>
+              <i class="ph-bold ph-arrow-right mock-narrow-arrow" aria-hidden="true"></i>
+              <ul class="word-tiles">
+                <li><span class="word-chip word-chip--static">crest</span></li>
+                <li><span class="word-chip word-chip--static">creed</span></li>
+                <li><span class="word-chip word-chip--static">chose</span></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
