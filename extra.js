@@ -95,15 +95,16 @@
     try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress)); } catch (e) {}
   }
 
+  /* Games reset on every page load: streak, XP, achievements and
+     lifetime totals persist, but each mini-game is playable again
+     from a fresh reload rather than staying locked in a solved
+     state from a previous visit. */
   var progress = loadProgress();
-  if (progress.dayIndex !== dayIndex()) {
-    progress.dayIndex = dayIndex();
-    progress.done = { today: false, unscramble: false, missing: false, speed: false };
-    saveProgress();
-  }
-  if (progress.weeklyWeek !== weekIndex()) {
-    progress.weeklyDone = false;
-  }
+  progress.dayIndex = dayIndex();
+  progress.done = { today: false, unscramble: false, missing: false, speed: false };
+  progress.weeklyWeek = weekIndex();
+  progress.weeklyDone = false;
+  saveProgress();
 
   function registerDailyActivity() {
     var di = dayIndex();

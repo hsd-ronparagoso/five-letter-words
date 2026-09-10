@@ -25,7 +25,16 @@
       <img src="images/logo.png" alt="UnscrambleX" width="26" height="26">
       <span class="brand-name">UnscrambleX</span>
     </div>
+    <nav class="site-nav" aria-label="Primary">
+      <button type="button" class="nav-link" data-scroll-to="#today-game">Play</button>
+      <button type="button" class="nav-link" data-scroll-to="#challenges">Challenges</button>
+      <button type="button" class="nav-link" data-scroll-to="#achievements">Achievements</button>
+      <button type="button" class="nav-link" data-scroll-to="#how-to-play">Guide</button>
+    </nav>
     <div class="top-actions">
+      <a class="btn-primary nav-cta" href="https://unscramblex.com/" target="_blank" rel="noopener noreferrer">
+        Try the Word Finder
+      </a>
       <div class="streak-chip" id="streak-chip" title="Current daily streak">
         <i class="ph-fill ph-fire flame" aria-hidden="true"></i>
         <span id="streak-val">0</span>
@@ -69,19 +78,6 @@
           <span class="tag-item"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>4 games, one streak</span>
           <span class="tag-item"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>No sign-up, ever</span>
         </div>
-
-        <form class="finder-box finder-box--hero" action="https://unscramblex.com/" method="get">
-          <label class="finder-label" for="finder-input">Or search by letters or pattern</label>
-          <div class="finder-row">
-            <input class="finder-input" id="finder-input" name="q" type="text" maxlength="5"
-                   placeholder="e.g. c?a?e" autocomplete="off" spellcheck="false">
-            <button class="finder-go" type="submit">
-              Find words
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-            </button>
-          </div>
-          <p class="finder-hint">Use <span class="w-inline">?</span> for any letter you don't know yet.</p>
-        </form>
       </div>
 
       <!-- Game column: real drag-and-drop Scrabble-tile board -->
