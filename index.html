@@ -2,396 +2,894 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Five Letter Words — UnscrambleX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>5 Letter Words Finder | UnscrambleX</title>
+<meta name="description" content="Find 5 letter words fast: search by the letters you know, the pattern you're missing, or the letter it starts with — then play today's five-letter puzzle and browse word lists for Wordle, crosswords, and vocabulary practice.">
+<meta name="theme-color" content="#e6f4ff">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
+<canvas id="confetti" aria-hidden="true"></canvas>
 
-  <!-- Nav -->
-  <nav style="display:flex; align-items:center; justify-content:space-between; padding:20px 0; border-bottom:1px solid rgba(15,23,42,0.08); flex-wrap:wrap; gap:12px;">
-    <div style="display:flex; align-items:center; gap:12px;">
-      <img src="images/logo.png" alt="UnscrambleX" style="width:36px; height:36px; border-radius:8px;">
-      <span style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; letter-spacing:-0.02em; color:#1e2a5e;">UnscrambleX</span>
+<!-- ============ Utility bar ============ -->
+<header class="topbar">
+  <div class="wrap-game topbar-in">
+    <div class="brand">
+      <img src="images/logo.png" alt="UnscrambleX" width="26" height="26">
+      <span class="brand-name">UnscrambleX</span>
     </div>
-    <div class="nav-links">
-      <a href="#tools" class="hide-sm" style="color:#334155; text-decoration:none;">Tools</a>
-      <a href="#games" class="hide-sm" style="color:#334155; text-decoration:none;">Games</a>
-      <a href="#categories" class="hide-sm" style="color:#334155; text-decoration:none;">Categories</a>
-      <a href="#patterns" class="hide-sm" style="color:#334155; text-decoration:none;">Patterns</a>
-      <a href="#tools" style="background:#1e2a5e; color:#faf7f2; padding:10px 18px; border-radius:6px; text-decoration:none;">Word Finder</a>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-copy">
-      <div style="display:inline-flex; align-items:center; gap:8px; padding:6px 12px; background:rgba(30,42,94,0.06); border-radius:100px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#1e2a5e; margin-bottom:20px; letter-spacing:0.02em;">
-        <span style="width:6px; height:6px; background:#c9a961; border-radius:50%;"></span>
-        158,390 five-letter words indexed
+    <div class="top-actions">
+      <div class="streak-chip" id="streak-chip" title="Current daily streak">
+        <i class="ph-fill ph-fire flame" aria-hidden="true"></i>
+        <span id="streak-val">0</span>
       </div>
-      <h1 class="hero-title" tabindex="0" title="A five-letter word contains exactly five alphabetic characters." data-tooltip="A five-letter word contains exactly five alphabetic characters.">
-        Five Letter <span style="color:#1e2a5e; font-style:italic;">Words</span>
-      </h1>
-      <details class="hero-description" title="Explore definitions, categories, patterns, and word finders for five-letter words.">
-        <summary class="hero-lede">Five-letter words come up often in Wordle, crosswords, Scrabble, and vocabulary-building exercises. <span class="show-more-label" tabindex="0">Show more<span class="show-more-tooltip" role="tooltip">Reveal more details about five-letter words and how to use them.</span></span></summary>
-        <p>Explore definitions, categories, patterns, and finders in one place. Whether you are solving a daily puzzle, checking a crossword entry, or building your vocabulary, UnscrambleX gives you a clear, easy-to-scan reference for finding the five-letter words that fit.</p>
-      </details>
-      <div class="cta-row">
-        <a href="#tools" title="Search five-letter words by letters, positions, and patterns." style="background:#1e2a5e; color:#faf7f2; padding:14px 24px; border-radius:8px; text-decoration:none; font-weight:600; font-size:15px;">Open Word Finder →</a>
-        <a href="#categories" title="Explore five-letter words grouped by useful categories." style="background:transparent; color:#1e2a5e; padding:14px 24px; border-radius:8px; text-decoration:none; font-weight:600; font-size:15px; border:1.5px solid rgba(30,42,94,0.2);">Browse Categories</a>
+      <button class="icon-btn" id="stats-btn" type="button" aria-label="View statistics">
+        <i class="ph-bold ph-chart-bar" aria-hidden="true"></i>
+      </button>
+      <button class="icon-btn" id="help-btn" type="button" aria-label="How to play">
+        <i class="ph-bold ph-question" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ Hero (H1) — the centerpiece ============ -->
+<section class="hero" id="hero">
+  <div class="wrap-hero">
+    <div class="hero-grid">
+
+      <!-- Copy column -->
+      <div class="hero-copy" data-hero-in>
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Daily 5-letter puzzle</p>
+        <h1>5 Letter Words Finder</h1>
+        <p class="hero-lede">
+          Find 5 letter words by the letters you know, the pattern you're missing, or the letter
+          they start with — then drag the tiles into place and prove it on today's challenge. A
+          brand-new set of five-letter words every day, four ways to play, and a finder that never
+          runs out of ideas.
+        </p>
+        <div class="hero-cta-row">
+          <button class="btn-primary" type="button" data-scroll-to="#today-game">
+            Play Today's Challenge
+            <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+          </button>
+          <button class="btn-ghost" type="button" data-scroll-to="#challenges">
+            Try Another Challenge
+          </button>
+        </div>
+        <div class="hero-tags">
+          <span class="tag-item"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>New puzzle every day</span>
+          <span class="tag-item"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>4 games, one streak</span>
+          <span class="tag-item"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>No sign-up, ever</span>
+        </div>
+
+        <form class="finder-box finder-box--hero" action="https://unscramblex.com/" method="get">
+          <label class="finder-label" for="finder-input">Or search by letters or pattern</label>
+          <div class="finder-row">
+            <input class="finder-input" id="finder-input" name="q" type="text" maxlength="5"
+                   placeholder="e.g. c?a?e" autocomplete="off" spellcheck="false">
+            <button class="finder-go" type="submit">
+              Find words
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+          <p class="finder-hint">Use <span class="w-inline">?</span> for any letter you don't know yet.</p>
+        </form>
+      </div>
+
+      <!-- Game column: real drag-and-drop Scrabble-tile board -->
+      <div class="hero-game-col" data-hero-in data-hero-delay="1">
+        <div class="game-card" id="today-game">
+          <div class="game-card-head">
+            <span class="game-card-title"><span class="dot live" aria-hidden="true"></span> Today's Challenge</span>
+            <span class="game-card-day" id="today-label">&nbsp;</span>
+          </div>
+          <p class="drag-instructions">Drag the tiles into the answer row to spell today's word &mdash; or tap a tile to place it.</p>
+
+          <p class="drag-row-label">Answer</p>
+          <div class="answer-row" id="answer-row" role="group" aria-label="Answer slots"></div>
+
+          <p class="drag-row-label">Available letters</p>
+          <div class="tray-row" id="tray-row" role="group" aria-label="Available letters"></div>
+
+          <p class="drag-feedback" id="drag-feedback" aria-live="polite">Fill all five slots, then submit your answer.</p>
+
+          <div class="mg-actions">
+            <button class="btn-secondary" type="button" id="drag-shuffle">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h4l3 4M21 6h-4l-3 4M3 18h4l3-4M21 18h-4l-3-4"/></svg>
+              Shuffle
+            </button>
+            <button class="btn-secondary" type="button" id="drag-clear">Clear</button>
+            <button class="btn-primary" type="button" id="drag-submit" disabled>Submit Answer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ Marquee ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Play</span><span class="dot-sep">&bull;</span><span>Solve</span><span class="dot-sep">&bull;</span><span>Unscramble</span><span class="dot-sep">&bull;</span><span>Earn XP</span><span class="dot-sep">&bull;</span><span>Win</span><span class="dot-sep">&bull;</span><span>Play</span><span class="dot-sep">&bull;</span><span>Solve</span><span class="dot-sep">&bull;</span><span>Unscramble</span><span class="dot-sep">&bull;</span><span>Earn XP</span><span class="dot-sep">&bull;</span><span>Win</span><span class="dot-sep">&bull;</span>
+      </div>
+    </div>
+
+    <!-- ============ Game modes carousel ============ -->
+    <div class="modes-carousel-wrap" data-reveal-item>
+      <p class="modes-kicker">Choose your game</p>
+      <div class="carousel" id="modes-carousel">
+        <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Previous game mode">&#8249;</button>
+        <div class="carousel-track" id="modes-track">
+          <div class="carousel-card">
+            <span class="carousel-icon" aria-hidden="true"><i class="ph-fill ph-target"></i></span>
+            <p class="carousel-name">Today's Challenge</p>
+            <p class="carousel-desc">Drag Scrabble tiles into place to spell the daily word.</p>
+            <button class="btn-ghost carousel-cta" type="button" data-scroll-to="#today-game">Start Playing</button>
+          </div>
+          <div class="carousel-card">
+            <span class="carousel-icon" aria-hidden="true"><i class="ph-fill ph-shuffle"></i></span>
+            <p class="carousel-name">Unscramble</p>
+            <p class="carousel-desc">Drag or tap tiles to put scrambled letters back in order.</p>
+            <button class="btn-ghost carousel-cta" type="button" data-scroll-to="#unscramble-game">Unscramble Now</button>
+          </div>
+          <div class="carousel-card">
+            <span class="carousel-icon" aria-hidden="true"><i class="ph-fill ph-question"></i></span>
+            <p class="carousel-name">Missing Letter</p>
+            <p class="carousel-desc">One letter is hidden. Figure out what completes the word.</p>
+            <button class="btn-ghost carousel-cta" type="button" data-scroll-to="#missing-letter-game">Try the Challenge</button>
+          </div>
+          <div class="carousel-card">
+            <span class="carousel-icon" aria-hidden="true"><i class="ph-fill ph-timer"></i></span>
+            <p class="carousel-name">Speed Round</p>
+            <p class="carousel-desc">Solve as many words as you can in 60 seconds flat.</p>
+            <button class="btn-ghost carousel-cta" type="button" data-scroll-to="#speed-round-game">Challenge Yourself</button>
+          </div>
+          <div class="carousel-card">
+            <span class="carousel-icon" aria-hidden="true"><i class="ph-fill ph-trophy"></i></span>
+            <p class="carousel-name">Weekly Challenge</p>
+            <p class="carousel-desc">A tougher word, new every week, worth bonus XP.</p>
+            <button class="btn-ghost carousel-cta" type="button" data-scroll-to="#weekly-challenge-game">Take the Weekly Challenge</button>
+          </div>
+        </div>
+        <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Next game mode">&#8250;</button>
+      </div>
+      <div class="carousel-dots" id="modes-dots"></div>
+    </div>
+
+    <!-- ============ Today's Challenges strip ============ -->
+    <div class="challenges-strip" id="challenges" data-hero-in data-hero-delay="2">
+      <div class="challenges-head">
+        <div>
+          <p class="challenges-title">Today's Challenges</p>
+          <p class="challenges-sub">Play all four, keep the streak alive.</p>
+        </div>
+        <p class="challenges-progress"><span id="challenges-done">0</span> / 4 Completed</p>
+      </div>
+      <div class="challenges-track" id="challenges-track">
+        <button class="challenge-chip" type="button" data-challenge="today" data-scroll-to="#today-game">
+          <span class="challenge-num">01</span>
+          <span class="challenge-icon" aria-hidden="true"><i class="ph-fill ph-target"></i></span>
+          <span class="challenge-name">Today's Challenge</span>
+          <span class="challenge-state" data-state="pending"><i class="ph-bold ph-check"></i></span>
+        </button>
+        <button class="challenge-chip" type="button" data-challenge="unscramble" data-scroll-to="#unscramble-game">
+          <span class="challenge-num">02</span>
+          <span class="challenge-icon" aria-hidden="true"><i class="ph-fill ph-shuffle"></i></span>
+          <span class="challenge-name">Unscramble</span>
+          <span class="challenge-state" data-state="pending"><i class="ph-bold ph-check"></i></span>
+        </button>
+        <button class="challenge-chip" type="button" data-challenge="missing" data-scroll-to="#missing-letter-game">
+          <span class="challenge-num">03</span>
+          <span class="challenge-icon" aria-hidden="true"><i class="ph-fill ph-question"></i></span>
+          <span class="challenge-name">Missing Letter</span>
+          <span class="challenge-state" data-state="pending"><i class="ph-bold ph-check"></i></span>
+        </button>
+        <button class="challenge-chip" type="button" data-challenge="speed" data-scroll-to="#speed-round-game">
+          <span class="challenge-num">04</span>
+          <span class="challenge-icon" aria-hidden="true"><i class="ph-fill ph-timer"></i></span>
+          <span class="challenge-name">Speed Round</span>
+          <span class="challenge-state" data-state="pending"><i class="ph-bold ph-check"></i></span>
+        </button>
+      </div>
+      <button class="weekly-teaser" type="button" data-scroll-to="#weekly-challenge-game" id="weekly-label">
+        <i class="ph-fill ph-trophy"></i>
+        <span>&nbsp;</span>
+        <i class="ph-bold ph-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Live stat strip (your own play, tracked on this device) ============ -->
+<div class="stat-strip" id="stat-strip">
+  <div class="wrap-hero stat-strip-in" data-reveal-group>
+    <div data-reveal-item>
+      <div class="stat-num" id="stat-games" data-count-target="0">0</div>
+      <div class="stat-label">Games played</div>
+    </div>
+    <div data-reveal-item>
+      <div class="stat-num" id="stat-words" data-count-target="0">0</div>
+      <div class="stat-label">Words solved</div>
+    </div>
+    <div data-reveal-item>
+      <div class="stat-num" id="stat-success" data-count-target="0" data-suffix="%">0%</div>
+      <div class="stat-label">Success rate</div>
+    </div>
+    <div data-reveal-item>
+      <div class="stat-num" id="stat-xp" data-count-target="0">0</div>
+      <div class="stat-label">XP earned</div>
+    </div>
+    <div data-reveal-item>
+      <div class="stat-num" id="stat-level" data-count-target="1">1</div>
+      <div class="stat-label">Level</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Stats modal ============ -->
+<div class="modal-backdrop" id="stats-modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="stats-heading">
+    <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
+    <h2 id="stats-heading">Your Statistics</h2>
+    <p class="sub">Across every game mode, stored on this device.</p>
+
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-num" id="stat-played-modal">0</div><div class="stat-label">Played</div></div>
+      <div class="stat-cell"><div class="stat-num" id="stat-winpct-modal">0</div><div class="stat-label">Win %</div></div>
+      <div class="stat-cell"><div class="stat-num" id="stat-streak-modal">0</div><div class="stat-label">Streak</div></div>
+      <div class="stat-cell"><div class="stat-num" id="stat-max-modal">0</div><div class="stat-label">Best</div></div>
+    </div>
+
+    <p class="dist-title">Achievements unlocked</p>
+    <div id="dist-wrap"></div>
+  </div>
+</div>
+
+<!-- ============ Help modal ============ -->
+<div class="modal-backdrop" id="help-modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="help-heading">
+    <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
+    <h2 id="help-heading">How to play</h2>
+    <p class="sub">Four ways to solve a five-letter word every day.</p>
+
+    <div class="help-row">
+      <i class="ph-fill ph-target help-icon" aria-hidden="true"></i>
+      <p><strong>Today's Challenge</strong> &mdash; drag the Scrabble tiles into the answer row to spell the daily word, then submit.</p>
+    </div>
+    <div class="help-row">
+      <i class="ph-fill ph-shuffle help-icon" aria-hidden="true"></i>
+      <p><strong>Unscramble</strong> &mdash; drag or tap two tiles to swap them until the scrambled letters are back in order.</p>
+    </div>
+    <div class="help-row">
+      <i class="ph-fill ph-question help-icon" aria-hidden="true"></i>
+      <p><strong>Missing Letter</strong> &mdash; one letter is hidden from the word. Type the letter that completes it.</p>
+    </div>
+    <div class="help-row">
+      <i class="ph-fill ph-timer help-icon" aria-hidden="true"></i>
+      <p><strong>Speed Round</strong> &mdash; solve as many missing-letter words as you can before the 60-second clock runs out.</p>
+    </div>
+
+    <p style="font-size:12px;color:var(--absent-key);margin:14px 0 0;">
+      Every challenge you complete earns XP and counts toward your daily streak. A new set of
+      words arrives every day, and a tougher Weekly Challenge arrives every week.
+    </p>
+  </div>
+</div>
+
+<main>
+
+  <!-- ============ How to Play accordion ============ -->
+  <section class="mini-game-section" id="how-to-play">
+    <div class="wrap-hero">
+      <div class="how-split">
+        <div class="how-media" data-reveal-item>
+          <img src="https://images.unsplash.com/photo-1564501676519-a269052d3a83?auto=format&fit=crop&w=900&q=80"
+               alt="Scrabble tiles spelling HOPE, surrounded by loose letter tiles on a table" loading="lazy" width="900" height="675">
+        </div>
+        <div data-reveal-item>
+          <span class="kicker">Before you play</span>
+          <h2 class="mg-title">How It Works</h2>
+          <p class="mg-sub" style="margin-bottom:20px;">Four game modes, one streak. Tap a question to see how each one is scored.</p>
+
+          <div class="accordion" id="how-accordion">
+            <div class="accordion-item">
+              <button class="accordion-trigger" type="button" aria-expanded="true" aria-controls="acc-1">
+                How does Today's Challenge work?
+                <i class="ph-bold ph-caret-down accordion-chev" aria-hidden="true"></i>
+              </button>
+              <div class="accordion-panel" id="acc-1" data-open="true">
+                <div class="accordion-panel-in">
+                  <p>Drag the Scrabble-style tiles from the tray into the five answer slots. Rearrange them as many times as you like, then hit Submit Answer. Solve it to earn XP and lock in today's streak.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-2">
+                How do XP and levels work?
+                <i class="ph-bold ph-caret-down accordion-chev" aria-hidden="true"></i>
+              </button>
+              <div class="accordion-panel" id="acc-2">
+                <div class="accordion-panel-in">
+                  <p>Every challenge you finish earns XP &mdash; more for a correct solve, a little for trying. XP adds up into your level, shown in the stats strip below. There's no cap, so every game you play moves the needle.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-3">
+                How does the streak work?
+                <i class="ph-bold ph-caret-down accordion-chev" aria-hidden="true"></i>
+              </button>
+              <div class="accordion-panel" id="acc-3">
+                <div class="accordion-panel-in">
+                  <p>Complete at least one challenge today and your streak continues; miss a full day and it resets. The flame in the top bar always shows your current streak, stored on this device.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-4">
+                What's the Weekly Challenge?
+                <i class="ph-bold ph-caret-down accordion-chev" aria-hidden="true"></i>
+              </button>
+              <div class="accordion-panel" id="acc-4">
+                <div class="accordion-panel-in">
+                  <p>A tougher five-letter word that changes once a week instead of once a day. Solve it once per week for a bigger XP bonus &mdash; find it near the bottom of the challenge carousel above.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Stats strip -->
-  <section class="stats">
-    <div class="stat-item">
-      <div style="font-family:'Fraunces',serif; font-size:34px; font-weight:600; color:#1e2a5e; letter-spacing:-0.02em;">158K+</div>
-      <div class="stat-label"><span>Words indexed</span><span class="info-icon" tabindex="0" aria-label="About words indexed">i<span class="info-tooltip" role="tooltip">The approximate number of five-letter entries available in the reference.</span></span></div>
-    </div>
-    <div class="stat-item">
-      <div style="font-family:'Fraunces',serif; font-size:34px; font-weight:600; color:#1e2a5e; letter-spacing:-0.02em;">26</div>
-      <div class="stat-label"><span>Starting-letter groups</span><span class="info-icon" tabindex="0" aria-label="About starting-letter groups">i<span class="info-tooltip" role="tooltip">Words are organized into all 26 possible starting-letter groups.</span></span></div>
-    </div>
-    <div class="stat-item">
-      <div style="font-family:'Fraunces',serif; font-size:34px; font-weight:600; color:#1e2a5e; letter-spacing:-0.02em;">12</div>
-      <div class="stat-label"><span>Special patterns</span><span class="info-icon" tabindex="0" aria-label="About special patterns">i<span class="info-tooltip" role="tooltip">Pattern collections include double letters, palindromes, and vowel-related groups.</span></span></div>
-    </div>
-    <div class="stat-item">
-      <div style="font-family:'Fraunces',serif; font-size:34px; font-weight:600; color:#1e2a5e; letter-spacing:-0.02em;">4</div>
-      <div class="stat-label"><span>Dictionary sources</span><span class="info-icon" tabindex="0" aria-label="About dictionary sources">i<span class="info-tooltip" role="tooltip">The reference compares entries across multiple dictionary and game word sources.</span></span></div>
+  <!-- ============ Mini-game 2: Unscramble ============ -->
+  <section class="mini-game-section" id="unscramble-game">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Challenge 02 &middot; Unscramble</span>
+        <h2 class="mg-title">Unscramble Today's Word</h2>
+        <p class="mg-sub">Drag two tiles to swap them, or tap one then tap another. Put the letters in order before you run out of moves.</p>
+      </div>
+
+      <div class="mg-card" data-reveal-item>
+        <div class="unscramble-stage">
+          <p class="unscramble-clue" id="unscramble-clue">Loading today's word&hellip;</p>
+          <div class="unscramble-tiles" id="unscramble-tiles" role="group" aria-label="Scrambled letters"></div>
+          <p class="unscramble-feedback" id="unscramble-feedback" aria-live="polite">Drag a tile onto another to swap them.</p>
+        </div>
+        <div class="mg-actions">
+          <button class="btn-secondary" type="button" id="unscramble-shuffle">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h4l3 4M21 6h-4l-3 4M3 18h4l3-4M21 18h-4l-3-4"/></svg>
+            Shuffle
+          </button>
+          <button class="btn-secondary" type="button" id="unscramble-reset">Reset</button>
+          <button class="btn-primary" type="button" id="unscramble-submit">Unscramble Now</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- What are 5LW -->
-  <section class="two-col">
-    <div>
-      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 01 — Definition</div>
-      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">What Are Five Letter Words?</h2>
-    </div>
-    <div>
-      <p style="font-size:17px; line-height:1.65; color:#334155; margin:0 0 20px;">
-        A five-letter word is a word containing exactly five alphabetic characters, no more and no fewer. Its fixed structure makes it easy to identify and compare with words of other lengths, while still leaving enough room to carry a distinct meaning.
-      </p>
-      <p style="font-size:17px; line-height:1.65; color:#334155; margin:0 0 32px;">
-        Common examples include <em style="color:#1e2a5e;">house</em>, <em style="color:#1e2a5e;">bread</em>, <em style="color:#1e2a5e;">quiet</em>, and <em style="color:#1e2a5e;">clean</em>. Five-letter words are used in everyday writing and frequently appear in Wordle, crosswords, Scrabble, spelling bees, and vocabulary practice.
-      </p>
+  <!-- ============ Mini-game 3: Missing Letter ============ -->
+  <section class="mini-game-section on-wash" id="missing-letter-game">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Challenge 03 &middot; Missing Letter</span>
+        <h2 class="mg-title">Find the Missing Letter</h2>
+        <p class="mg-sub">One letter is hidden from today's word. Type the letter that completes it.</p>
+      </div>
 
-      <!-- Dictionary card -->
-      <div style="background:#0f172a; border-radius:12px; padding:28px 32px; color:#faf7f2;">
-        <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:12px;">
-          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase;">Dictionary definition</span>
+      <div class="mg-card" data-reveal-item>
+        <div class="missing-stage">
+          <div class="missing-tiles" id="missing-tiles" aria-label="Word with a missing letter"></div>
+          <div class="missing-input-row">
+            <input class="missing-input" id="missing-input" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Missing letter">
+            <button class="btn-primary" type="button" id="missing-submit">Submit Letter</button>
+          </div>
+          <p class="missing-feedback" id="missing-feedback" aria-live="polite">You have 3 tries.</p>
         </div>
-        <h3 style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; margin:0 0 16px;"><a href="https://www.merriam-webster.com/wordfinder" style="color:#faf7f2;">How Does Merriam Dictionary Define a Five Letter Word?</a></h3>
-        <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:12px;">
-          <span style="font-family:'Fraunces',serif; font-size:36px; font-weight:600;">word</span>
-          <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#94a3b8;">/wərd/</span>
-          <span style="font-size:13px; color:#c9a961; font-style:italic;">noun</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Mini-game 4: Speed Round ============ -->
+  <section class="mini-game-section" id="speed-round-game">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Challenge 04 &middot; Speed Round</span>
+        <h2 class="mg-title">60-Second Speed Round</h2>
+        <p class="mg-sub">Solve as many missing-letter words as you can before the clock runs out.</p>
+      </div>
+
+      <div class="mg-card" data-reveal-item>
+        <div class="speed-stage">
+          <div class="speed-hud">
+            <div class="speed-timer" id="speed-timer">60</div>
+            <div class="speed-score">Score <span id="speed-score">0</span></div>
+          </div>
+          <div class="missing-tiles" id="speed-tiles" aria-label="Word with a missing letter"></div>
+          <div class="missing-input-row">
+            <input class="missing-input" id="speed-input" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Missing letter" disabled>
+            <button class="btn-primary" type="button" id="speed-start">Challenge Yourself</button>
+          </div>
+          <p class="missing-feedback" id="speed-feedback" aria-live="polite">Press start when you're ready — the clock starts immediately.</p>
         </div>
-        <p style="margin:0; font-size:15px; line-height:1.6; color:#cbd5e1;">
-          Merriam-Webster describes a word as a meaningful unit of language. A five-letter word applies that idea to a sequence of exactly five letters, counted from the first character to the last. This distinction helps separate five-letter entries from shorter or longer words in dictionaries, games, and word lists.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Weekly Challenge ============ -->
+  <section class="mini-game-section on-wash" id="weekly-challenge-game">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker"><i class="ph-fill ph-trophy" aria-hidden="true"></i> Weekly Challenge</span>
+        <h2 class="mg-title">This Week's Harder Word</h2>
+        <p class="mg-sub">A tougher five-letter word, new every week. Find the missing letter for a bonus XP payout.</p>
+      </div>
+
+      <div class="mg-card" data-reveal-item>
+        <div class="missing-stage">
+          <div class="missing-tiles" id="weekly-tiles" aria-label="Word with a missing letter"></div>
+          <div class="missing-input-row">
+            <input class="missing-input" id="weekly-input" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Missing letter">
+            <button class="btn-primary" type="button" id="weekly-submit">Take the Weekly Challenge</button>
+          </div>
+          <p class="missing-feedback" id="weekly-feedback" aria-live="polite">You have 3 tries. Solved once per week for +150 XP.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Progress &amp; achievements ============ -->
+  <section class="mini-game-section on-wash" id="achievements">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Your progress</span>
+        <h2 class="mg-title">Achievements</h2>
+        <p class="mg-sub">Unlocked automatically as you play — stored on this device, no account needed.</p>
+      </div>
+      <div class="achv-grid" id="achv-grid" data-reveal-item></div>
+    </div>
+  </section>
+
+  <!-- ============ Reference content ============ -->
+  <div class="content">
+  <div class="wrap">
+
+    <section class="sec" id="what-are">
+      <div class="sec-head">
+        <h2>What Are 5 Letter Words?</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          A 5 letter word is any word made of exactly five letters — no more, no fewer. Length is
+          the only rule: <span class="w">bread</span>, <span class="w">quiet</span> and
+          <span class="w">stone</span> all qualify regardless of what they mean, because each one
+          is built from five alphabetic characters.
+        </p>
+        <p>
+          That length sits in a useful middle band. Four-letter words flip into something
+          unrelated after a single swapped letter, while seven- and eight-letter words carry so
+          much information that a puzzle can only offer a handful of them. Five letters leaves
+          room for a recognizable vowel-consonant skeleton — usually two vowels against three
+          consonants — which is exactly what makes a five-letter word guessable from partial
+          information.
         </p>
       </div>
-      <h4 style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; margin:28px 0 8px; color:#0f172a;">Do Five Letter Words Help Build Vocabulary?</h4>
-      <p style="font-size:15px; line-height:1.6; color:#475569; margin:0 0 8px;">Yes. Studying five-letter words builds vocabulary by reinforcing word meanings, spelling patterns, pronunciation, and recognition.</p>
-    </div>
-  </section>
 
-  <!-- Word games -->
-  <section id="games" style="padding:8px 0 96px;">
-    <div style="max-width:720px; margin-bottom:56px;">
-      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 02 — Word games</div>
-      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">What Is the Use of Five Letter Words in Word Games?</h2>
-      <p style="font-size:18px; line-height:1.6; color:#475569; margin:0;">Their fixed length is a feature, not an accident. It anchors guessing, gives clues a stable shape, and turns vocabulary into a solvable puzzle across Wordle, crosswords, and other word games.</p>
-    </div>
-
-    <div class="cards-2">
-      <!-- Wordle card -->
-      <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:36px;">
-        <div style="display:flex; gap:6px; margin-bottom:24px;">
-          <div style="width:36px; height:36px; background:#1e2a5e; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; color:#faf7f2; font-size:20px;">S</div>
-          <div style="width:36px; height:36px; background:#c9a961; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; color:#faf7f2; font-size:20px;">L</div>
-          <div style="width:36px; height:36px; background:#1e2a5e; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; color:#faf7f2; font-size:20px;">A</div>
-          <div style="width:36px; height:36px; background:#e2e8f0; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; color:#0f172a; font-size:20px;">T</div>
-          <div style="width:36px; height:36px; background:#e2e8f0; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; color:#0f172a; font-size:20px;">E</div>
+      <div class="subsec">
+        <h3>What Are Some Common 5 Letter Words?</h3>
+        <div class="prose">
+          <p>
+            You meet 5 letter words constantly in ordinary writing and speech —
+            <span class="w">house</span>, <span class="w">water</span>, <span class="w">think</span>,
+            <span class="w">world</span>, <span class="w">happy</span> and <span class="w">green</span>
+            are among the most frequent. That same balance of length and structure is why Wordle,
+            crossword grids, Scrabble racks and spelling drills all lean on this band so heavily.
+          </p>
         </div>
-        <h3 style="font-family:'Fraunces',serif; font-size:28px; font-weight:600; letter-spacing:-0.02em; margin:0 0 12px; color:#0f172a;">Why Are Five Letter Words Central to Wordle?</h3>
-        <p style="font-size:15px; line-height:1.6; color:#475569; margin:0 0 20px;">Wordle uses five-letter words because the fixed length creates a balanced challenge: long enough to test vocabulary, but short enough to solve in six guesses. Each row narrows the field by placement, presence, and elimination.</p>
-        <div style="border-top:1px solid rgba(15,23,42,0.08); padding-top:16px; display:grid; grid-template-columns:auto 1fr; gap:8px 16px; font-size:14px;">
-          <span style="color:#64748b;">Grid</span><span style="color:#0f172a;">6 rows × 5 letters</span>
-          <span style="color:#64748b;">Strategy</span><span style="color:#0f172a;">Vowel-heavy openers, position tracking</span>
-          <span style="color:#64748b;">Common starters</span><span style="color:#0f172a; font-family:'JetBrains Mono',monospace;">crane · slate · adieu</span>
+
+        <div class="panel">
+          <div class="panel-rail"><span class="rail-sm">A&ndash;Z</span></div>
+          <div class="panel-body">
+            <p class="panel-title">Common 5 letter words</p>
+            <ul class="words">
+              <li><span class="w-item">house</span></li>
+              <li><span class="w-item">water</span></li>
+              <li><span class="w-item">think</span></li>
+              <li><span class="w-item">world</span></li>
+              <li><span class="w-item">happy</span></li>
+              <li><span class="w-item">green</span></li>
+              <li><span class="w-item">bread</span></li>
+              <li><span class="w-item">chair</span></li>
+              <li><span class="w-item">plant</span></li>
+              <li><span class="w-item">smile</span></li>
+              <li><span class="w-item">quiet</span></li>
+              <li><span class="w-item">stone</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <h4>Which 5 Letter Words Are Useful for Word Games?</h4>
+        <div class="prose">
+          <p>
+            The common words above double as reliable word-game vocabulary. They use high-frequency
+            letters, follow ordinary vowel-consonant patterns, and appear often enough in a
+            dictionary that a solver can lean on them as safe openers or fallback guesses — in
+            Wordle, in a crossword grid, or on a Scrabble rack when you need a dependable five-tile
+            play.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="finder">
+      <div class="sec-head">
+        <h2>How Can You Find 5 Letter Words With a Word Finder?</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          A word finder turns the letters you already have into a finished shortlist. Type what
+          you know into the box below, and <a href="https://unscramblex.com/" rel="noopener">UnscrambleX</a>
+          checks its full game dictionary and returns every five-letter word that fits — grouped
+          so the five-letter results are visible without scrolling.
+        </p>
+      </div>
+
+      <form class="finder-box finder-box--inline" action="https://unscramblex.com/" method="get">
+        <label class="finder-label" for="finder-input-2">Letters you know, or a pattern</label>
+        <div class="finder-row">
+          <input class="finder-input" id="finder-input-2" name="q" type="text" maxlength="5"
+                 placeholder="e.g. cr?ne" autocomplete="off" spellcheck="false">
+          <button class="finder-go" type="submit">
+            Find words
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <div class="subsec">
+        <h3>How Does a 5 Letter Word Finder Work?</h3>
+        <div class="prose">
+          <p>
+            A five-letter word finder checks every entry in a dictionary against the constraints
+            you give it, then returns only the matches. The steps below are the same ones the box
+            above runs through on UnscrambleX.
+          </p>
+        </div>
+
+        <ol class="steps">
+          <li>
+            <b>Enter the letters you know</b>
+            <span>Type your confirmed letters in. Order matters when you know the positions, so
+            enter them where they actually sit in the word.</span>
+          </li>
+          <li>
+            <b>Use wildcards for the gaps</b>
+            <span>Replace each unknown position with a question mark. Searching
+            <span class="w">c?a?e</span> returns crane, chase, clave and every other word matching
+            that exact shape.</span>
+          </li>
+          <li>
+            <b>Filter by pattern</b>
+            <span>Narrow further with <em>starts with</em>, <em>ends with</em> and <em>contains
+            letters</em>. Combining a known first letter with a known ending usually leaves only a
+            few candidates.</span>
+          </li>
+          <li>
+            <b>Pick the right dictionary</b>
+            <span>Switch between Scrabble US, Scrabble UK and Words with Friends so the results
+            match the game you are actually playing.</span>
+          </li>
+          <li>
+            <b>Read the results by length</b>
+            <span>Results arrive grouped by word length with a score beside each entry, so you can
+            jump straight to the five-letter block and take the highest-scoring play.</span>
+          </li>
+        </ol>
+
+        <h4>Can You Find 5 Letter Words Using Specific Letters?</h4>
+        <div class="prose">
+          <p>
+            Yes. A finder built around a game dictionary lets you search two ways at once: by the
+            exact letters you know are in the word, and by the ones you know are not. Marking a
+            letter as included tells the finder every result must contain it; marking one as
+            excluded removes every result that does. Combined, those two filters usually collapse
+            a five-letter search to a short, workable list.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="with-letters">
+      <div class="sec-head">
+        <h2>How Can You Find 5 Letter Words With These Letters?</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          "5 letter words with these letters" is an anagram-style search: you hold a set of
+          letters — a Scrabble rack, a Wordle guess, a set of tiles — and want every five-letter
+          word that can be built from them, regardless of order. A finder built for this treats
+          your letters as a pool rather than a fixed sequence.
+        </p>
+      </div>
+
+      <div class="subsec">
+        <h3>How Can You Search for 5 Letter Words Containing Certain Letters?</h3>
+        <div class="prose">
+          <p>
+            Enter the letters you hold and let the finder solve for every valid word that uses
+            some or all of them, sorted by length. This is the natural fit for a Scrabble rack or
+            a leftover set of tiles, where position is not yet fixed and order doesn't matter —
+            you just need to know what five-letter word your letters can make.
+          </p>
         </div>
       </div>
 
-      <!-- Crossword card -->
-      <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:36px;">
-        <div style="display:grid; grid-template-columns:repeat(5,20px); gap:2px; margin-bottom:24px;">
-          <div style="width:20px; height:20px; background:#0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#c9a961; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#c9a961; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-          <div style="width:20px; height:20px; background:#faf7f2; border:1px solid #0f172a;"></div>
-        </div>
-        <h3 style="font-family:'Fraunces',serif; font-size:28px; font-weight:600; letter-spacing:-0.02em; margin:0 0 12px; color:#0f172a;">How Do Five Letter Words Help in Solving Crossword Puzzles?</h3>
-        <p style="font-size:15px; line-height:1.6; color:#475569; margin:0 0 20px;">Crossword solvers combine the clue, the five-letter length, known letters, and intersecting answers to identify possible entries. Matching the pattern against a word list makes unfamiliar clues easier to solve.</p>
-        <div style="border-top:1px solid rgba(15,23,42,0.08); padding-top:16px; display:grid; grid-template-columns:auto 1fr; gap:8px 16px; font-size:14px;">
-          <span style="color:#64748b;">Prevalence</span><span style="color:#0f172a;">~30% of Monday NYT entries</span>
-          <span style="color:#64748b;">Approach</span><span style="color:#0f172a;">Fill crossings, match pattern</span>
-          <span style="color:#64748b;">Reliable crossings</span><span style="color:#0f172a; font-family:'JetBrains Mono',monospace;">oreo · eerie · irate</span>
+      <div class="subsec">
+        <h4>Can You Search for 5 Letter Words With Letters in Specific Positions?</h4>
+        <div class="prose">
+          <p>
+            Yes — that's a pattern search rather than a pool search. Write the known letters into
+            their positions and leave the rest blank, so a known first and fourth letter becomes
+            <span class="w">c???e</span>. A position-aware finder like UnscrambleX's supports both
+            at once: hold your letters as a pool for an anagram search, or lock them into slots for
+            a pattern search, whichever matches the clue you actually have.
+          </p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Categories -->
-  <section id="categories" style="padding:8px 0 96px;">
-    <div style="max-width:720px; margin-bottom:48px;">
-      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 03 — Categories</div>
-      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">What Are the Different Categories of Five-Letter Words?</h2>
-      <p style="font-size:18px; line-height:1.6; color:#475569; margin:0;">The main categories include starting letter, double letters, and palindromes. Each group helps organize five-letter words for games, searches, and vocabulary practice.</p>
-    </div>
-
-    <div class="cards-3">
-      <!-- Starts with A -->
-      <div style="background:#0f172a; color:#faf7f2; border-radius:16px; padding:32px; position:relative; overflow:hidden;">
-        <div style="font-family:'Fraunces',serif; font-size:120px; font-weight:600; line-height:1; color:#c9a961; position:absolute; right:-8px; top:-16px; opacity:0.2;">A</div>
-        <div style="position:relative;">
-          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#c9a961; margin-bottom:12px;">By starting letter</div>
-          <h3 style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; margin:0 0 12px;"><a href="https://unscramblex.com/words-start-with/a" style="color:#faf7f2;">Which Five-Letter Words Start With A?</a></h3>
-          <p style="font-size:14px; line-height:1.55; color:#cbd5e1; margin:0 0 20px;">Common examples include apple, aisle, adorn, and alarm. These words support word games, spelling practice, and searches for words that begin with A.</p>
-          <div style="display:flex; flex-wrap:wrap; gap:6px;">
-            <span style="padding:5px 10px; background:rgba(250,247,242,0.1); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">apple</span>
-            <span style="padding:5px 10px; background:rgba(250,247,242,0.1); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">aisle</span>
-            <span style="padding:5px 10px; background:rgba(250,247,242,0.1); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">adorn</span>
-            <span style="padding:5px 10px; background:rgba(250,247,242,0.1); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">alarm</span>
-            <span style="padding:5px 10px; background:rgba(250,247,242,0.1); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">agile</span>
-          </div>
-        </div>
+    <section class="sec" id="starting-with">
+      <div class="sec-head">
+        <h2>How Can You Find 5 Letter Words Starting With a Specific Letter?</h2>
       </div>
 
-      <!-- Double letters -->
-      <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:32px;">
-        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#c9a961; margin-bottom:12px;">Repeated letters</div>
-        <h3 style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; margin:0 0 12px; color:#0f172a;">What Five-Letter Words Contain Double Letters?</h3>
-        <p style="font-size:14px; line-height:1.55; color:#475569; margin:0 0 20px;">Five-letter words such as sheep, seedy, and cliff contain a repeated double letter. Recognizing these patterns helps with pronunciation, spelling, and word-game guesses.</p>
-        <div style="display:flex; flex-direction:column; gap:8px;">
-          <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:rgba(30,42,94,0.04); border-radius:6px;">
-            <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#0f172a;">sh<mark style="background:#c9a961; color:#faf7f2; padding:0 2px; border-radius:2px;">ee</mark>p</span>
-            <span style="font-size:12px; color:#64748b; margin-left:auto;">EE</span>
-          </div>
-          <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:rgba(30,42,94,0.04); border-radius:6px;">
-            <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#0f172a;">s<mark style="background:#c9a961; color:#faf7f2; padding:0 2px; border-radius:2px;">ee</mark>dy</span>
-            <span style="font-size:12px; color:#64748b; margin-left:auto;">EE</span>
-          </div>
-          <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:rgba(30,42,94,0.04); border-radius:6px;">
-            <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#0f172a;">cli<mark style="background:#c9a961; color:#faf7f2; padding:0 2px; border-radius:2px;">ff</mark></span>
-            <span style="font-size:12px; color:#64748b; margin-left:auto;">FF</span>
-          </div>
-          <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:rgba(30,42,94,0.04); border-radius:6px;">
-            <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#0f172a;">ha<mark style="background:#c9a961; color:#faf7f2; padding:0 2px; border-radius:2px;">pp</mark>y</span>
-            <span style="font-size:12px; color:#64748b; margin-left:auto;">PP</span>
+      <div class="prose">
+        <p>
+          Browsing
+          <a href="https://unscramblex.com/words-start-with" rel="noopener">5 letter words starting with</a>
+          a known first letter is often the fastest route into a puzzle, because a crossword clue
+          or a Wordle guess frequently confirms the opening letter before anything else. Once that
+          letter is fixed, the remaining search space shrinks fast.
+        </p>
+      </div>
+
+      <div class="subsec">
+        <h3>How Do You Find 5 Letter Words That Start With Specific Letters?</h3>
+        <div class="prose">
+          <p>
+            Set the starting letter as a fixed first position and let everything else stay open.
+            On UnscrambleX that means using the <em>starts with</em> filter directly, or writing the
+            letter followed by four wildcards — <span class="w">t????</span> — into the finder
+            above. Either way, the results are every five-letter word that opens with that letter,
+            ready to narrow further with a second known letter or ending.
+          </p>
+        </div>
+
+        <h4>Can You Find 5 Letter Words That Start With &ldquo;TO&rdquo;?</h4>
+        <div class="prose">
+          <p>
+            Yes — searching
+            <a href="https://unscramblex.com/words-start-with/to" rel="noopener">5 letter words starting with to</a>
+            returns a short, dependable list. It's a common two-letter opener in English, which
+            makes it a useful pattern to know by heart for both guessing games and crosswords.
+          </p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-rail"><span class="rail-sm">TO&ndash;</span></div>
+          <div class="panel-body">
+            <p class="panel-title">5 letter words starting with "to"</p>
+            <ul class="words">
+              <li><span class="w-item">today</span></li>
+              <li><span class="w-item">tonic</span></li>
+              <li><span class="w-item">toxic</span></li>
+              <li><span class="w-item">torch</span></li>
+              <li><span class="w-item">total</span></li>
+              <li><span class="w-item">touch</span></li>
+              <li><span class="w-item">tours</span></li>
+              <li><span class="w-item">towel</span></li>
+              <li><span class="w-item">tower</span></li>
+              <li><span class="w-item">toast</span></li>
+            </ul>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Palindromes -->
-      <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:32px;">
-        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#c9a961; margin-bottom:12px;">Symmetry</div>
-        <h3 style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; margin:0 0 12px; color:#0f172a;">What Five-Letter Words Are Palindromes?</h3>
-        <p style="font-size:14px; line-height:1.55; color:#475569; margin:0 0 20px;">Five-letter palindromes read the same forwards and backwards. Level, radar, and rotor are notable examples because their symmetrical structure makes them easy to recognize.</p>
-        <div style="display:flex; flex-direction:column; gap:10px;">
-          <div style="display:flex; gap:4px; justify-content:center;">
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">L</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">E</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#c9a961; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">V</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">E</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">L</span>
-          </div>
-          <div style="display:flex; gap:4px; justify-content:center;">
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">R</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">A</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#c9a961; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">D</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">A</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">R</span>
-          </div>
-          <div style="display:flex; gap:4px; justify-content:center;">
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">R</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">O</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#c9a961; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">T</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">O</span>
-            <span style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; background:#1e2a5e; color:#faf7f2; border-radius:4px; font-family:'Fraunces',serif; font-weight:700; font-size:15px;">R</span>
-          </div>
+    <section class="sec" id="word-list">
+      <div class="sec-head">
+        <h2>How Can You Use a 5 Letter Words List?</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          A <a href="#word-list" rel="noopener">5 letter words list</a> is a pre-sorted reference
+          you can scan instead of search — useful when you want to browse a whole category at once
+          rather than run a single lookup. The starting-letter list above and the common-words list
+          higher up the page are both examples of the format.
+        </p>
+      </div>
+
+      <div class="subsec">
+        <h3>What Types of 5 Letter Words Can You Find in a Word List?</h3>
+        <div class="prose">
+          <p>
+            The most useful lists are organized around how a puzzle actually constrains a word:
+          </p>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Tools -->
-  <section id="tools" style="padding:8px 0 96px;">
-    <div style="max-width:720px; margin-bottom:48px;">
-      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 04 — Finders</div>
-      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">How Can UnscrambleX Help You Quickly Find Five Letter Words?</h2>
-      <p style="font-size:18px; line-height:1.6; color:#475569; margin:0;">Enter known letters, use wildcards, and filter by pattern to narrow the list quickly. <a href="http://unscramblex.com/">UnscrambleX</a> helps you generate five-letter word options for games and puzzles.</p>
-    </div>
-
-    <!-- Comparison table -->
-    <div class="comparison-card" style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:32px 36px;">
-      <h3 style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; letter-spacing:-0.02em; margin:0 0 4px; color:#0f172a;">How Does Unscramble.me Help You Find Five Letter Words?</h3>
-      <p style="font-size:14px; color:#64748b; margin:0 0 24px;">Enter a set of letters or a word pattern, then use search and filtering features to narrow potential words for anagrams, Wordle, and puzzle solving.</p>
-      <div class="comparison-table" style="display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:1px; background:rgba(15,23,42,0.08); border:1px solid rgba(15,23,42,0.08); border-radius:8px; overflow:hidden; font-size:14px;">
-        <div style="background:#0f172a; color:#faf7f2; padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.05em;">Filter</div>
-        <div style="background:#0f172a; color:#faf7f2; padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.05em;">UnscrambleX</div>
-        <div style="background:#0f172a; color:#faf7f2; padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.05em;">Unscramble.me</div>
-
-        <div style="background:#faf7f2; padding:14px 16px; color:#334155;">Position match</div>
-        <div style="background:#faf7f2; padding:14px 16px; color:#1e2a5e; font-weight:600;">Per-slot wildcards</div>
-        <div style="background:#faf7f2; padding:14px 16px; color:#64748b;">Starts / ends only</div>
-
-        <div style="background:#f5f0e8; padding:14px 16px; color:#334155;">Contains letters</div>
-        <div style="background:#f5f0e8; padding:14px 16px; color:#1e2a5e; font-weight:600;">Yes, with excludes</div>
-        <div style="background:#f5f0e8; padding:14px 16px; color:#0f172a;">Yes</div>
-
-        <div style="background:#faf7f2; padding:14px 16px; color:#334155;">Dictionary picker</div>
-        <div style="background:#faf7f2; padding:14px 16px; color:#1e2a5e; font-weight:600;">NWL, SOWPODS, Wordle</div>
-        <div style="background:#faf7f2; padding:14px 16px; color:#0f172a;">TWL only</div>
-
-        <div style="background:#f5f0e8; padding:14px 16px; color:#334155;">Best for</div>
-        <div style="background:#f5f0e8; padding:14px 16px; color:#1e2a5e; font-weight:600;">Wordle-style deduction</div>
-        <div style="background:#f5f0e8; padding:14px 16px; color:#0f172a;">Quick anagram lookup</div>
-      </div>
-      <h4 style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; margin:24px 0 8px; color:#0f172a;">Does Unscramble.me Offer More Filtering Options Than UnscrambleX?</h4>
-      <p style="font-size:14px; line-height:1.6; color:#475569; margin:0;">The best tool depends on the puzzle. UnscrambleX emphasizes position matching, wildcards, excludes, and dictionary choices, while Unscramble.me is useful for quick anagram searches.</p>
-      </div>
-  </section>
-
-  <!-- Patterns -->
-  <section id="patterns" style="padding:8px 0 96px;">
-    <div style="max-width:720px; margin-bottom:48px;">
-      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 05 — Patterns</div>
-      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">What Are Some Five Letter Words with Special Patterns?</h2>
-      <p style="font-size:18px; line-height:1.6; color:#475569; margin:0;">Special patterns include words with no traditional vowels and words with repeated or consecutive letters. Recognizing these arrangements can help with word games and puzzles.</p>
-    </div>
-
-    <div class="cards-2">
-      <!-- No vowels -->
-      <div style="background:#1e2a5e; color:#faf7f2; border-radius:16px; padding:36px;">
-        <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:24px;">
+        <div class="points">
           <div>
-            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#c9a961; margin-bottom:8px;">Zero vowels</div>
-            <h3 style="font-family:'Fraunces',serif; font-size:28px; font-weight:600; margin:0; letter-spacing:-0.02em;">Which Five Letter Words Have No Vowels?</h3>
+            <p class="points-title">By starting or ending letter</p>
+            <p>Every five-letter word that opens or closes on a given letter — the fastest list to
+            scan once a clue confirms one end of the word.</p>
           </div>
-          <div style="font-family:'Fraunces',serif; font-size:42px; font-weight:600; color:#c9a961; letter-spacing:-0.02em; font-style:italic;">y?</div>
-        </div>
-        <p style="font-size:14px; line-height:1.6; color:#cbd5e1; margin:0 0 24px;">Yes. If Y is counted as a consonant, words such as nymph, crypt, lymph, glyph, tryst, and pygmy contain no A, E, I, O, or U. They can be useful for challenging word-game guesses.</p>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">nymph</div>
-          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">crypt</div>
-          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">lymph</div>
-          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">glyph</div>
-          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">tryst</div>
-          <div style="background:rgba(250,247,242,0.08); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px;">pygmy</div>
-        </div>
-        <h4 style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; margin:24px 0 8px;">Are There Real Five Letter Words with No Vowels?</h4>
-        <p style="font-size:14px; line-height:1.6; color:#cbd5e1; margin:0;">Yes. Nymph, crypt, lymph, glyph, tryst, and pygmy are real examples when Y is treated as a consonant.</p>
-      </div>
-
-      <!-- Consecutive doubles -->
-      <div style="background:#faf7f2; border:1px solid rgba(15,23,42,0.1); border-radius:16px; padding:36px;">
-        <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:24px;">
           <div>
-            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#c9a961; margin-bottom:8px;">Consecutive repeats</div>
-            <h3 style="font-family:'Fraunces',serif; font-size:28px; font-weight:600; margin:0; letter-spacing:-0.02em; color:#0f172a;">Which Five Letter Words Have Double Letters?</h3>
+            <p class="points-title">By letter pattern</p>
+            <p>Words matching a fixed shape, such as a known second and fourth letter, for when a
+            puzzle gives you scattered confirmed positions.</p>
           </div>
-          <div style="font-family:'Fraunces',serif; font-size:42px; font-weight:600; color:#c9a961; letter-spacing:-0.02em; font-style:italic;">xx</div>
+          <div>
+            <p class="points-title">By special feature</p>
+            <p>Double letters, no vowels, or palindromes — categories that break the ordinary
+            five-letter rhythm and are worth memorizing outright.</p>
+          </div>
         </div>
-        <p style="font-size:14px; line-height:1.6; color:#475569; margin:0 0 24px;">Words such as book, pizza, fuzzy, happy, betta, and kitty contain repeated or consecutive letters. Recognizing these patterns can quickly narrow down word-game answers.</p>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">bo<span style="color:#c9a961; font-weight:700;">oo</span>k</div>
-          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">pi<span style="color:#c9a961; font-weight:700;">zz</span>a</div>
-          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">fu<span style="color:#c9a961; font-weight:700;">zz</span>y</div>
-          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">ha<span style="color:#c9a961; font-weight:700;">pp</span>y</div>
-          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">be<span style="color:#c9a961; font-weight:700;">tt</span>a</div>
-          <div style="background:rgba(30,42,94,0.04); padding:12px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:16px; color:#0f172a;">ki<span style="color:#c9a961; font-weight:700;">tt</span>y</div>
+
+        <h4>How Can a 5 Letter Word List Help With Word Games?</h4>
+        <div class="prose">
+          <p>
+            A list turns recall into recognition. Instead of generating a word from memory, you
+            scan a short, pre-filtered set and pick the one that fits — faster than a live search
+            when you already know roughly which category the answer falls into, and a good warm-up
+            for building the vocabulary a live finder later confirms.
+          </p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Why they matter -->
-  <section style="padding:8px 0 96px;">
-    <div style="max-width:720px; margin-bottom:48px;">
-      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9a961; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;">§ 06 — Why they matter</div>
-      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,48px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 20px; color:#0f172a;">Why Are Five Letter Words Important?</h2>
-      <p style="font-size:18px; line-height:1.6; color:#475569; margin:0;">Five-letter words support vocabulary development, communication, spelling, reading, memory, and word recognition. Their consistent length also makes them useful in education and language-learning activities.</p>
-    </div>
+    <section class="sec" id="memory">
+      <div class="sec-head">
+        <h2>How Can 5 Letter Word Games Support Memory and Brain Skills?</h2>
+      </div>
 
-    <div class="cards-3">
-      <div style="border-top:2px solid #1e2a5e; padding-top:20px;">
-        <div style="font-family:'Fraunces',serif; font-size:44px; font-weight:600; color:#1e2a5e; letter-spacing:-0.02em; line-height:1; margin-bottom:12px;">01</div>
-        <h3 style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; margin:0 0 8px; color:#0f172a;">How Do Five Letter Words Help Build Vocabulary?</h3>
-        <p style="font-size:14px; line-height:1.6; color:#475569; margin:0;">Learning five-letter words introduces new meanings while reinforcing spelling patterns, pronunciation, and recognition through repeated exposure.</p>
+      <div class="prose">
+        <p>
+          Fixed-length word games are a form of everyday
+          <strong>brain exercises and games to improve memory</strong>: recalling a five-letter
+          word under a constraint — a known letter, a used-up guess, a ticking clock — exercises
+          working memory and word retrieval the same way a deliberate memory drill does, just
+          disguised as play.
+        </p>
+        <p>
+          Because every answer is the same length, the constraint is fixed and the effort goes into
+          retrieval rather than figuring out how long the word even is — which is precisely what
+          keeps the exercise light enough to repeat daily.
+        </p>
       </div>
-      <div style="border-top:2px solid #c9a961; padding-top:20px;">
-        <div style="font-family:'Fraunces',serif; font-size:44px; font-weight:600; color:#c9a961; letter-spacing:-0.02em; line-height:1; margin-bottom:12px;">02</div>
-        <h3 style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; margin:0 0 8px; color:#0f172a;">Why Do Five Letter Words Matter in Education and Language Learning?</h3>
-        <p style="font-size:14px; line-height:1.6; color:#475569; margin:0;">Teachers and learners can use five-letter words for spelling, reading, pronunciation, pattern recognition, classroom exercises, and word games.</p>
-      </div>
-      <div style="border-top:2px solid #0f172a; padding-top:20px;">
-        <div style="font-family:'Fraunces',serif; font-size:44px; font-weight:600; color:#0f172a; letter-spacing:-0.02em; line-height:1; margin-bottom:12px;">03</div>
-        <h3 style="font-family:'Fraunces',serif; font-size:20px; font-weight:600; margin:0 0 8px; color:#0f172a;">Pattern recognition</h3>
-        <p style="font-size:14px; line-height:1.6; color:#475569; margin:0;">Common endings — <em>-ight</em>, <em>-ound</em>, <em>-orch</em> — become instant footholds for readers and puzzle solvers alike.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- CTA -->
-  <section style="padding:8px 0 96px;">
-    <div class="cta-box">
-      <div>
-        <h2 style="font-family:'Fraunces',serif; font-size:clamp(28px,4.5vw,44px); font-weight:600; line-height:1.05; letter-spacing:-0.025em; margin:0 0 16px;">Stuck on today's Wordle?</h2>
-        <p style="font-size:17px; line-height:1.55; color:#cbd5e1; margin:0 0 28px; max-width:480px;">Type the letters you know. We'll return every five-letter word that fits — filtered by position, contents, and dictionary.</p>
-        <a href="#tools" style="display:inline-block; background:#c9a961; color:#0f172a; padding:14px 24px; border-radius:8px; text-decoration:none; font-weight:600; font-size:15px;">Open the finder →</a>
-      </div>
-      <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:6px;">
-        <div style="aspect-ratio:1; background:rgba(250,247,242,0.06); border:1.5px solid rgba(250,247,242,0.15); border-radius:6px;"></div>
-        <div style="aspect-ratio:1; background:#c9a961; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; font-size:24px;">O</div>
-        <div style="aspect-ratio:1; background:rgba(250,247,242,0.06); border:1.5px solid rgba(250,247,242,0.15); border-radius:6px;"></div>
-        <div style="aspect-ratio:1; background:#1e2a5e; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; font-size:24px;">S</div>
-        <div style="aspect-ratio:1; background:rgba(250,247,242,0.06); border:1.5px solid rgba(250,247,242,0.15); border-radius:6px;"></div>
-      </div>
-    </div>
-  </section>
+      <div class="subsec">
+        <h3>What Memorization Techniques Can Help You Remember 5 Letter Words?</h3>
+        <div class="prose">
+          <p>
+            The same <strong>memorization techniques</strong> that work for any vocabulary apply
+            cleanly to a fixed five-letter set:
+          </p>
+        </div>
 
-  <!-- Footer -->
-  <footer style="border-top:1px solid rgba(15,23,42,0.08); padding:32px 0 48px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:#64748b;">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <img src="images/logo.png" style="width:24px; height:24px; border-radius:5px;">
-      <span>© UnscrambleX · Five-letter word reference</span>
-    </div>
-    <div style="display:flex; gap:24px;">
-      <a href="#" style="color:#64748b; text-decoration:none;">Word finder</a>
-      <a href="#" style="color:#64748b; text-decoration:none;">Categories</a>
-      <a href="#" style="color:#64748b; text-decoration:none;">Dictionary</a>
-    </div>
-  </footer>
+        <ol class="steps">
+          <li>
+            <b>Learn in families, not singles</b>
+            <span>Group words that share a shape — <span class="w">crane</span>,
+            <span class="w">crate</span>, <span class="w">crave</span> — so one pattern carries
+            several meanings.</span>
+          </li>
+          <li>
+            <b>Say the word as you write it</b>
+            <span>Pairing sound with spelling fixes both, and is how doubled letters and silent
+            endings stop being surprises.</span>
+          </li>
+          <li>
+            <b>Revisit on a spaced schedule</b>
+            <span>Come back to a list after a day, then a week. Spacing the repetitions is what
+            turns recognition into recall.</span>
+          </li>
+        </ol>
 
-</div>
+        <h4>Can Creative Thinking Activities Improve Word Game Skills?</h4>
+        <div class="prose">
+          <p>
+            Yes. <strong>Creative thinking activities</strong> — inventing alternate words that fit
+            a pattern, building sentences around a day's answer, or brainstorming every word you
+            can think of that starts with a given letter — build the same flexible letter
+            association a puzzle rewards, and they train pattern recognition from a different angle
+            than straight memorization does.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="wordle">
+      <div class="sec-head">
+        <h2>How Can 5 Letter Words Help With Wordle?</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          Wordle is built entirely around <strong>5 letter words for Wordle</strong>: every answer
+          is five letters, which keeps the puzzle solvable in six guesses without making it
+          trivial. A shorter word collapses the answer space so far that luck decides the round; a
+          longer one leaves too many candidates standing after six attempts.
+        </p>
+      </div>
+
+      <div class="subsec">
+        <h3>What 5 Letter Words Are Useful for Wordle?</h3>
+        <div class="prose">
+          <p>
+            An opener that tests common, distinct letters gathers the most information from a
+            single guess. The words below are frequently recommended starting guesses:
+          </p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-rail"><span class="rail-sm">1st</span></div>
+          <div class="panel-body">
+            <p class="panel-title">Strong Wordle openers</p>
+            <ul class="words">
+              <li><span class="w-item">crane</span></li>
+              <li><span class="w-item">slate</span></li>
+              <li><span class="w-item">adieu</span></li>
+              <li><span class="w-item">arose</span></li>
+              <li><span class="w-item">irate</span></li>
+              <li><span class="w-item">stare</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <h4>Can a 5 Letter Word Finder Narrow Wordle Possibilities?</h4>
+        <div class="prose">
+          <p>
+            Yes. After a guess, Wordle marks each letter correct, present or absent. Feed those
+            results into the finder at the top of this page as known letters, excluded letters and
+            a pattern of confirmed positions, and it returns every remaining word that still fits —
+            turning the guesses left into a shortlist instead of a guess.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  </div>
+
+</main>
+
+<!-- ============ Footer ============ -->
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">
+      <img src="images/logo.png" alt="">
+      <span>&copy; UnscrambleX &middot; 5 letter word finder &amp; daily puzzle</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="extra.js"></script>
+<script>
+  function setVh(){document.documentElement.style.setProperty('--vh', (window.innerHeight*0.01)+'px');}
+  setVh();
+  window.addEventListener('resize', setVh);
+</script>
 </body>
 </html>

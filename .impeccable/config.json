@@ -1,0 +1,41 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "bounce-easing",
+        "value": "bounce",
+        "createdAt": "2026-09-09T01:55:06.781Z",
+        "reason": "Agent: win-row celebration bounce on correct guess, matching Wordle's own win animation; brief explicitly asked for celebratory feedback on a win"
+      },
+      {
+        "rule": "layout-transition",
+        "value": "*",
+        "files": [
+          "style.css"
+        ],
+        "createdAt": "2026-09-09T01:55:18.672Z",
+        "reason": "Agent: only layout-transition usage is the guess-distribution bar chart in the stats modal (6 tiny elements, animates once on modal open, not scroll-linked/repeating); a transform-based rewrite would require pulling the count label out of the scaled element for no real perf benefit at this scale"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-09T01:55:42.191Z",
+        "reason": "Agent: the 3 flagged pairs (white on #2e9e63/#b5822a/#78838d) are the Wordle-standard tile feedback colors on bold 20-28px letters; computed contrast is 3.4-3.9:1, which clears WCAG's large-text 3:1 threshold (the detector checks the flat 4.5:1 body-text floor and doesn't apply the large-bold-text exception). The same semantic colors get separately darkened -key variants (5.3-5.9:1) for the smaller keyboard-key text, which does need the stricter floor."
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "style.css"
+        ],
+        "createdAt": "2026-09-10T11:38:08.706Z",
+        "reason": "remaining <11px sizes (.brand-tag 10px, .define-src 10.5px) are dead CSS from pre-redesign content, unused by any element in index.html — no rendered legibility issue"
+      }
+    ]
+  }
+}
