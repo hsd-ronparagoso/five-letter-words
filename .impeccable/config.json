@@ -35,6 +35,15 @@
         ],
         "createdAt": "2026-09-10T11:38:08.706Z",
         "reason": "remaining <11px sizes (.brand-tag 10px, .define-src 10.5px) are dead CSS from pre-redesign content, unused by any element in index.html — no rendered legibility issue"
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-10T12:31:32.112Z",
+        "reason": "user explicitly requested marquee-style scrolling sections in three consecutive briefs (word-game energy/rhythm), not an unintentional pattern"
       }
     ]
   }

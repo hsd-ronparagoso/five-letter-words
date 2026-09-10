@@ -26,20 +26,6 @@
     "whisk","vexed","jumbo","fuzzy","quirk","waltz","brisk","gawky","vixen","zonal"
   ];
 
-  /* Hero demo rack recipes — a 7-letter pool plus every 5-letter
-     word we've verified it can spell. One recipe is picked per
-     day (deterministic, changes daily) so the demo doesn't go
-     stale. */
-  var DEMO_RECIPES = [
-    { letters: ["C","R","A","N","E","S","T"], words: ["CRANE","STARE","CARTS","TRACE","RANTS","SCANT"] },
-    { letters: ["S","T","O","N","E","R","L"], words: ["STONE","TONER","STOLE","LOSER","NOTES","TONES"] },
-    { letters: ["P","L","A","N","E","T","S"], words: ["PLANE","PLATE","PANEL","PANTS","PLANT","SLANT"] },
-    { letters: ["B","R","E","A","D","S","T"], words: ["BREAD","BEARD","DEBTS","BATED","RATED","BARDS"] },
-    { letters: ["C","H","E","A","R","T","S"], words: ["CHART","CHASE","TEACH","TEARS","CRASH","HATES"] },
-    { letters: ["G","R","A","P","E","S","T"], words: ["GRAPE","GATES","GREAT","RATES","PEARS","GRATE"] },
-    { letters: ["W","A","T","E","R","S","L"], words: ["WATER","WASTE","LATER","ALERT","RATES","STALE"] }
-  ];
-
   function seededPick(pool, seed) {
     var n = pool.length;
     var i = ((seed * 2654435761) % n + n) % n;
@@ -382,22 +368,6 @@
   }
 
   /* ---------------------------------------------------------
-     Tactile entrance for the board + keyboard, matching the
-     about-page hero demo's tile polish (lift, weight, stagger)
-     so the game reads as alive rather than a static grid.
-     --------------------------------------------------------- */
-  function initTileEntrance() {
-    qsa("#board .tile").forEach(function (t, i) {
-      t.style.animationDelay = (i * 20) + "ms";
-      t.classList.add("tile-enter");
-    });
-    qsa("#keyboard .key").forEach(function (k, i) {
-      k.style.animationDelay = (260 + i * 10) + "ms";
-      k.classList.add("key-enter");
-    });
-  }
-
-  /* ---------------------------------------------------------
      Hero CTAs: smooth-scroll data-scroll-to buttons
      --------------------------------------------------------- */
   function initCtaScroll() {
@@ -420,9 +390,12 @@
     }
     var weeklyEl = qs("#weekly-label");
     if (weeklyEl) {
+      var span = weeklyEl.querySelector("span");
       var w = weeklyWord();
-      weeklyEl.innerHTML = '<strong>Weekly challenge:</strong> this week’s bonus word has ' + w.length +
-        ' letters and starts with “' + w[0].toUpperCase() + '” — try to land it in Practice mode.';
+      var text = progress.weeklyDone
+        ? "This week's Weekly Challenge is solved — a new word arrives next week."
+        : "Weekly Challenge: a " + w.length + "-letter word starting with “" + w[0].toUpperCase() + "” is waiting below.";
+      if (span) span.textContent = text;
     }
   }
 
@@ -457,7 +430,6 @@
       while (usLetters.join("") === usWord && tries < 5) { usLetters = shuffle(usLetters); tries++; }
     }
     renderUnscramble(solvedAlready);
-    wrap.addEventListener("click", onUnscrambleTileClick);
     qs("#unscramble-shuffle").addEventListener("click", function (btn) {
       if (progress.done.unscramble) return;
       this.classList.add("is-spinning");
@@ -491,6 +463,13 @@
       t.textContent = ch.toUpperCase();
       t.setAttribute("data-i", i);
       t.disabled = solved;
+      if (!solved) {
+        initDrag(t, {
+          onOver: function (target) { highlightUsTarget(target); },
+          onDrop: function (target) { handleUsDrop(i, target); },
+          onTap: function () { onUnscrambleTap(i, t); }
+        });
+      }
       wrap.appendChild(t);
     });
     var clue = qs("#unscramble-clue");
@@ -500,11 +479,23 @@
     if (solved) setFeedback("unscramble-feedback", "Solved! The word was “" + usWord.toUpperCase() + "”.", true);
   }
 
-  function onUnscrambleTileClick(e) {
+  function highlightUsTarget(target) {
+    qsa(".us-tile.is-target").forEach(function (t) { t.classList.remove("is-target"); });
+    var tile = target && target.closest ? target.closest(".us-tile") : null;
+    if (tile) tile.classList.add("is-target");
+  }
+
+  function handleUsDrop(sourceIndex, target) {
+    qsa(".us-tile.is-target").forEach(function (t) { t.classList.remove("is-target"); });
+    var targetTile = target && target.closest ? target.closest(".us-tile") : null;
+    if (!targetTile) return;
+    var targetIndex = parseInt(targetTile.getAttribute("data-i"), 10);
+    if (targetIndex === sourceIndex) return;
+    swapUs(sourceIndex, targetIndex);
+  }
+
+  function onUnscrambleTap(i, btn) {
     if (progress.done.unscramble) return;
-    var btn = e.target.closest(".us-tile");
-    if (!btn) return;
-    var i = parseInt(btn.getAttribute("data-i"), 10);
     if (usSelected === null) {
       usSelected = i;
       btn.classList.add("is-selected");
@@ -515,13 +506,14 @@
       usSelected = null;
       return;
     }
-    var tmp = usLetters[usSelected];
-    usLetters[usSelected] = usLetters[i];
-    usLetters[i] = tmp;
-    usSwaps++;
+    swapUs(usSelected, i);
     usSelected = null;
+  }
+
+  function swapUs(a, b) {
+    var tmp = usLetters[a]; usLetters[a] = usLetters[b]; usLetters[b] = tmp;
+    usSwaps++;
     renderUnscramble(false);
-    qsa("#unscramble-tiles .us-tile").forEach(function (t) { t.classList.add("is-swap"); });
     checkUnscramble();
   }
 
@@ -699,6 +691,8 @@
     input.disabled = true;
     qs("#speed-start").textContent = "Challenge Yourself Again";
     setFeedback("speed-feedback", "Time! You solved " + speedScore + (speedScore === 1 ? " word." : " words."), speedScore > 0);
+    progress.bestSpeedScore = Math.max(progress.bestSpeedScore || 0, speedScore);
+    saveProgress();
     completeChallenge("speed", speedScore > 0, 0);
     checkAchievements();
   }
@@ -944,14 +938,238 @@
   }
 
   /* ============================================================
-     Wire the main Wordle game's completion event into the
-     challenges tracker (game.js dispatches this; zero coupling
-     beyond the event name).
+     Mini-game 5: Weekly Challenge — a tougher word, missing-
+     letter mechanic, resettable once a week for bonus XP.
      ============================================================ */
-  function initMainGameHook() {
-    document.addEventListener("ftw:daily-complete", function (e) {
-      completeChallenge("guess", !!(e.detail && e.detail.won));
+  var wkWord = weeklyWord();
+  var wkIndex = Math.max(1, Math.min(wkWord.length - 2, Math.floor(wkWord.length / 2)));
+  var wkTriesLeft = 3;
+
+  function initWeeklyChallenge() {
+    var wrap = qs("#weekly-tiles");
+    if (!wrap) return;
+    renderWeekly();
+    var input = qs("#weekly-input");
+    var btn = qs("#weekly-submit");
+    if (progress.weeklyDone) {
+      input.disabled = true;
+      btn.disabled = true;
+      btn.textContent = "Solved this week";
+      revealWeekly(true);
+    }
+    btn.addEventListener("click", submitWeekly);
+    input.addEventListener("keydown", function (e) { if (e.key === "Enter") submitWeekly(); });
+    input.addEventListener("input", function () {
+      input.value = input.value.replace(/[^a-zA-Z]/g, "").slice(0, 1);
     });
+  }
+
+  function renderWeekly() {
+    var wrap = qs("#weekly-tiles");
+    wrap.innerHTML = "";
+    wkWord.split("").forEach(function (ch, i) {
+      var t = document.createElement("div");
+      t.className = "ml-tile" + (i === wkIndex ? " is-blank" : "");
+      t.textContent = i === wkIndex ? "" : ch.toUpperCase();
+      wrap.appendChild(t);
+    });
+  }
+
+  function revealWeekly(correct) {
+    var tile = qsa("#weekly-tiles .ml-tile")[wkIndex];
+    if (!tile) return;
+    tile.textContent = wkWord[wkIndex].toUpperCase();
+    tile.setAttribute("data-state", correct ? "correct" : "incorrect");
+  }
+
+  function submitWeekly() {
+    if (progress.weeklyDone) return;
+    var input = qs("#weekly-input");
+    var val = (input.value || "").toLowerCase();
+    if (!val) return;
+    var tile = qsa("#weekly-tiles .ml-tile")[wkIndex];
+    if (val === wkWord[wkIndex]) {
+      tile.textContent = val.toUpperCase();
+      tile.setAttribute("data-state", "correct");
+      setFeedback("weekly-feedback", "Correct! The word was “" + wkWord.toUpperCase() + "”. +150 XP banked.", true);
+      input.disabled = true;
+      qs("#weekly-submit").disabled = true;
+      qs("#weekly-submit").textContent = "Solved this week";
+      completeWeekly(true);
+      launchConfetti();
+    } else {
+      wkTriesLeft--;
+      tile.setAttribute("data-state", "incorrect");
+      (function (t) { setTimeout(function () { t.removeAttribute("data-state"); }, 500); })(tile);
+      if (wkTriesLeft <= 0) {
+        revealWeekly(false);
+        setFeedback("weekly-feedback", "Out of tries — it was “" + wkWord.toUpperCase() + "”. Back next week.", false);
+        input.disabled = true;
+        qs("#weekly-submit").disabled = true;
+        completeWeekly(false);
+      } else {
+        setFeedback("weekly-feedback", wkTriesLeft + (wkTriesLeft === 1 ? " try" : " tries") + " left.", false);
+      }
+    }
+    input.value = "";
+  }
+
+  /* ============================================================
+     Accordion (How to Play) — generic grid-rows expand/collapse
+     ============================================================ */
+  function initAccordion() {
+    qsa(".accordion-trigger").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!open));
+        var panel = document.getElementById(btn.getAttribute("aria-controls"));
+        if (panel) panel.setAttribute("data-open", String(!open));
+      });
+    });
+  }
+
+  /* ============================================================
+     Game-modes carousel — swipeable track, arrows, dots
+     ============================================================ */
+  function initCarousel() {
+    var track = qs("#modes-track");
+    if (!track) return;
+    var cards = qsa(".carousel-card", track);
+    var dotsWrap = qs("#modes-dots");
+    var prev = qs(".carousel-arrow--prev");
+    var next = qs(".carousel-arrow--next");
+
+    cards.forEach(function (_, i) {
+      var d = document.createElement("button");
+      d.type = "button";
+      d.className = "carousel-dot";
+      d.setAttribute("aria-label", "Go to slide " + (i + 1));
+      d.addEventListener("click", function () { scrollToCard(i); });
+      dotsWrap.appendChild(d);
+    });
+    var dots = qsa(".carousel-dot", dotsWrap);
+
+    function step() { return cards[0].offsetWidth + 14; }
+    function scrollToCard(i) { track.scrollTo({ left: i * step(), behavior: "smooth" }); }
+    function updateDots() {
+      var idx = Math.round(track.scrollLeft / step());
+      dots.forEach(function (d, i) { d.classList.toggle("is-active", i === idx); });
+    }
+    var scrollTimer = null;
+    track.addEventListener("scroll", function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(updateDots, 80);
+    });
+    if (prev) prev.addEventListener("click", function () { track.scrollBy({ left: -step(), behavior: "smooth" }); });
+    if (next) next.addEventListener("click", function () { track.scrollBy({ left: step(), behavior: "smooth" }); });
+    updateDots();
+  }
+
+  /* ============================================================
+     Topbar: streak chip, stats/help modals, confetti. Owns the
+     UI that used to belong to the removed daily-guess game.
+     ============================================================ */
+  function isModalOpen() {
+    var s = qs("#stats-modal"), h = qs("#help-modal");
+    return (s && !s.hidden) || (h && !h.hidden);
+  }
+  function openModal(m) { if (m) m.hidden = false; }
+  function closeAllModals() {
+    var s = qs("#stats-modal"), h = qs("#help-modal");
+    if (s) s.hidden = true;
+    if (h) h.hidden = true;
+  }
+
+  function initTopbar() {
+    updateStreakUI();
+    var statsBtn = qs("#stats-btn");
+    var helpBtn = qs("#help-btn");
+    if (statsBtn) statsBtn.addEventListener("click", function () { openModal(qs("#stats-modal")); updateStatsUI(); });
+    if (helpBtn) helpBtn.addEventListener("click", function () { openModal(qs("#help-modal")); });
+    qsa("[data-close]").forEach(function (b) { b.addEventListener("click", closeAllModals); });
+    qsa(".modal-backdrop").forEach(function (bd) {
+      bd.addEventListener("click", function (e) { if (e.target === bd) closeAllModals(); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && isModalOpen()) closeAllModals();
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Lightweight canvas confetti burst — celebration for a
+     correct Today's Challenge / Weekly Challenge answer or a
+     freshly unlocked achievement.
+     --------------------------------------------------------- */
+  function launchConfetti() {
+    var canvas = qs("#confetti");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+    ctx.scale(dpr, dpr);
+    canvas.classList.add("is-active");
+
+    var colors = ["#0e4076", "#4d97c0", "#2e9e63", "#e0a53c", "#ffffff"];
+    var pieces = [];
+    for (var i = 0; i < 110; i++) {
+      pieces.push({
+        x: window.innerWidth / 2 + (Math.random() - 0.5) * 140,
+        y: window.innerHeight * 0.3,
+        vx: (Math.random() - 0.5) * 8,
+        vy: -Math.random() * 9 - 4,
+        size: Math.random() * 6 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * Math.PI,
+        vr: (Math.random() - 0.5) * 0.3
+      });
+    }
+    var gravity = 0.28, frame = 0, maxFrames = 120;
+    function tick() {
+      frame++;
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      pieces.forEach(function (p) {
+        p.vy += gravity; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+        ctx.restore();
+      });
+      if (frame < maxFrames) {
+        requestAnimationFrame(tick);
+      } else {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        canvas.classList.remove("is-active");
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ============================================================
+     Scroll FX: GSAP ScrollTrigger reveal when available, with a
+     plain IntersectionObserver fallback so nothing breaks if the
+     CDN is blocked.
+     ============================================================ */
+  function initScrollFX() {
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+      initReveal();
+      return;
+    }
+    gsap.registerPlugin(ScrollTrigger);
+    qsa("[data-reveal-item],[data-hero-in]").forEach(function (t) {
+      gsap.fromTo(t, { opacity: 0, y: 16 }, {
+        opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
+        scrollTrigger: { trigger: t, start: "top 90%", once: true }
+      });
+    });
+    var strip = qs("#stat-strip");
+    if (strip) {
+      ScrollTrigger.create({ trigger: strip, start: "top 85%", once: true, onEnter: animateStatEls });
+    }
   }
 
   /* ============================================================
@@ -960,17 +1178,19 @@
   document.addEventListener("DOMContentLoaded", function () {
     initLabels();
     initCtaScroll();
-    initTileEntrance();
-    initHeroDemo();
+    initTopbar();
+    initTodayGame();
     initUnscramble();
     initMissingLetter();
     initSpeedRound();
-    initMainGameHook();
+    initWeeklyChallenge();
+    initAccordion();
+    initCarousel();
     renderChallenges();
     renderAchievements();
     updateStatsUI();
     checkAchievements();
     initShowMore();
-    initReveal();
+    initScrollFX();
   });
 })();
