@@ -573,6 +573,10 @@
               </button>
             </div>
           </form>
+          <div class="pattern-cycler" id="pattern-cycler" aria-hidden="true">
+            <p class="pattern-cycler-label"><span class="pulse-dot"></span>Searching&hellip;</p>
+            <div class="pattern-cycler-row" id="pattern-cycler-row"></div>
+          </div>
         </div>
       </div>
 
@@ -684,14 +688,14 @@
         <div class="split-aside">
           <div class="demo-card">
             <span class="kicker">Anagram search — any order</span>
-            <div class="tile-row">
-              <span class="letter is-loose">R</span>
-              <span class="letter is-loose">C</span>
-              <span class="letter is-loose">E</span>
-              <span class="letter is-loose">N</span>
-              <span class="letter is-loose">A</span>
+            <div class="tile-row" id="anagram-tiles">
+              <button type="button" class="letter is-loose">R</button>
+              <button type="button" class="letter is-loose">C</button>
+              <button type="button" class="letter is-loose">E</button>
+              <button type="button" class="letter is-loose">N</button>
+              <button type="button" class="letter is-loose">A</button>
             </div>
-            <p class="demo-card-text">A pool of letters, no fixed order — every match that can be built from them.</p>
+            <p class="demo-card-text">A pool of letters, no fixed order — every match that can be built from them. Drag a tile onto another to swap them, or tap one then tap another.</p>
           </div>
           <div class="demo-card demo-card--pattern">
             <span class="kicker">Pattern search — fixed slots</span>

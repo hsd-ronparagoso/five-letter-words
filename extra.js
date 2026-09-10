@@ -940,15 +940,12 @@
 
   /* ============================================================
      Reference-content interactivity: shuffle word-tile grids, fill
-     the inline finder from a clicked word chip, and the Wordle
-     opener demo board.
+     the inline finder from a clicked word chip, the Wordle opener
+     demo board, draggable anagram tiles, and a small typewriter-
+     style "searching…" pattern cycler.
      ============================================================ */
-  function shuffleArray(arr) {
-    for (var i = arr.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
-    }
-    return arr;
+  function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }
 
   function initWordShuffle() {
@@ -956,7 +953,7 @@
       var list = document.getElementById(btn.getAttribute("data-shuffle"));
       if (!list) return;
       btn.addEventListener("click", function () {
-        var items = shuffleArray(qsa("li", list));
+        var items = shuffle(qsa("li", list));
         items.forEach(function (li) { list.appendChild(li); });
         var svg = btn.querySelector("svg");
         if (svg) {
@@ -972,6 +969,9 @@
     var target = qs("#finder-input-2");
     qsa(".word-chip[data-fill]").forEach(function (chip) {
       chip.addEventListener("click", function () {
+        chip.classList.remove("is-picked");
+        void chip.offsetWidth;
+        chip.classList.add("is-picked");
         if (!target) return;
         target.value = chip.getAttribute("data-fill");
         target.focus();
@@ -980,22 +980,253 @@
     });
   }
 
+  function flipTiles(tiles, applyState, stagger) {
+    tiles.forEach(function (tile, i) {
+      var delay = prefersReducedMotion() ? 0 : (stagger || 90) * i;
+      setTimeout(function () {
+        if (!prefersReducedMotion()) {
+          tile.classList.remove("is-flipping");
+          void tile.offsetWidth;
+          tile.classList.add("is-flipping");
+        }
+        setTimeout(function () { applyState(tile, i); }, prefersReducedMotion() ? 0 : 190);
+      }, delay);
+    });
+  }
+
   function initWordleDemo() {
     var board = qs("#wordle-board");
     var openers = qs("#wordle-openers");
     if (!board || !openers) return;
     var tiles = qsa(".letter", board);
+
     qsa(".opener-chip", openers).forEach(function (chip) {
       chip.addEventListener("click", function () {
+        if (chip.classList.contains("is-active")) return;
         qsa(".opener-chip", openers).forEach(function (c) { c.classList.remove("is-active"); });
         chip.classList.add("is-active");
         var word = (chip.getAttribute("data-word") || "").split("");
         var colors = (chip.getAttribute("data-colors") || "").split(",");
-        tiles.forEach(function (tile, i) {
+        flipTiles(tiles, function (tile, i) {
           tile.textContent = word[i] || "";
           tile.classList.remove("correct", "wrong-position", "incorrect");
           if (colors[i]) tile.classList.add(colors[i]);
+        }, 80);
+      });
+    });
+
+    if (!("IntersectionObserver" in window)) return;
+    var revealed = false;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting || revealed) return;
+        revealed = true;
+        io.disconnect();
+        if (prefersReducedMotion()) return;
+        tiles.forEach(function (tile) { tile.classList.add("is-flipping"); });
+        tiles.forEach(function (tile, i) {
+          setTimeout(function () {
+            tile.classList.remove("is-flipping");
+            void tile.offsetWidth;
+            tile.classList.add("is-flipping");
+          }, i * 110);
         });
+      });
+    }, { threshold: 0.5 });
+    io.observe(board);
+  }
+
+  /* ---------------------------------------------------------
+     Draggable anagram tiles (with-letters section) — same
+     pointer-based drag engine as the Unscramble tiles, with a
+     tap-to-swap fallback so dragging is never required.
+     --------------------------------------------------------- */
+  function initAnagramDrag() {
+    var wrap = qs("#anagram-tiles");
+    if (!wrap) return;
+    var tiles = qsa(".letter", wrap);
+    var selected = null;
+
+    function highlightTarget(target) {
+      qsa(".letter.is-drag-target", wrap).forEach(function (t) { t.classList.remove("is-drag-target"); });
+      var tile = target && target.closest ? target.closest(".letter") : null;
+      if (tile && wrap.contains(tile)) tile.classList.add("is-drag-target");
+    }
+
+    function clearSelection() {
+      if (selected) selected.classList.remove("is-drag-selected");
+      selected = null;
+    }
+
+    function swap(a, b) {
+      if (a === b) return;
+      var A = tiles[a], B = tiles[b];
+      var tmp = A.textContent;
+      A.textContent = B.textContent;
+      B.textContent = tmp;
+      if (!prefersReducedMotion()) {
+        [A, B].forEach(function (t) {
+          t.classList.remove("is-flipping");
+          void t.offsetWidth;
+          t.classList.add("is-flipping");
+        });
+      }
+    }
+
+    tiles.forEach(function (tile, i) {
+      tile.classList.add("is-draggable");
+      initDrag(tile, {
+        onOver: function (target) { highlightTarget(target); },
+        onDrop: function (target) {
+          qsa(".letter.is-drag-target", wrap).forEach(function (t) { t.classList.remove("is-drag-target"); });
+          var targetTile = target && target.closest ? target.closest(".letter") : null;
+          if (!targetTile || !wrap.contains(targetTile)) return;
+          var j = tiles.indexOf(targetTile);
+          if (j !== -1) swap(i, j);
+        },
+        onTap: function () {
+          if (!selected) {
+            selected = tile;
+            tile.classList.add("is-drag-selected");
+            return;
+          }
+          if (selected === tile) { clearSelection(); return; }
+          var a = tiles.indexOf(selected), b = i;
+          clearSelection();
+          swap(a, b);
+        }
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Pattern cycler — a small "Searching…" typewriter-style demo
+     that builds a pattern, then flips through matching words.
+     Decorative only; paused under reduced motion.
+     --------------------------------------------------------- */
+  function initPatternCycler() {
+    var row = qs("#pattern-cycler-row");
+    if (!row || prefersReducedMotion()) return;
+    var CYCLES = [
+      { pattern: "c?a?e", words: ["crane", "crate", "crave"] },
+      { pattern: "t????", words: ["today", "toxic", "tours"] },
+      { pattern: "?l??t", words: ["plant", "blast", "float"] }
+    ];
+    var cells = [];
+    for (var i = 0; i < 5; i++) {
+      var span = document.createElement("span");
+      span.className = "letter wildcard";
+      span.textContent = "?";
+      row.appendChild(span);
+      cells.push(span);
+    }
+
+    var cycleIndex = 0, wordIndex = 0, current = null;
+    var timer = null;
+    var paused = false;
+
+    function setCells(text, isWildcardMask) {
+      var chars = text.split("");
+      cells.forEach(function (cell, i) {
+        var ch = chars[i] || "?";
+        var isBlank = ch === "?";
+        setTimeout(function () {
+          cell.classList.remove("is-cycling");
+          void cell.offsetWidth;
+          cell.classList.add("is-cycling");
+          setTimeout(function () {
+            cell.textContent = ch;
+            cell.classList.toggle("wildcard", isBlank);
+            cell.classList.toggle("correct", !isBlank && !isWildcardMask);
+          }, 170);
+        }, i * 70);
+      });
+    }
+
+    function step() {
+      if (paused) { timer = setTimeout(step, 400); return; }
+      var cycle = CYCLES[cycleIndex];
+      if (current === null) {
+        setCells(cycle.pattern, true);
+        current = "pattern";
+        timer = setTimeout(step, 900);
+        return;
+      }
+      if (wordIndex < cycle.words.length) {
+        setCells(cycle.words[wordIndex], false);
+        wordIndex++;
+        current = "word";
+        timer = setTimeout(step, 1500);
+        return;
+      }
+      wordIndex = 0;
+      current = null;
+      cycleIndex = (cycleIndex + 1) % CYCLES.length;
+      timer = setTimeout(step, 500);
+    }
+
+    var wrapEl = qs("#pattern-cycler");
+    if (wrapEl && "IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { paused = !entry.isIntersecting; });
+      }, { threshold: 0.2 });
+      io.observe(wrapEl);
+    }
+    document.addEventListener("visibilitychange", function () {
+      paused = document.hidden || paused;
+    });
+
+    step();
+  }
+
+  /* ---------------------------------------------------------
+     Scroll-triggered motion for the reference-content sections:
+     headings ease in, card/tile grids stagger, supporting
+     visuals drift slightly on scroll. GSAP + ScrollTrigger only;
+     content is fully visible and static without it.
+     --------------------------------------------------------- */
+  function initContentMotion() {
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+    if (prefersReducedMotion()) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    function revealOnce(target, fromVars, triggerEl) {
+      var els = target && target.length !== undefined ? target : [target];
+      if (!els.length) return;
+      gsap.from(els, Object.assign({
+        scrollTrigger: { trigger: triggerEl || els[0], start: "top 88%", once: true },
+        onComplete: function () { gsap.set(els, { clearProps: "all" }); }
+      }, fromVars));
+    }
+
+    qsa(".content .sec-head").forEach(function (h) {
+      revealOnce(h, { opacity: 0, y: 18, duration: .55, ease: "power2.out" });
+    });
+
+    qsa(".content .how-grid, .content .icon-cards").forEach(function (grid) {
+      revealOnce(grid.children, { opacity: 0, y: 20, duration: .45, stagger: .08, ease: "power2.out" }, grid);
+    });
+
+    qsa(".content .word-tiles").forEach(function (list) {
+      revealOnce(list.children, { opacity: 0, y: 10, scale: .85, duration: .32, stagger: .035, ease: "back.out(1.8)" }, list);
+    });
+
+    qsa(".content .tile-row:not(.anatomy-row)").forEach(function (row) {
+      revealOnce(row.children, { opacity: 0, y: 14, duration: .4, stagger: .07, ease: "back.out(1.7)" }, row);
+    });
+
+    qsa([
+      ".content .mini-card", ".content .demo-card", ".content .mock-finder",
+      ".content .mock-narrow", ".content .wordle-demo", ".content .letter-strip-wrap",
+      ".content .chip-panel", ".content .table-scroll", ".content .anatomy-card"
+    ].join(",")).forEach(function (el) {
+      revealOnce(el, { opacity: 0, y: 18, duration: .5, ease: "power2.out" });
+    });
+
+    qsa(".content .split-aside").forEach(function (aside) {
+      gsap.to(aside, {
+        y: -20, ease: "none",
+        scrollTrigger: { trigger: aside, start: "top bottom", end: "bottom top", scrub: .6 }
       });
     });
   }
@@ -1285,6 +1516,9 @@
     initWordShuffle();
     initWordChipFill();
     initWordleDemo();
+    initAnagramDrag();
+    initPatternCycler();
+    initContentMotion();
     initScrollFX();
 
     var marqueeResize = null;
