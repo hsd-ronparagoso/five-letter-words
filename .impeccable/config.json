@@ -53,6 +53,12 @@
         ],
         "createdAt": "2026-09-10T13:37:09.476Z",
         "reason": "user explicitly requested marquee text run edge-to-edge (no inset/fade) this session; deliberate full-bleed design, not an oversight"
+      },
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(.34, 1.56, .64, 1)",
+        "createdAt": "2026-09-10T16:08:37.517Z",
+        "reason": "Intentional: bounce/overshoot easing kept on the letter/word/opener tiles specifically to feel like physical Scrabble tiles settling into place, per user's explicit brief request for tile interactions to feel like manipulating physical puzzle tiles. Removed from card icons (.how-icon, .icon-card-icon) which now use a smooth ease-out-expo instead."
       }
     ]
   }
