@@ -68,6 +68,15 @@
         ],
         "createdAt": "2026-09-11T05:16:04.648Z",
         "reason": "established design-system convention: short uppercase micro-labels (kicker, stat-label, drag-row-label, mock-finder-label, wf-label, demo-card-caption) are single-line 3-6 word field labels/eyebrows, not long body prose — same pattern used ~15+ times pre-session"
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-11T08:26:09.821Z",
+        "reason": "modal-close is positioned inside .modal (overflow-y:auto) by design and is not a popover needing to escape the clip; verified not clipped. The one real instance, hero tooltips inside .hero overflow:hidden, was fixed by removing the now-vestigial clip."
       }
     ]
   }

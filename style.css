@@ -448,11 +448,13 @@ button{font-family:inherit;}
    Hero (H1) — the centerpiece
    ============================================================ */
 
+/* No overflow clip here: the background layers below are inset:0 so nothing
+   spills, and clipping would cut off the stat tooltips, which are positioned
+   to escape upward out of their stat. */
 .hero{
   flex:none;
   padding:72px 0 64px;
   position:relative;
-  overflow:hidden;
   text-align:center;
   color:var(--white);
 }
