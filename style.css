@@ -129,6 +129,8 @@ a.nav-cta.btn-primary{display:none;padding:9px 16px;font-size:12.5px;}
 .icon-btn:active{transform:scale(.92);}
 .icon-btn svg{width:17px;height:17px;}
 
+.icon-btn--past{color:var(--blue-300);}
+
 /* ---------- Mode switch ---------- */
 
 .mode-switch{
@@ -630,6 +632,58 @@ h1{
 .weekly-teaser i:last-child{font-size:14px;flex:none;transition:transform .16s ease;}
 .weekly-teaser:hover i:last-child{transform:translateX(3px);}
 
+.past-challenges-cta{
+  display:flex;align-items:center;justify-content:center;gap:9px;width:100%;
+  margin:10px 0 0;padding:14px 16px;border:0;cursor:pointer;
+  background:var(--blue-300);color:var(--white);
+  box-shadow:0 10px 22px rgba(47,128,204,.32);
+  font-family:inherit;font-size:13.5px;font-weight:700;letter-spacing:.01em;
+  transition:background .14s ease,transform .1s ease,box-shadow .14s ease;
+}
+.past-challenges-cta:hover{background:var(--navy-500);box-shadow:0 12px 26px rgba(19,79,140,.38);}
+.past-challenges-cta:active{transform:scale(.98);}
+.past-challenges-cta i{font-size:17px;transition:transform .18s ease;}
+.past-challenges-cta:hover i{transform:rotate(-25deg);}
+
+/* Past Challenges modal contents */
+.past-week-row{border-bottom:1px solid var(--grey-200);}
+.past-week-row:last-child{border-bottom:0;}
+.past-week-toggle{
+  display:flex;align-items:center;justify-content:space-between;width:100%;
+  border:0;background:none;cursor:pointer;padding:12px 2px;
+  font-family:inherit;text-align:left;
+}
+.past-week-toggle:hover .past-week-range{color:var(--navy-800);}
+.past-week-range{font-size:13.5px;font-weight:700;color:var(--navy-600);transition:color .14s ease;}
+.past-week-toggle i{font-size:13px;color:var(--absent-key);transition:transform .16s ease;}
+.past-week-toggle.is-open i{transform:rotate(180deg);}
+.past-week-body{display:flex;flex-wrap:wrap;gap:6px;padding:0 2px 14px;}
+.past-week-body[hidden]{display:none;}
+.past-week-chip{
+  border:0;cursor:pointer;background:var(--grey-100);color:var(--navy-600);
+  font-family:inherit;font-size:12px;font-weight:700;padding:8px 12px;
+  transition:background .14s ease,color .14s ease;
+}
+.past-week-chip:hover{background:var(--navy-600);color:var(--white);}
+.past-week-empty{font-size:13px;color:var(--absent-key);margin:8px 2px 0;}
+
+/* Archive banner — shown while replaying a past week's challenges */
+.archive-bar{
+  background:var(--navy-800);color:var(--white);
+}
+.archive-bar[hidden]{display:none;}
+.archive-bar-in{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:10px 2px;
+}
+.archive-bar-text{font-size:12.5px;font-weight:600;color:var(--blue-150);}
+.archive-bar-back{
+  flex:none;border:0;cursor:pointer;background:var(--blue-300);color:var(--white);
+  font-family:inherit;font-size:12px;font-weight:700;padding:7px 14px;
+  transition:background .14s ease;
+}
+.archive-bar-back:hover{background:var(--blue-400);}
+
 @media (max-width:560px){
   .challenges-track{grid-template-columns:repeat(2,1fr);}
 }
@@ -699,6 +753,8 @@ h1{
   transition:background .14s ease;
 }
 .carousel-arrow:hover{background:var(--blue-050);}
+
+.carousel-card.is-clone{pointer-events:none;}
 
 .carousel-dots{display:flex;justify-content:center;gap:7px;margin-top:14px;}
 .carousel-dot{

@@ -39,6 +39,9 @@
         <i class="ph-fill ph-fire flame" aria-hidden="true"></i>
         <span id="streak-val">0</span>
       </div>
+      <button class="icon-btn icon-btn--past" type="button" data-open-past-challenges aria-label="Try past challenges">
+        <i class="ph-bold ph-clock-counter-clockwise" aria-hidden="true"></i>
+      </button>
       <button class="icon-btn" id="stats-btn" type="button" aria-label="View statistics">
         <i class="ph-bold ph-chart-bar" aria-hidden="true"></i>
       </button>
@@ -48,6 +51,14 @@
     </div>
   </div>
 </header>
+
+<!-- ============ Archive banner — shown only while replaying a past week ============ -->
+<div class="archive-bar" id="archive-bar" hidden>
+  <div class="wrap-hero archive-bar-in">
+    <span class="archive-bar-text" id="archive-bar-text"></span>
+    <button type="button" class="archive-bar-back" id="archive-bar-back">Back to current week</button>
+  </div>
+</div>
 
 <!-- ============ Hero (H1) — the centerpiece ============ -->
 <section class="hero" id="hero">
@@ -162,8 +173,8 @@
     <div class="challenges-strip" id="challenges" data-hero-in data-hero-delay="2">
       <div class="challenges-head">
         <div>
-          <p class="challenges-title">Today's Challenges</p>
-          <p class="challenges-sub">Play all four, keep the streak alive.</p>
+          <p class="challenges-title">Let&rsquo;s Try This Week&rsquo;s Challenges</p>
+          <p class="challenges-sub" id="week-range-label">&nbsp;</p>
         </div>
         <p class="challenges-progress"><span id="challenges-done">0</span> / 4 Completed</p>
       </div>
@@ -197,6 +208,10 @@
         <i class="ph-fill ph-trophy"></i>
         <span>&nbsp;</span>
         <i class="ph-bold ph-arrow-right"></i>
+      </button>
+      <button class="past-challenges-cta" type="button" data-open-past-challenges>
+        <i class="ph-bold ph-clock-counter-clockwise" aria-hidden="true"></i>
+        Try Past Challenges
       </button>
     </div>
   </div>
@@ -272,9 +287,19 @@
     </div>
 
     <p style="font-size:12px;color:var(--absent-key);margin:14px 0 0;">
-      Every challenge you complete earns XP and counts toward your daily streak. A new set of
-      words arrives every day, and a tougher Weekly Challenge arrives every week.
+      Every challenge you complete earns XP and counts toward your daily streak. A fresh set of
+      words &mdash; and a tougher Weekly Challenge &mdash; arrives every Monday.
     </p>
+  </div>
+</div>
+
+<!-- ============ Past Challenges modal ============ -->
+<div class="modal-backdrop" id="past-challenges-modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="past-heading">
+    <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
+    <h2 id="past-heading">Past Challenges</h2>
+    <p class="sub">Pick an older week to reveal its challenges, then play them again for practice.</p>
+    <div id="past-weeks-list"></div>
   </div>
 </div>
 
@@ -320,7 +345,7 @@
             <span class="how-icon"><i class="ph-fill ph-trophy" aria-hidden="true"></i></span>
           </div>
           <h3 class="how-card-title">Weekly Challenge</h3>
-          <p class="how-card-text">A tougher five-letter word that changes once a week instead of once a day. Solve it once per week for a bigger XP bonus &mdash; find it near the bottom of the challenge carousel above.</p>
+          <p class="how-card-text">A tougher five-letter word that changes once a week instead of once a day. Solve it for a bigger XP bonus &mdash; find it near the bottom of the challenge carousel above.</p>
         </div>
       </div>
     </div>
@@ -417,7 +442,7 @@
             <input class="missing-input" id="weekly-input" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Missing letter">
             <button class="btn-primary" type="button" id="weekly-submit">Take the Weekly Challenge</button>
           </div>
-          <p class="missing-feedback" id="weekly-feedback" aria-live="polite">You have 3 tries. Solved once per week for +150 XP.</p>
+          <p class="missing-feedback" id="weekly-feedback" aria-live="polite">You have 3 tries. Solve it for +150 XP.</p>
         </div>
       </div>
     </div>
@@ -930,7 +955,7 @@
           <div class="prose">
             <p>
               Fixed-length word games are a form of everyday
-              <strong>brain exercises and games to improve memory</strong>: recalling a five-letter
+              <a href="#memory" rel="noopener"><strong>brain exercises and games to improve memory</strong></a>: recalling a five-letter
               word under a constraint — a known letter, a used-up guess, a ticking clock — exercises
               working memory and word retrieval the same way a deliberate memory drill does, just
               disguised as play.
@@ -961,7 +986,7 @@
         <h3>What Memorization Techniques Can Help You Remember 5 Letter Words?</h3>
         <div class="prose">
           <p>
-            The same <strong>memorization techniques</strong> that work for any vocabulary apply
+            The same <a href="#memory" rel="noopener"><strong>memorization techniques</strong></a> that work for any vocabulary apply
             cleanly to a fixed five-letter set:
           </p>
         </div>
@@ -998,7 +1023,7 @@
             <h4>Can Creative Thinking Activities Improve Word Game Skills?</h4>
             <div class="prose">
               <p>
-                Yes. <strong>Creative thinking activities</strong> — inventing alternate words that fit
+                Yes. <a href="#memory" rel="noopener"><strong>Creative thinking activities</strong></a> — inventing alternate words that fit
                 a pattern, building sentences around a day's answer, or brainstorming every word you
                 can think of that starts with a given letter — build the same flexible letter
                 association a puzzle rewards, and they train pattern recognition from a different angle
@@ -1025,7 +1050,7 @@
         <div class="split-main">
           <div class="prose">
             <p>
-              Wordle is built entirely around <strong>5 letter words for Wordle</strong>: every answer
+              Wordle is built entirely around <a href="#wordle" rel="noopener"><strong>5 letter words for Wordle</strong></a>: every answer
               is five letters, which keeps the puzzle solvable in six guesses without making it
               trivial. A shorter word collapses the answer space so far that luck decides the round; a
               longer one leaves too many candidates standing after six attempts.

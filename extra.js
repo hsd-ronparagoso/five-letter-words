@@ -32,21 +32,39 @@
     return pool[i];
   }
 
-  var EPOCH = new Date(2024, 0, 1);
+  var EPOCH = new Date(2024, 0, 1); // a Monday — anchors weeks to Mon-Sun
   function dayIndex() {
     var now = new Date();
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     return Math.floor((today - EPOCH) / 86400000);
   }
   function weekIndex() { return Math.floor(dayIndex() / 7); }
-  function hoursUntilMidnight() {
-    var now = new Date();
-    var midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-    return Math.max(1, Math.round((midnight - now) / 3600000));
+
+  /* The week the visitor is actually looking at right now, vs. the
+     real current week. They differ only while replaying a Past
+     Challenge, and that's the flag every mini-game and the progress
+     store checks before persisting XP, streaks or "solved" state. */
+  var CURRENT_WEEK = weekIndex();
+  var viewingWeek = CURRENT_WEEK;
+  function isLiveWeek() { return viewingWeek === CURRENT_WEEK; }
+
+  var MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function weekStartDate(wIndex) {
+    return new Date(EPOCH.getFullYear(), EPOCH.getMonth(), EPOCH.getDate() + wIndex * 7);
+  }
+  function weekRangeLabel(wIndex) {
+    var start = weekStartDate(wIndex);
+    var end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 6);
+    var thisYear = new Date().getFullYear();
+    var yearSuffix = (start.getFullYear() !== thisYear || end.getFullYear() !== thisYear) ? (", " + end.getFullYear()) : "";
+    if (start.getMonth() === end.getMonth()) {
+      return MONTH_NAMES[start.getMonth()] + " " + start.getDate() + "–" + end.getDate() + yearSuffix;
+    }
+    return MONTH_NAMES[start.getMonth()] + " " + start.getDate() + " – " + MONTH_NAMES[end.getMonth()] + " " + end.getDate() + yearSuffix;
   }
 
-  function dailyWord(offset) { return seededPick(WORDS, dayIndex() * 13 + offset); }
-  function weeklyWord() { return seededPick(HARD_WORDS, weekIndex()); }
+  function weekWord(offset, wIndex) { return seededPick(WORDS, (wIndex === undefined ? viewingWeek : wIndex) * 13 + offset); }
+  function hardWordForWeek(wIndex) { return seededPick(HARD_WORDS, wIndex === undefined ? viewingWeek : wIndex); }
 
   function shuffle(arr) {
     var a = arr.slice();
@@ -66,7 +84,7 @@
 
   function defaultProgress() {
     return {
-      dayIndex: dayIndex(),
+      weekIndex: CURRENT_WEEK,
       done: { today: false, unscramble: false, missing: false, speed: false },
       totalXp: 0,
       gamesPlayed: 0,
@@ -76,7 +94,6 @@
       maxStreak: 0,
       streakDay: -1,
       weeklyDone: false,
-      weeklyWeek: -1,
       bestSpeedScore: 0,
       achievements: []
     };
@@ -95,14 +112,15 @@
     try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress)); } catch (e) {}
   }
 
-  /* Games reset on every page load: streak, XP, achievements and
-     lifetime totals persist, but each mini-game is playable again
-     from a fresh reload rather than staying locked in a solved
-     state from a previous visit. */
+  /* Every reload starts each mini-game fresh — solving one just
+     locks it for the rest of that visit, not for the whole week —
+     so returning visitors always have something to play again.
+     Streak, XP, achievements and lifetime totals still persist;
+     only the "done" flags reset. Word content still rotates
+     weekly regardless (see weekWord()/hardWordForWeek()). */
   var progress = loadProgress();
-  progress.dayIndex = dayIndex();
+  progress.weekIndex = CURRENT_WEEK;
   progress.done = { today: false, unscramble: false, missing: false, speed: false };
-  progress.weeklyWeek = weekIndex();
   progress.weeklyDone = false;
   saveProgress();
 
@@ -155,6 +173,7 @@
      Challenges tracker
      --------------------------------------------------------- */
   function completeChallenge(key, won, xpOverride) {
+    if (!isLiveWeek()) return; // Past Challenges are practice-only — never persisted
     if (!(key in progress.done)) return;
     if (progress.done[key]) return;
     progress.done[key] = true;
@@ -171,9 +190,9 @@
   }
 
   function completeWeekly(won) {
+    if (!isLiveWeek()) return; // Past Challenges are practice-only — never persisted
     if (progress.weeklyDone) return;
     progress.weeklyDone = true;
-    progress.weeklyWeek = weekIndex();
     progress.gamesPlayed++;
     if (won) { progress.wordsSolved++; progress.wins++; }
     saveProgress();
@@ -371,10 +390,15 @@
   /* ---------------------------------------------------------
      Hero CTAs: smooth-scroll data-scroll-to buttons
      --------------------------------------------------------- */
+  var GAME_SECTION_SELECTORS = ["#today-game", "#unscramble-game", "#missing-letter-game", "#speed-round-game", "#weekly-challenge-game"];
   function initCtaScroll() {
     qsa("[data-scroll-to]").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        var target = qs(btn.getAttribute("data-scroll-to"));
+        var sel = btn.getAttribute("data-scroll-to");
+        if (GAME_SECTION_SELECTORS.indexOf(sel) !== -1 && !isLiveWeek()) {
+          backToCurrentWeek();
+        }
+        var target = qs(sel);
         if (!target) return;
         target.scrollIntoView({ behavior: "smooth", block: "start" });
       });
@@ -387,14 +411,18 @@
   function initLabels() {
     var todayEl = qs("#today-label");
     if (todayEl) {
-      todayEl.textContent = "Day " + (dayIndex() + 1) + " · resets in " + hoursUntilMidnight() + "h";
+      todayEl.textContent = "Week of " + weekRangeLabel(CURRENT_WEEK) + " · new set every Monday";
+    }
+    var weekRangeEl = qs("#week-range-label");
+    if (weekRangeEl) {
+      weekRangeEl.textContent = "Week of " + weekRangeLabel(CURRENT_WEEK) + " · play all four, keep the streak alive.";
     }
     var weeklyEl = qs("#weekly-label");
     if (weeklyEl) {
       var span = weeklyEl.querySelector("span");
-      var w = weeklyWord();
+      var w = hardWordForWeek(CURRENT_WEEK);
       var text = progress.weeklyDone
-        ? "This week's Weekly Challenge is solved — a new word arrives next week."
+        ? "Weekly Challenge solved — reload the page for another shot."
         : "Weekly Challenge: a " + w.length + "-letter word starting with “" + w[0].toUpperCase() + "” is waiting below.";
       if (span) span.textContent = text;
     }
@@ -415,24 +443,36 @@
   /* ============================================================
      Mini-game 2: Unscramble
      ============================================================ */
-  var usWord = dailyWord(1);
+  var usWord = "";
   var usLetters = [];
   var usSelected = null;
   var usSwaps = 0;
   var MAX_SWAPS = 16;
 
-  function initUnscramble() {
-    var wrap = qs("#unscramble-tiles");
-    if (!wrap) return;
-    var solvedAlready = progress.done.unscramble;
+  function usIsLocked() { return isLiveWeek() && progress.done.unscramble; }
+
+  function setupUnscramble() {
+    usWord = weekWord(1);
+    usSwaps = 0;
+    usSelected = null;
+    var solvedAlready = usIsLocked();
     usLetters = solvedAlready ? usWord.split("") : shuffle(usWord.split(""));
     if (!solvedAlready) {
       var tries = 0;
       while (usLetters.join("") === usWord && tries < 5) { usLetters = shuffle(usLetters); tries++; }
     }
     renderUnscramble(solvedAlready);
+    setFeedback("unscramble-feedback", solvedAlready
+      ? "Solved! The word was “" + usWord.toUpperCase() + "”."
+      : "Drag a tile onto another to swap them.", solvedAlready ? true : null);
+  }
+
+  function initUnscramble() {
+    var wrap = qs("#unscramble-tiles");
+    if (!wrap) return;
+    setupUnscramble();
     qs("#unscramble-shuffle").addEventListener("click", function (btn) {
-      if (progress.done.unscramble) return;
+      if (usIsLocked()) return;
       this.classList.add("is-spinning");
       var self = this;
       setTimeout(function () { self.classList.remove("is-spinning"); }, 420);
@@ -441,7 +481,7 @@
       renderUnscramble(false);
     });
     qs("#unscramble-reset").addEventListener("click", function () {
-      if (progress.done.unscramble) return;
+      if (usIsLocked()) return;
       usLetters = shuffle(usWord.split(""));
       usSwaps = 0;
       usSelected = null;
@@ -449,7 +489,7 @@
       renderUnscramble(false);
     });
     qs("#unscramble-submit").addEventListener("click", function () {
-      if (progress.done.unscramble) return;
+      if (usIsLocked()) return;
       checkUnscramble();
     });
   }
@@ -496,7 +536,7 @@
   }
 
   function onUnscrambleTap(i, btn) {
-    if (progress.done.unscramble) return;
+    if (usIsLocked()) return;
     if (usSelected === null) {
       usSelected = i;
       btn.classList.add("is-selected");
@@ -522,6 +562,7 @@
     var joined = usLetters.join("");
     if (joined === usWord) {
       renderUnscramble(true);
+      if (!isLiveWeek()) setFeedback("unscramble-feedback", "Solved! The word was “" + usWord.toUpperCase() + "”. (Archived challenge — practice only.)", true);
       completeChallenge("unscramble", true);
     } else if (usSwaps >= MAX_SWAPS) {
       qsa("#unscramble-tiles .us-tile").forEach(function (t) { t.disabled = true; });
@@ -535,21 +576,35 @@
   /* ============================================================
      Mini-game 3: Missing Letter
      ============================================================ */
-  var mlWord = dailyWord(2);
-  var mlIndex = Math.max(1, Math.min(mlWord.length - 2, Math.floor(mlWord.length / 2)));
+  var mlWord = "";
+  var mlIndex = 0;
   var mlTriesLeft = 3;
+
+  function setupMissing() {
+    mlWord = weekWord(2);
+    mlIndex = Math.max(1, Math.min(mlWord.length - 2, Math.floor(mlWord.length / 2)));
+    mlTriesLeft = 3;
+    renderMissing();
+    var input = qs("#missing-input");
+    var btn = qs("#missing-submit");
+    var solved = isLiveWeek() && progress.done.missing;
+    input.value = "";
+    input.disabled = solved;
+    btn.disabled = solved;
+    if (solved) {
+      revealMissing(true);
+      setFeedback("missing-feedback", "Correct! The word was “" + mlWord.toUpperCase() + "”.", true);
+    } else {
+      setFeedback("missing-feedback", "You have 3 tries.", null);
+    }
+  }
 
   function initMissingLetter() {
     var wrap = qs("#missing-tiles");
     if (!wrap) return;
-    renderMissing();
+    setupMissing();
     var input = qs("#missing-input");
     var btn = qs("#missing-submit");
-    if (progress.done.missing) {
-      input.disabled = true;
-      btn.disabled = true;
-      revealMissing(true);
-    }
     btn.addEventListener("click", submitMissing);
     input.addEventListener("keydown", function (e) { if (e.key === "Enter") submitMissing(); });
     input.addEventListener("input", function () {
@@ -576,7 +631,7 @@
   }
 
   function submitMissing() {
-    if (progress.done.missing) return;
+    if (isLiveWeek() && progress.done.missing) return;
     var input = qs("#missing-input");
     var val = (input.value || "").toLowerCase();
     if (!val) return;
@@ -584,7 +639,7 @@
     if (val === mlWord[mlIndex]) {
       tile.textContent = val.toUpperCase();
       tile.setAttribute("data-state", "correct");
-      setFeedback("missing-feedback", "Correct! The word was “" + mlWord.toUpperCase() + "”.", true);
+      setFeedback("missing-feedback", "Correct! The word was “" + mlWord.toUpperCase() + "”." + (isLiveWeek() ? "" : " (Archived challenge — practice only.)"), true);
       input.disabled = true;
       qs("#missing-submit").disabled = true;
       completeChallenge("missing", true);
@@ -609,7 +664,7 @@
      Mini-game 4: Speed round
      ============================================================ */
   var SPEED_DURATION = 60;
-  var speedPool = [3, 4, 5, 6, 7, 8, 9, 10].map(dailyWord);
+  var speedPool = [];
   var speedPoolIdx = 0;
   var speedWord = null;
   var speedIndex = null;
@@ -629,8 +684,26 @@
     });
   }
 
+  function resetSpeedRound() {
+    if (speedTimerId) { clearInterval(speedTimerId); speedTimerId = null; }
+    var wrap = qs("#speed-tiles");
+    if (!wrap) return;
+    speedScore = 0;
+    speedTimeLeft = SPEED_DURATION;
+    wrap.innerHTML = "";
+    var input = qs("#speed-input");
+    input.disabled = true;
+    input.value = "";
+    qs("#speed-start").textContent = "Challenge Yourself";
+    qs("#speed-score").textContent = "0";
+    qs("#speed-timer").textContent = String(SPEED_DURATION);
+    qs("#speed-timer").classList.remove("is-low");
+    setFeedback("speed-feedback", "Press start when you're ready — the clock starts immediately.", null);
+  }
+
   function startSpeed() {
     if (speedTimerId) clearInterval(speedTimerId);
+    speedPool = [3, 4, 5, 6, 7, 8, 9, 10].map(function (o) { return weekWord(o); });
     speedScore = 0;
     speedTimeLeft = SPEED_DURATION;
     speedPoolIdx = 0;
@@ -678,9 +751,11 @@
     if (val === speedWord[speedIndex]) {
       speedScore++;
       qs("#speed-score").textContent = String(speedScore);
-      progress.totalXp += 20;
-      saveProgress();
-      updateStatsUI();
+      if (isLiveWeek()) {
+        progress.totalXp += 20;
+        saveProgress();
+        updateStatsUI();
+      }
     }
     nextSpeedWord();
   }
@@ -691,11 +766,13 @@
     var input = qs("#speed-input");
     input.disabled = true;
     qs("#speed-start").textContent = "Challenge Yourself Again";
-    setFeedback("speed-feedback", "Time! You solved " + speedScore + (speedScore === 1 ? " word." : " words."), speedScore > 0);
-    progress.bestSpeedScore = Math.max(progress.bestSpeedScore || 0, speedScore);
-    saveProgress();
-    completeChallenge("speed", speedScore > 0, 0);
-    checkAchievements();
+    setFeedback("speed-feedback", "Time! You solved " + speedScore + (speedScore === 1 ? " word." : " words.") + (isLiveWeek() ? "" : " (Archived challenge — practice only.)"), speedScore > 0);
+    if (isLiveWeek()) {
+      progress.bestSpeedScore = Math.max(progress.bestSpeedScore || 0, speedScore);
+      saveProgress();
+      completeChallenge("speed", speedScore > 0, 0);
+      checkAchievements();
+    }
   }
 
   /* ============================================================
@@ -765,8 +842,8 @@
      the tray into the answer row. Real drag-and-drop, plus a
      tap-to-place fallback for reliability.
      ============================================================ */
-  var todayWord = dailyWord(0).toUpperCase();
-  var todayTiles = todayWord.split("").map(function (ch, i) { return { id: "tt" + i, letter: ch }; });
+  var todayWord = "";
+  var todayTiles = [];
   var todayTray = [];
   var todaySlots = [];
   var todayLocked = false;
@@ -776,14 +853,22 @@
     return null;
   }
 
+  function setupTodayGame() {
+    todayWord = weekWord(0).toUpperCase();
+    todayTiles = todayWord.split("").map(function (ch, i) { return { id: "tt" + i, letter: ch }; });
+    todayLocked = isLiveWeek() && !!progress.done.today;
+    todaySlots = todayLocked ? todayTiles.map(function (t) { return t.id; }) : new Array(todayTiles.length).fill(null);
+    todayTray = todayLocked ? [] : shuffle(todayTiles.map(function (t) { return t.id; }));
+    renderToday();
+    setFeedback("drag-feedback", todayLocked
+      ? "CORRECT! 🎉 The word was “" + todayWord + "”."
+      : "Fill all five slots, then submit your answer.", todayLocked ? true : null);
+  }
+
   function initTodayGame() {
     var answerRow = qs("#answer-row");
     if (!answerRow) return;
-    todayLocked = !!progress.done.today;
-    todaySlots = todayLocked ? todayTiles.map(function (t) { return t.id; }) : new Array(todayTiles.length).fill(null);
-    todayTray = todayLocked ? [] : shuffle(todayTiles.map(function (t) { return t.id; }));
-
-    renderToday();
+    setupTodayGame();
 
     qs("#drag-shuffle").addEventListener("click", function () {
       if (todayLocked) return;
@@ -889,7 +974,7 @@
     if (guess === todayWord) {
       todayLocked = true;
       renderToday();
-      setFeedback("drag-feedback", "CORRECT! 🎉 The word was “" + todayWord + "”.", true);
+      setFeedback("drag-feedback", "CORRECT! 🎉 The word was “" + todayWord + "”." + (isLiveWeek() ? "" : " (Archived challenge — practice only.)"), true);
       completeChallenge("today", true, 100);
       launchConfetti();
     } else {
@@ -1235,22 +1320,36 @@
      Mini-game 5: Weekly Challenge — a tougher word, missing-
      letter mechanic, resettable once a week for bonus XP.
      ============================================================ */
-  var wkWord = weeklyWord();
-  var wkIndex = Math.max(1, Math.min(wkWord.length - 2, Math.floor(wkWord.length / 2)));
+  var wkWord = "";
+  var wkIndex = 0;
   var wkTriesLeft = 3;
+
+  function setupWeeklyChallenge() {
+    wkWord = hardWordForWeek();
+    wkIndex = Math.max(1, Math.min(wkWord.length - 2, Math.floor(wkWord.length / 2)));
+    wkTriesLeft = 3;
+    renderWeekly();
+    var input = qs("#weekly-input");
+    var btn = qs("#weekly-submit");
+    var solved = isLiveWeek() && progress.weeklyDone;
+    input.value = "";
+    input.disabled = solved;
+    btn.disabled = solved;
+    btn.textContent = solved ? "Solved!" : "Take the Weekly Challenge";
+    if (solved) {
+      revealWeekly(true);
+      setFeedback("weekly-feedback", "Correct! The word was “" + wkWord.toUpperCase() + "”. +150 XP banked.", true);
+    } else {
+      setFeedback("weekly-feedback", "You have 3 tries. Solve it for +150 XP.", null);
+    }
+  }
 
   function initWeeklyChallenge() {
     var wrap = qs("#weekly-tiles");
     if (!wrap) return;
-    renderWeekly();
+    setupWeeklyChallenge();
     var input = qs("#weekly-input");
     var btn = qs("#weekly-submit");
-    if (progress.weeklyDone) {
-      input.disabled = true;
-      btn.disabled = true;
-      btn.textContent = "Solved this week";
-      revealWeekly(true);
-    }
     btn.addEventListener("click", submitWeekly);
     input.addEventListener("keydown", function (e) { if (e.key === "Enter") submitWeekly(); });
     input.addEventListener("input", function () {
@@ -1277,7 +1376,7 @@
   }
 
   function submitWeekly() {
-    if (progress.weeklyDone) return;
+    if (isLiveWeek() && progress.weeklyDone) return;
     var input = qs("#weekly-input");
     var val = (input.value || "").toLowerCase();
     if (!val) return;
@@ -1285,10 +1384,10 @@
     if (val === wkWord[wkIndex]) {
       tile.textContent = val.toUpperCase();
       tile.setAttribute("data-state", "correct");
-      setFeedback("weekly-feedback", "Correct! The word was “" + wkWord.toUpperCase() + "”. +150 XP banked.", true);
+      setFeedback("weekly-feedback", "Correct! The word was “" + wkWord.toUpperCase() + "”." + (isLiveWeek() ? " +150 XP banked." : " (Archived challenge — practice only.)"), true);
       input.disabled = true;
       qs("#weekly-submit").disabled = true;
-      qs("#weekly-submit").textContent = "Solved this week";
+      qs("#weekly-submit").textContent = "Solved!";
       completeWeekly(true);
       launchConfetti();
     } else {
@@ -1306,6 +1405,120 @@
       }
     }
     input.value = "";
+  }
+
+  /* ============================================================
+     Week switching — reloads every mini-game's word set for a
+     given week index. Used to jump back to the live week or to
+     drop into a Past Challenge for practice.
+     ============================================================ */
+  function loadWeek(wIndex) {
+    viewingWeek = wIndex;
+    setupTodayGame();
+    setupUnscramble();
+    setupMissing();
+    resetSpeedRound();
+    setupWeeklyChallenge();
+    updateArchiveBar();
+  }
+
+  function backToCurrentWeek() {
+    if (isLiveWeek()) return;
+    loadWeek(CURRENT_WEEK);
+  }
+
+  function updateArchiveBar() {
+    var bar = qs("#archive-bar");
+    if (!bar) return;
+    if (isLiveWeek()) { bar.hidden = true; return; }
+    bar.hidden = false;
+    var textEl = qs("#archive-bar-text");
+    if (textEl) textEl.textContent = "Replaying archived challenges — Week of " + weekRangeLabel(viewingWeek) + ". Results here aren't saved.";
+  }
+
+  function initArchiveBar() {
+    var backBtn = qs("#archive-bar-back");
+    if (backBtn) backBtn.addEventListener("click", backToCurrentWeek);
+  }
+
+  /* ============================================================
+     Past Challenges — an archive of previous weeks. Picking a
+     challenge from a past week loads that week's words into the
+     matching mini-game and scrolls to it; solving it there is
+     practice only (see isLiveWeek() gates above).
+     ============================================================ */
+  var PAST_WEEKS_COUNT = 8;
+  var PAST_CHALLENGE_TARGETS = [
+    { label: "Today's Challenge", target: "#today-game" },
+    { label: "Unscramble", target: "#unscramble-game" },
+    { label: "Missing Letter", target: "#missing-letter-game" },
+    { label: "Speed Round", target: "#speed-round-game" },
+    { label: "Weekly Challenge", target: "#weekly-challenge-game" }
+  ];
+
+  function buildPastWeekRow(wIndex, container) {
+    var row = document.createElement("div");
+    row.className = "past-week-row";
+
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "past-week-toggle";
+    toggle.innerHTML =
+      '<span class="past-week-range">Week of ' + weekRangeLabel(wIndex) + "</span>" +
+      '<i class="ph-bold ph-caret-down" aria-hidden="true"></i>';
+
+    var body = document.createElement("div");
+    body.className = "past-week-body";
+    body.hidden = true;
+
+    PAST_CHALLENGE_TARGETS.forEach(function (c) {
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "past-week-chip";
+      chip.textContent = c.label;
+      chip.addEventListener("click", function () {
+        closeAllModals();
+        loadWeek(wIndex);
+        var target = qs(c.target);
+        if (target) setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60);
+      });
+      body.appendChild(chip);
+    });
+
+    toggle.addEventListener("click", function () {
+      var willOpen = body.hidden;
+      qsa(".past-week-body", container).forEach(function (b) { b.hidden = true; });
+      qsa(".past-week-toggle", container).forEach(function (b) { b.classList.remove("is-open"); });
+      body.hidden = !willOpen;
+      toggle.classList.toggle("is-open", willOpen);
+    });
+
+    row.appendChild(toggle);
+    row.appendChild(body);
+    return row;
+  }
+
+  function renderPastWeeks() {
+    var wrap = qs("#past-weeks-list");
+    if (!wrap) return;
+    wrap.innerHTML = "";
+    for (var i = 1; i <= PAST_WEEKS_COUNT; i++) {
+      var wIndex = CURRENT_WEEK - i;
+      if (wIndex < 0) break;
+      wrap.appendChild(buildPastWeekRow(wIndex, wrap));
+    }
+    if (!wrap.children.length) {
+      wrap.innerHTML = '<p class="past-week-empty">No past weeks yet — check back after this week ends.</p>';
+    }
+  }
+
+  function initPastChallenges() {
+    qsa("[data-open-past-challenges]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        renderPastWeeks();
+        openModal(qs("#past-challenges-modal"));
+      });
+    });
   }
 
   /* ============================================================
@@ -1350,39 +1563,95 @@
   }
 
   /* ============================================================
-     Game-modes carousel — swipeable track, arrows, dots
+     Game-modes carousel — swipeable, arrow-driven, and loops
+     forever in both directions. The illusion: a couple of cards
+     from each end are cloned onto the opposite end of the track,
+     so there's always another card to scroll to; once a clone
+     settles into view we teleport (no animation) to the identical
+     real card at the same visual position, which is imperceptible.
+     Only 2 dots are shown — five cards isn't enough to need one
+     per card, so each dot just jumps to a half of the set.
      ============================================================ */
   function initCarousel() {
     var track = qs("#modes-track");
     if (!track) return;
-    var cards = qsa(".carousel-card", track);
+    var realCards = qsa(".carousel-card:not(.is-clone)", track);
+    var total = realCards.length;
+    if (!total) return;
+
     var dotsWrap = qs("#modes-dots");
     var prev = qs(".carousel-arrow--prev");
     var next = qs(".carousel-arrow--next");
 
-    cards.forEach(function (_, i) {
+    var stepPx = realCards[0].offsetWidth + 14; // card width + track gap
+    function step() { return stepPx; }
+    function indexAll() { return Math.round(track.scrollLeft / stepPx); }
+
+    /* Clone enough cards on each side to cover whatever is visible
+       at once, plus one — otherwise on a wide viewport the track's
+       real scroll range never reaches the clone "jump zone" and
+       the loop hits a hard stop instead of wrapping. */
+    var CLONE_COUNT = Math.min(total, Math.ceil(track.clientWidth / stepPx) + 1);
+
+    function makeClone(card) {
+      var clone = card.cloneNode(true);
+      clone.classList.add("is-clone");
+      clone.setAttribute("aria-hidden", "true");
+      qsa("button,a", clone).forEach(function (el) { el.tabIndex = -1; });
+      return clone;
+    }
+
+    qsa(".carousel-card.is-clone", track).forEach(function (c) { c.remove(); });
+    for (var h = CLONE_COUNT - 1; h >= 0; h--) {
+      track.insertBefore(makeClone(realCards[(total - CLONE_COUNT + h) % total]), track.firstChild);
+    }
+    for (var t = 0; t < CLONE_COUNT; t++) {
+      track.appendChild(makeClone(realCards[t % total]));
+    }
+
+    /* Two dots only: each jumps to the start of one half of the
+       real (non-cloned) cards. */
+    var HALF = Math.ceil(total / 2);
+    dotsWrap.innerHTML = "";
+    [0, HALF].forEach(function (realIdx, i) {
       var d = document.createElement("button");
       d.type = "button";
       d.className = "carousel-dot";
-      d.setAttribute("aria-label", "Go to slide " + (i + 1));
-      d.addEventListener("click", function () { scrollToCard(i); });
+      d.setAttribute("aria-label", "Go to slide group " + (i + 1));
+      d.addEventListener("click", function () {
+        track.scrollTo({ left: (CLONE_COUNT + realIdx) * stepPx, behavior: "smooth" });
+      });
       dotsWrap.appendChild(d);
     });
     var dots = qsa(".carousel-dot", dotsWrap);
 
-    function step() { return cards[0].offsetWidth + 14; }
-    function scrollToCard(i) { track.scrollTo({ left: i * step(), behavior: "smooth" }); }
     function updateDots() {
-      var idx = Math.round(track.scrollLeft / step());
-      dots.forEach(function (d, i) { d.classList.toggle("is-active", i === idx); });
+      var realIdx = ((indexAll() - CLONE_COUNT) % total + total) % total;
+      var active = realIdx < HALF ? 0 : 1;
+      dots.forEach(function (d, i) { d.classList.toggle("is-active", i === active); });
     }
+
+    function loopIfNeeded() {
+      var idx = indexAll();
+      if (idx < CLONE_COUNT) {
+        track.scrollLeft += total * stepPx;
+      } else if (idx >= CLONE_COUNT + total) {
+        track.scrollLeft -= total * stepPx;
+      }
+    }
+
     var scrollTimer = null;
     track.addEventListener("scroll", function () {
       clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(updateDots, 80);
+      scrollTimer = setTimeout(function () {
+        loopIfNeeded();
+        updateDots();
+      }, 120);
     });
-    if (prev) prev.addEventListener("click", function () { track.scrollBy({ left: -step(), behavior: "smooth" }); });
-    if (next) next.addEventListener("click", function () { track.scrollBy({ left: step(), behavior: "smooth" }); });
+    if (prev) prev.addEventListener("click", function () { track.scrollBy({ left: -stepPx, behavior: "smooth" }); });
+    if (next) next.addEventListener("click", function () { track.scrollBy({ left: stepPx, behavior: "smooth" }); });
+
+    track.scrollLeft = CLONE_COUNT * stepPx;
     updateDots();
   }
 
@@ -1391,14 +1660,11 @@
      UI that used to belong to the removed daily-guess game.
      ============================================================ */
   function isModalOpen() {
-    var s = qs("#stats-modal"), h = qs("#help-modal");
-    return (s && !s.hidden) || (h && !h.hidden);
+    return qsa(".modal-backdrop").some(function (m) { return !m.hidden; });
   }
   function openModal(m) { if (m) m.hidden = false; }
   function closeAllModals() {
-    var s = qs("#stats-modal"), h = qs("#help-modal");
-    if (s) s.hidden = true;
-    if (h) h.hidden = true;
+    qsa(".modal-backdrop").forEach(function (m) { m.hidden = true; });
   }
 
   function initTopbar() {
@@ -1500,6 +1766,8 @@
     initLabels();
     initCtaScroll();
     initTopbar();
+    initArchiveBar();
+    initPastChallenges();
     initTodayGame();
     initUnscramble();
     initMissingLetter();
