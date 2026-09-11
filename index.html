@@ -91,16 +91,25 @@
 
       <ul class="hero-stats">
         <li class="hero-stat">
-          <span class="hero-stat-num" id="hero-stat-words">1,100+</span>
-          <span class="hero-stat-label">words searchable</span>
+          <button class="hero-stat-trigger" type="button" aria-describedby="hero-tip-words">
+            <span class="hero-stat-num" id="hero-stat-words">1,100+</span>
+            <span class="hero-stat-label">words searchable</span>
+          </button>
+          <span class="hero-stat-tip" id="hero-tip-words" role="tooltip">Every result is checked against this word list, searched as you type.</span>
         </li>
         <li class="hero-stat">
-          <span class="hero-stat-num">3</span>
-          <span class="hero-stat-label">ways to filter</span>
+          <button class="hero-stat-trigger" type="button" aria-describedby="hero-tip-filters">
+            <span class="hero-stat-num">3</span>
+            <span class="hero-stat-label">ways to filter</span>
+          </button>
+          <span class="hero-stat-tip" id="hero-tip-filters" role="tooltip">Filter by letter position, letters the word must contain, and letters to rule out.</span>
         </li>
         <li class="hero-stat">
-          <span class="hero-stat-num">5</span>
-          <span class="hero-stat-label">word games to play</span>
+          <button class="hero-stat-trigger" type="button" aria-describedby="hero-tip-games">
+            <span class="hero-stat-num">5</span>
+            <span class="hero-stat-label">word games to play</span>
+          </button>
+          <span class="hero-stat-tip" id="hero-tip-games" role="tooltip">Today's Challenge, Unscramble, Missing Letter, Speed Round and a weekly bonus word.</span>
         </li>
       </ul>
     </div>
@@ -870,7 +879,7 @@
               <span class="kicker">Mini-game: guess the word</span>
               <span class="mini-score">Tries left <strong id="wordle-tries">3</strong></span>
             </div>
-            <p class="mini-instruction">You get three tries. Type a guess or tap an opener, then use the tile colours to pick your next one.</p>
+            <p class="mini-instruction">Type a guess or tap an opener, then let the colours guide your next try.</p>
             <div class="wordle-board" id="wordle-board">
               <span class="letter wildcard">?</span>
               <span class="letter wildcard">?</span>

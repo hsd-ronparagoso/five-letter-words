@@ -636,6 +636,31 @@
     cta.addEventListener("click", scrollToWordFinder);
   }
 
+  /* Hero stat tooltips. Hover and keyboard focus are handled in CSS;
+     this adds tap-to-toggle so touch devices, which have no hover, can
+     reach the same explanation. */
+  function initHeroStatTips() {
+    var stats = qsa(".hero-stat");
+    if (!stats.length) return;
+    function closeAll(except) {
+      stats.forEach(function (s) { if (s !== except) s.classList.remove("is-open"); });
+    }
+    stats.forEach(function (stat) {
+      var trigger = qs(".hero-stat-trigger", stat);
+      if (!trigger) return;
+      trigger.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var open = stat.classList.contains("is-open");
+        closeAll(stat);
+        stat.classList.toggle("is-open", !open);
+      });
+    });
+    document.addEventListener("click", function () { closeAll(null); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeAll(null);
+    });
+  }
+
   /* ---------------------------------------------------------
      Today / weekly labels
      --------------------------------------------------------- */
@@ -2720,6 +2745,7 @@
     initCtaScroll();
     initHeroMore();
     initHeroCta();
+    initHeroStatTips();
     initTopbar();
     initArchiveBar();
     initPastChallenges();

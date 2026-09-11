@@ -533,7 +533,56 @@ button{font-family:inherit;}
   list-style:none;margin:0;padding:0;
   display:flex;flex-wrap:wrap;justify-content:center;gap:16px 38px;
 }
-.hero-stat{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.hero-stat{position:relative;display:flex;flex-direction:column;align-items:center;}
+/* The stat itself is the tooltip trigger: focusable for keyboard, tappable
+   on touch, with a dotted label as the "there is more here" cue. */
+.hero-stat-trigger{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  border:0;background:none;padding:4px 6px;margin:0;
+  font-family:inherit;color:inherit;cursor:help;
+}
+.hero-stat-trigger:focus-visible{outline:2px solid var(--blue-300);outline-offset:3px;}
+.hero-stat-trigger .hero-stat-label{
+  border-bottom:1px dotted rgba(255,255,255,.45);padding-bottom:2px;
+  transition:color .16s ease,border-color .16s ease;
+}
+.hero-stat-trigger:hover .hero-stat-label,
+.hero-stat-trigger:focus-visible .hero-stat-label,
+.hero-stat.is-open .hero-stat-label{color:rgba(255,255,255,.92);border-bottom-color:var(--white);}
+
+/* Absolutely positioned, so revealing it never moves the hero. */
+.hero-stat-tip{
+  position:absolute;left:50%;bottom:calc(100% + 10px);z-index:20;
+  width:max-content;max-width:240px;
+  transform:translate(-50%,6px);
+  background:var(--navy-800);color:var(--white);
+  padding:10px 13px;text-align:center;
+  font-size:12.5px;line-height:1.5;font-weight:500;
+  box-shadow:0 14px 30px rgba(3,13,26,.5);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s;
+}
+.hero-stat-tip::after{
+  content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:var(--navy-800);
+}
+.hero-stat-trigger:hover + .hero-stat-tip,
+.hero-stat-trigger:focus-visible + .hero-stat-tip,
+.hero-stat.is-open .hero-stat-tip{
+  opacity:1;visibility:visible;transform:translate(-50%,0);
+  transition:opacity .2s ease,transform .2s ease,visibility 0s;
+}
+/* On narrow screens anchor the tooltip to the whole row instead of the
+   individual stat, so an edge stat cannot push it off screen. */
+@media (max-width:560px){
+  .hero-stats{position:relative;}
+  .hero-stat{position:static;}
+  .hero-stat-tip{width:min(300px,86vw);max-width:none;}
+  .hero-stat-tip::after{display:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-stat-tip{transition:opacity .2s ease,visibility 0s;transform:translate(-50%,0);}
+}
 .hero-stat-num{
   font-size:clamp(20px,2.4vw,26px);font-weight:700;line-height:1;
   color:var(--white);letter-spacing:-.015em;font-variant-numeric:tabular-nums;
