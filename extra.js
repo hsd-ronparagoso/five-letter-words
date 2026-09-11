@@ -26,6 +26,194 @@
     "whisk","vexed","jumbo","fuzzy","quirk","waltz","brisk","gawky","vixen","zonal"
   ];
 
+  /* ---------------------------------------------------------
+     Word Finder dictionary — a real, sizeable sample of common
+     five-letter words so the on-page finder returns genuine
+     matches instead of a canned list. Not exhaustive (the full
+     game dictionary lives on unscramblex.com), but big enough to
+     make every search below feel real.
+     --------------------------------------------------------- */
+  var FINDER_DICTIONARY = (function () {
+    var raw = [
+      "about","above","abuse","actor","acute","admit","adopt","adult","after","again",
+      "agent","agree","ahead","alarm","album","alert","alike","alive","allow","alone",
+      "along","alter","among","angel","anger","angle","angry","apart","apple","apply",
+      "arena","argue","arise","armor","aside","asset","audio","audit","avoid","awake",
+      "award","aware","badge","baker","basic","basis","beach","begin","being","below",
+      "bench","berry","birth","black","blade","blame","blank","blast","bless","blind",
+      "block","blood","board","boost","booth","bound","brain","brand","brave","bread",
+      "break","breed","brief","bring","broad","broke","brown","brush","build","built",
+      "bunch","burst","cabin","cable","candy","canoe","carry","carve","catch","cause",
+      "chain","chair","chalk","charm","chart","chase","cheap","check","cheer","chess",
+      "chest","chief","child","chunk","churn","claim","class","clean","clear","climb",
+      "clock","close","cloud","coach","coast","color","comic","cover","craft","crane",
+      "crash","cream","creek","crime","crisp","cross","crowd","crown","crush","curve",
+      "cycle","dairy","dance","dealt","death","debut","delay","depth","diary","dodge",
+      "doing","donor","doubt","dozen","draft","drain","drama","dream","dress","dried",
+      "drift","drill","drink","drive","drove","dwell","eager","early","earth","eight",
+      "elbow","elder","elite","empty","enemy","enjoy","enter","entry","equal","equip",
+      "error","event","every","exact","exist","extra","fable","faith","false","fancy",
+      "fault","fiber","field","fifth","fifty","fight","final","first","fixed","flame",
+      "flash","fleet","flesh","float","flock","flood","floor","flour","fluid","flute",
+      "focus","force","forge","forth","forty","forum","found","frame","fresh","front",
+      "frost","fruit","fully","funny","genre","ghost","giant","given","glare","glass",
+      "gleam","glide","globe","glory","glove","grace","grade","grain","grand","grant",
+      "grape","graph","grasp","grass","great","greed","green","greet","grief","grill",
+      "grind","groom","gross","group","grove","guard","guess","guest","guide","habit",
+      "happy","harsh","haste","haven","heart","heavy","hello","hobby","honey","honor",
+      "horse","hotel","house","human","humor","hurry","ideal","image","imply","index",
+      "inner","input","issue","ivory","japan","jelly","jolly","joint","judge","juice",
+      "jumbo","kneel","knife","knock","known","label","labor","laugh","layer","learn",
+      "least","leave","lemon","level","light","limit","local","lodge","logic","loose",
+      "lower","loyal","lucky","lunar","lunch","lyric","magic","major","maker","mango",
+      "march","match","maybe","mayor","medal","media","melon","mercy","merit","metal",
+      "meter","might","minor","minus","mirth","model","moist","money","month","moral",
+      "motor","mount","mouse","mouth","movie","music","naive","nerve","never","newly",
+      "night","noble","noise","north","novel","nurse","ocean","offer","often","olive",
+      "onset","orbit","order","organ","other","ought","outer","owner","oxide","paint",
+      "panel","panic","paper","party","pasta","patch","pause","peace","pearl","pedal",
+      "penny","phase","phone","photo","piano","piece","pilot","pitch","pivot","pixel",
+      "place","plaid","plain","plane","plant","plate","point","pooch","porch","posse",
+      "pound","power","press","price","pride","prime","print","prior","prize","proof",
+      "proud","prove","pulse","punch","pupil","puppy","purse","queen","query","quest",
+      "quick","quiet","quilt","quite","quote","radar","radio","raise","rally","ranch",
+      "range","rapid","ratio","reach","react","ready","realm","rebel","refer","reign",
+      "relax","reply","reset","rhyme","ridge","rider","right","rigid","rival","river",
+      "roast","robot","rocky","rouge","rough","round","route","royal","rugby","rural",
+      "salad","salsa","sauce","scale","scarf","scene","scent","scope","score","scout",
+      "scrap","screw","seven","shade","shake","shall","shape","share","shark","sharp",
+      "sheep","sheet","shelf","shell","shift","shine","shirt","shock","shoot","shore",
+      "short","shout","shown","sight","silky","since","sixth","skill","skirt","slate",
+      "sleep","slice","slide","slope","small","smart","smell","smile","smoke","snack",
+      "solar","solid","solve","sonic","sound","south","space","spare","spark","speak",
+      "speed","spell","spend","spent","spice","spike","spine","spire","spoke","sport",
+      "spray","squad","stack","staff","stage","stain","stair","stake","stall","stamp",
+      "stand","stark","start","state","steak","steal","steam","steel","steep","stern",
+      "stick","stiff","still","stock","stone","store","storm","story","stout","stove",
+      "study","stuff","style","sugar","suite","sunny","super","surge","swamp","swarm",
+      "swear","sweat","sweep","sweet","swift","swing","sword","syrup","table","taste",
+      "teach","teams","tempo","tenth","theme","thick","thief","thing","think","third",
+      "thorn","those","three","threw","throw","thumb","tiger","tight","timer","tired",
+      "title","toast","today","token","tonic","topic","torch","total","touch","tough",
+      "tower","toxic","trace","track","trade","trail","train","trait","trend","trial",
+      "tribe","trick","troop","trout","truck","truly","trunk","trust","truth","tulip",
+      "tumor","tunic","turbo","twice","twist","ultra","uncle","under","union","unity",
+      "until","upper","upset","urban","usage","usual","valid","value","vapor","vault",
+      "venue","verse","video","vigor","vinyl","viral","virus","visit","vital","vivid",
+      "vocal","voice","voter","wagon","waste","watch","water","weary","whale","wheat",
+      "wheel","where","which","while","white","whole","widen","widow","width","witty",
+      "world","worry","worth","would","wound","woven","wreck","wrist","write","wrong",
+      "yield","young","youth",
+      "aback","abbey","abide","abort","abyss","acids","acorn","adage","adieu","adobe",
+      "afoot","afoul","after","agile","aglow","agony","aider","aisle","alibi","align",
+      "alloy","aloft","aloof","alpha","altar","amber","amble","amend","amiss","amity",
+      "ample","amuse","angst","anime","ankle","annex","annoy","anode","antic","aorta",
+      "apnea","aptly","aroma","arrow","ashen","atlas","atoll","atone","attic","avert",
+      "avian","avoid","await","axiom","azure","bagel","baggy","bally","balmy","banjo",
+      "barge","basil","batch","bathe","baton","belly","bevel","bicep","bigot","bilge",
+      "binge","bison","blaze","bleak","bloat","blond","blunt","blurt","boast","bogus",
+      "bonus","booby","borne","bossy","bough","boxer","brace","brake","brawl","brawn",
+      "brine","briny","brisk","broil","brood","brook","broom","brute","buddy","budge",
+      "buggy","bulge","bulky","bunny","burly","cabby","cache","cacti","caddy","camel",
+      "canal","candi","canny","caper","caste","cedar","chard","chasm","cheek","cheep",
+      "chewy","chime","chirp","choir","chomp","chord","chose","chute","churl","cider",
+      "cigar","cinch","civic","civil","clamp","clang","clash","clasp","cleat","cleft",
+      "clerk","cliff","cling","clink","clown","clued","clump","clung","coast","cobra",
+      "cocoa","comet","comfy","comma","conch","condo","conic","coral","corny","couch",
+      "cough","could","coupe","court","covet","covey","cower","crack","cramp","crank",
+      "crate","crawl","credo","creek","creep","crepe","crest","crick","crony","crook",
+      "creed","crust","cubic","cupid","curly","curry","curse","curvy","cynic",
+      "daddy","daily","dally","dandy","datum","dazed","dealt","decal","decay","decor",
+      "decoy","defer","deity","delta","dense","depot","derby","desks","diner","dingo",
+      "dingy","disco","ditch","ditto","diver","dizzy","dodgy","dogma","donut","dowdy",
+      "downy","dowry","dozer","drank","dread","drear","drone","droop","dross","drown",
+      "drunk","dryer","dryly","duchy","dully","dummy","dumpy","dunce","dusky","dusty",
+      "dutch","duvet","dwelt","early","ebony","eerie","eject","elope","elude","elves",
+      "embed","ember","emcee","emote","enact","endow","envoy","epoch","epoxy","erase",
+      "erode","erupt","essay","ethic","evict","evoke","exalt","exert","exile","expel",
+      "extol","fable","facet","faint","fairy","falls","fancy","fanny","farce","fatal",
+      "fated","favor","feast","feign","fella","fence","feral","ferry","fetal","fetch",
+      "fever","fiery","filet","filly","filmy","filth","finch","finer","fjord","flack",
+      "flair","flake","flaky","flank","flare","flask","fleck","flick","flier","fling",
+      "flint","flirt","flock","flora","flops","fluff","fluke","flung","flunk","floss",
+      "flush","flyer","foamy","foray","forge","forgo","fudge","fully","fungi","funky",
+      "furry","fussy","fuzzy","gaily","gamma","gassy","gaudy","gauge","gaunt","gauze",
+      "gazer","gecko","genie","germs","goofy","ghoul","giddy","gizmo","glean","glint",
+      "gloat","gloom","glued","gnash","gnome","godly","golly","gonad","goose","gorge",
+      "gouge","gourd","grape","grimy","grind","gripe","groan","groat","gruff","grunt",
+      "guise","gully","gummy","gusto","gusty","hairy","halve","handy","hardy","harem",
+      "hasty","hatch","haunt","hazel","heave","hedge","hefty","heist","herby","hinge",
+      "hippo","hoard","hoist","holly","homer","hooky","horde","hovel","hover","howdy",
+      "hunch","husky","hutch","hydra","hyena","hymns","icing","igloo","incur","indie",
+      "infer","inlet","irate","irony","islet","itchy","ivory","jaunt","jazzy","jerky",
+      "jewel","joker","jumpy","junky","juror","kayak","kebab","kiosk","kitty","knead",
+      "kneed","koala","krill","lager","lance","lanky","lapel","lapse","larva","lasso",
+      "latch","later","latte","lease","leash","lefty","legal","lever","liner","lithe",
+      "livid","llama","loamy","locus","lofty","loner","looms","loopy","loved","lover",
+      "lowly","lucid","lumpy","lunge","lupus","lurch","lurid","lusty","lymph","lyric",
+      "macro","madly","mango","mange","mangy","mania","manor","maple","marsh","mason",
+      "match","mauve","medic","melee","mercy","messy","meter","midst","miner","minty",
+      "mocha","modem","moldy","mommy","moody","moose","mossy","motel","motto","mound",
+      "mummy","mural","murky","mushy","musty","myrrh","nacho","nasal","natal",
+      "needy","nervy","nifty","nomad","noose","numbs","nutty","nylon","oasis","ogled",
+      "olden","opera","optic","opine","orbit","organ","oscar","otter","ounce","outdo",
+      "ovary","paddy","pagan","pally","panda","panga","parka","party","patio","peaty",
+      "peppy","perch","peril","perky","petal","photo","piety","pilaf","pique","pixie",
+      "plaza","plead","pluck","plumb","plume","plump","poesy","poise","poker","polar",
+      "polka","poppy","potty","preen","press","prism","privy","probe","prong","prowl",
+      "proxy","puffy","pulpy","pygmy","quack","quail","qualm","quart","query","quick",
+      "quill","quirk","quota","quoth","rabid","radii","rajah","rally","ranch","rasps",
+      "raspy","ratty","raven","razor","reedy","refit","regal","reign","relic","remix",
+      "renal","repay","reply","resin","retro","rhino","ridge","rigid","rinse",
+      "risky","ritzy","rival","robin","robot","rocky","rodeo","roomy","rowdy","ruddy",
+      "rugby","ruler","rumba","rusty","sable","salsa","salty","salvo","samba","sappy",
+      "sassy","satin","savor","savvy","scald","scaly","scamp","scant","scare","scarf",
+      "scary","scoff","scoop","scoot","scowl","scrub","seedy","serum","sewer","shaky",
+      "shale","shame","shard","sharp","shawl","sheen","shied","shiny","shone","showy",
+      "shrub","shrug","shush","shyly","siege","silky","silly","siren","sissy","sixty",
+      "skate","skimp","skull","slack","slain","slang","slant","sleek","sleet","slept",
+      "slick","slimy","sling","slink","slosh","sloth","slump","slurp","slush","slyly",
+      "smash","smirk","smock","smoky","smote","snarl","sneak","sneer","snide","snoop",
+      "snore","snout","snowy","soggy","sonar","sooty","sorry","spasm","spawn","speck",
+      "spelt","spool","spoof","spoon","spoor","spout","sprig","spunk","spurn",
+      "spurt","squid","stale","stall","stark","stash","steed","stein","stint","stony",
+      "stoop","stray","strut","stump","stung","stunt","suave","surly","swirl",
+      "swish","swoon","swoop","tabby","taffy","talon","tangy","tardy","tarot","tawny",
+      "teddy","teeny","tempt","tepid","testy","thigh","thorn","throb","thump","thyme",
+      "tibia","tidal","tilde","timid","tipsy","toddy","token","tonal","tooth","toque",
+      "torso","truss","toxin","trawl","treat","tress","trill","tripe","trove","tryst",
+      "tunes","turfy","twang","tweak","tweed","twerp","twine","udder","ulcer","ultra",
+      "umbra","uncut","undid","undue","unfit","unify","unite","untie","upend","urged",
+      "usher","utter","vague","vaunt","veery","venom","verge","vertu","vexed","vigil",
+      "villa","vixen","vodka","vogue","vouch","waist","waltz","warty","weave","wedge",
+      "weedy","weird","welsh","whack","wharf","whelp","whiny","whisk","witch","woken",
+      "wooly","worry","wrath","wring","yacht","yearn","yeast","yield","zebra","zesty"
+    ];
+    var set = {};
+    raw.concat(WORDS, HARD_WORDS).forEach(function (w) { set[w] = true; });
+    return Object.keys(set).sort();
+  }());
+
+  /* Pattern: array of 5 chars/null. Contains/exclude: strings of
+     letters. Every argument is optional. */
+  function findMatches(pattern, contains, exclude) {
+    var mustContain = (contains || "").toLowerCase().replace(/[^a-z]/g, "").split("");
+    var mustExclude = (exclude || "").toLowerCase().replace(/[^a-z]/g, "").split("");
+    return FINDER_DICTIONARY.filter(function (word) {
+      for (var i = 0; i < 5; i++) {
+        var p = pattern && pattern[i];
+        if (p && word[i] !== p) return false;
+      }
+      for (var c = 0; c < mustContain.length; c++) {
+        if (word.indexOf(mustContain[c]) === -1) return false;
+      }
+      for (var x = 0; x < mustExclude.length; x++) {
+        if (word.indexOf(mustExclude[x]) !== -1) return false;
+      }
+      return true;
+    });
+  }
+
   function seededPick(pool, seed) {
     var n = pool.length;
     var i = ((seed * 2654435761) % n + n) % n;
@@ -398,11 +586,54 @@
         if (GAME_SECTION_SELECTORS.indexOf(sel) !== -1 && !isLiveWeek()) {
           backToCurrentWeek();
         }
+        if (sel === "#word-finder") {
+          scrollToWordFinder();
+          return;
+        }
         var target = qs(sel);
         if (!target) return;
         target.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
+  }
+
+  /* Hero show-more: the icon button drives the paragraph's own open
+     state. It toggles data-open (which CSS animates) rather than the
+     hidden attribute, because the extra copy is styled display:grid
+     and an author display rule beats the UA [hidden] rule, which is
+     why the button previously appeared to do nothing. */
+  function initHeroMore() {
+    var btn = qs("#hero-expand");
+    var extra = qs("#hero-lede-extra");
+    if (!btn || !extra) return;
+    btn.addEventListener("click", function () {
+      var open = extra.getAttribute("data-open") === "true";
+      var next = !open;
+      extra.setAttribute("data-open", String(next));
+      btn.setAttribute("aria-expanded", String(next));
+      var label = next ? "Show less about the word finder" : "Show more about the word finder";
+      btn.setAttribute("aria-label", label);
+      btn.setAttribute("title", label);
+    });
+  }
+
+  /* The Word Finder is always visible in the hero. Every entry point
+     into it (hero CTA, nav, word chips, presets) just scrolls to it,
+     landing it clear of the sticky topbar so the position boxes are
+     ready to type into. Nothing about the tool's state changes. */
+  function scrollToWordFinder() {
+    var card = qs("#word-finder");
+    if (!card) return;
+    var topbar = qs(".topbar");
+    var offset = (topbar ? topbar.offsetHeight : 0) + 24;
+    var top = window.scrollY + card.getBoundingClientRect().top - offset;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  }
+
+  function initHeroCta() {
+    var cta = qs("#hero-cta");
+    if (!cta) return;
+    cta.addEventListener("click", scrollToWordFinder);
   }
 
   /* ---------------------------------------------------------
@@ -422,10 +653,13 @@
       var span = weeklyEl.querySelector("span");
       var w = hardWordForWeek(CURRENT_WEEK);
       var text = progress.weeklyDone
-        ? "Weekly Challenge solved — reload the page for another shot."
+        ? "Weekly Challenge solved. Reload the page for another shot."
         : "Weekly Challenge: a " + w.length + "-letter word starting with “" + w[0].toUpperCase() + "” is waiting below.";
       if (span) span.textContent = text;
     }
+    /* Hero stat: the real size of the dictionary the finder searches. */
+    var wordsEl = qs("#hero-stat-words");
+    if (wordsEl) wordsEl.textContent = FINDER_DICTIONARY.length.toLocaleString();
   }
 
   /* ---------------------------------------------------------
@@ -562,14 +796,14 @@
     var joined = usLetters.join("");
     if (joined === usWord) {
       renderUnscramble(true);
-      if (!isLiveWeek()) setFeedback("unscramble-feedback", "Solved! The word was “" + usWord.toUpperCase() + "”. (Archived challenge — practice only.)", true);
+      if (!isLiveWeek()) setFeedback("unscramble-feedback", "Solved! The word was “" + usWord.toUpperCase() + "”. (Archived challenge, practice only.)", true);
       completeChallenge("unscramble", true);
     } else if (usSwaps >= MAX_SWAPS) {
       qsa("#unscramble-tiles .us-tile").forEach(function (t) { t.disabled = true; });
-      setFeedback("unscramble-feedback", "Out of swaps — the word was “" + usWord.toUpperCase() + "”.", false);
+      setFeedback("unscramble-feedback", "Out of swaps. The word was “" + usWord.toUpperCase() + "”.", false);
       completeChallenge("unscramble", false);
     } else {
-      setFeedback("unscramble-feedback", "Keep going — " + (MAX_SWAPS - usSwaps) + " swaps left.", null);
+      setFeedback("unscramble-feedback", "Keep going: " + (MAX_SWAPS - usSwaps) + " swaps left.", null);
     }
   }
 
@@ -639,7 +873,7 @@
     if (val === mlWord[mlIndex]) {
       tile.textContent = val.toUpperCase();
       tile.setAttribute("data-state", "correct");
-      setFeedback("missing-feedback", "Correct! The word was “" + mlWord.toUpperCase() + "”." + (isLiveWeek() ? "" : " (Archived challenge — practice only.)"), true);
+      setFeedback("missing-feedback", "Correct! The word was “" + mlWord.toUpperCase() + "”." + (isLiveWeek() ? "" : " (Archived challenge, practice only.)"), true);
       input.disabled = true;
       qs("#missing-submit").disabled = true;
       completeChallenge("missing", true);
@@ -649,7 +883,7 @@
       (function (t) { setTimeout(function () { t.removeAttribute("data-state"); }, 500); })(tile);
       if (mlTriesLeft <= 0) {
         revealMissing(false);
-        setFeedback("missing-feedback", "Out of tries — it was “" + mlWord.toUpperCase() + "”.", false);
+        setFeedback("missing-feedback", "Out of tries. It was “" + mlWord.toUpperCase() + "”.", false);
         input.disabled = true;
         qs("#missing-submit").disabled = true;
         completeChallenge("missing", false);
@@ -698,7 +932,7 @@
     qs("#speed-score").textContent = "0";
     qs("#speed-timer").textContent = String(SPEED_DURATION);
     qs("#speed-timer").classList.remove("is-low");
-    setFeedback("speed-feedback", "Press start when you're ready — the clock starts immediately.", null);
+    setFeedback("speed-feedback", "Press start when you're ready. The clock starts immediately.", null);
   }
 
   function startSpeed() {
@@ -766,7 +1000,7 @@
     var input = qs("#speed-input");
     input.disabled = true;
     qs("#speed-start").textContent = "Challenge Yourself Again";
-    setFeedback("speed-feedback", "Time! You solved " + speedScore + (speedScore === 1 ? " word." : " words.") + (isLiveWeek() ? "" : " (Archived challenge — practice only.)"), speedScore > 0);
+    setFeedback("speed-feedback", "Time! You solved " + speedScore + (speedScore === 1 ? " word." : " words.") + (isLiveWeek() ? "" : " (Archived challenge, practice only.)"), speedScore > 0);
     if (isLiveWeek()) {
       progress.bestSpeedScore = Math.max(progress.bestSpeedScore || 0, speedScore);
       saveProgress();
@@ -959,7 +1193,7 @@
     if (todayLocked) return;
     if (source === "tray") {
       var emptyIndex = todaySlots.indexOf(null);
-      if (emptyIndex === -1) { setFeedback("drag-feedback", "All slots are full — tap a placed tile to return it.", null); return; }
+      if (emptyIndex === -1) { setFeedback("drag-feedback", "All slots are full. Tap a placed tile to return it.", null); return; }
       placeInSlot(tileId, "tray", null, emptyIndex);
     } else {
       todaySlots[sourceSlotIndex] = null;
@@ -974,7 +1208,7 @@
     if (guess === todayWord) {
       todayLocked = true;
       renderToday();
-      setFeedback("drag-feedback", "CORRECT! 🎉 The word was “" + todayWord + "”." + (isLiveWeek() ? "" : " (Archived challenge — practice only.)"), true);
+      setFeedback("drag-feedback", "CORRECT! 🎉 The word was “" + todayWord + "”." + (isLiveWeek() ? "" : " (Archived challenge, practice only.)"), true);
       completeChallenge("today", true, 100);
       launchConfetti();
     } else {
@@ -982,7 +1216,7 @@
       row.classList.remove("is-shaking");
       void row.offsetWidth;
       row.classList.add("is-shaking");
-      setFeedback("drag-feedback", "Not quite — rearrange the letters and try again.", false);
+      setFeedback("drag-feedback", "Not quite. Rearrange the letters and try again.", false);
     }
   }
 
@@ -1050,19 +1284,675 @@
     });
   }
 
-  function initWordChipFill() {
-    var target = qs("#finder-input-2");
-    qsa(".word-chip[data-fill]").forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        chip.classList.remove("is-picked");
-        void chip.offsetWidth;
-        chip.classList.add("is-picked");
-        if (!target) return;
-        target.value = chip.getAttribute("data-fill");
-        target.focus();
-        target.scrollIntoView({ behavior: "smooth", block: "center" });
+  /* ============================================================
+     Word Finder — the page's actual tool. Five position boxes
+     (letter or blank), a "contains" filter and an "excludes"
+     filter, all combined client-side against FINDER_DICTIONARY.
+     Every example, preset and demo elsewhere on the page (word
+     chips, the starting-letter strip, the anagram tiles, the
+     Wordle narrowing demo) drives this same engine instead of
+     showing canned output.
+     ============================================================ */
+  var wfPosInputs = [];
+  var wfContainsInput, wfExcludeInput, wfResultsEl, wfCountEl;
+  var WF_RESULT_CAP = 60;
+
+  function wfCurrentPattern() {
+    return wfPosInputs.map(function (inp) {
+      var v = (inp.value || "").toLowerCase().trim();
+      return /^[a-z]$/.test(v) ? v : null;
+    });
+  }
+
+  function renderMatches(container, words, opts) {
+    opts = opts || {};
+    container.innerHTML = "";
+    var cap = opts.cap || words.length;
+    words.slice(0, cap).forEach(function (word) {
+      var li = document.createElement("li");
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "word-chip";
+      btn.textContent = word;
+      btn.setAttribute("data-fill", word);
+      li.appendChild(btn);
+      container.appendChild(li);
+    });
+  }
+
+  function runWordFinder() {
+    if (!wfResultsEl) return;
+    var pattern = wfCurrentPattern();
+    var contains = wfContainsInput ? wfContainsInput.value : "";
+    var exclude = wfExcludeInput ? wfExcludeInput.value : "";
+    var hasAnyFilter = pattern.some(function (p) { return p; }) || contains.trim() || exclude.trim();
+
+    if (!hasAnyFilter) {
+      wfResultsEl.innerHTML = '<li class="wf-empty">Start typing above: matches appear here instantly.</li>';
+      if (wfCountEl) wfCountEl.textContent = "Ready when you are";
+      return;
+    }
+
+    var matches = findMatches(pattern, contains, exclude);
+    if (wfCountEl) {
+      wfCountEl.textContent = matches.length
+        ? matches.length + (matches.length === 1 ? " word found" : " words found")
+        : "No matches";
+    }
+    if (!matches.length) {
+      wfResultsEl.innerHTML = '<li class="wf-empty">No matches in our sample dictionary. Try loosening a filter, or search the full dictionary.</li>';
+      return;
+    }
+    renderMatches(wfResultsEl, matches, { cap: WF_RESULT_CAP });
+  }
+
+  function wfHighlight() {
+    var card = qs("#word-finder");
+    if (!card) return;
+    card.classList.remove("wf-flash");
+    void card.offsetWidth;
+    card.classList.add("wf-flash");
+  }
+
+  /* Programs the tool from anywhere on the page — a word chip, a
+     starting-letter link, a preset button — then scrolls it into
+     view and runs a real search. `query.pattern` accepts either a
+     5-letter word or an array of 5 chars/null; "?" means blank. */
+  function setFinderQuery(query) {
+    query = query || {};
+    if (query.pattern) {
+      var chars = typeof query.pattern === "string" ? query.pattern.split("") : query.pattern;
+      wfPosInputs.forEach(function (inp, i) {
+        var ch = chars[i];
+        inp.value = (ch && ch !== "?") ? ch.toUpperCase() : "";
+      });
+    }
+    if (typeof query.contains === "string" && wfContainsInput) wfContainsInput.value = query.contains;
+    if (typeof query.exclude === "string" && wfExcludeInput) wfExcludeInput.value = query.exclude;
+    runWordFinder();
+    scrollToWordFinder();
+    setTimeout(wfHighlight, 250);
+  }
+
+  function initWordFinder() {
+    wfPosInputs = qsa(".wf-pos");
+    wfContainsInput = qs("#wf-contains");
+    wfExcludeInput = qs("#wf-excludes");
+    wfResultsEl = qs("#wf-results");
+    wfCountEl = qs("#wf-count");
+    if (!wfPosInputs.length || !wfResultsEl) return;
+
+    wfPosInputs.forEach(function (inp, i) {
+      inp.addEventListener("input", function () {
+        inp.value = inp.value.replace(/[^a-zA-Z]/g, "").slice(0, 1).toUpperCase();
+        if (inp.value && wfPosInputs[i + 1]) wfPosInputs[i + 1].focus();
+        runWordFinder();
+      });
+      inp.addEventListener("keydown", function (e) {
+        if (e.key === "Backspace" && !inp.value && wfPosInputs[i - 1]) {
+          wfPosInputs[i - 1].focus();
+        }
       });
     });
+    [wfContainsInput, wfExcludeInput].forEach(function (inp) {
+      if (!inp) return;
+      inp.addEventListener("input", function () {
+        inp.value = inp.value.replace(/[^a-zA-Z]/g, "").toLowerCase();
+        runWordFinder();
+      });
+    });
+
+    var clearBtn = qs("#wf-clear");
+    if (clearBtn) {
+      clearBtn.addEventListener("click", function () {
+        wfPosInputs.forEach(function (inp) { inp.value = ""; });
+        if (wfContainsInput) wfContainsInput.value = "";
+        if (wfExcludeInput) wfExcludeInput.value = "";
+        wfPosInputs[0].focus();
+        runWordFinder();
+      });
+    }
+
+    wfResultsEl.addEventListener("click", function (e) {
+      var chip = e.target.closest(".word-chip[data-fill]");
+      if (!chip) return;
+      setFinderQuery({ pattern: chip.getAttribute("data-fill") });
+    });
+
+    runWordFinder();
+  }
+
+  /* Any element anywhere on the page can drive the finder above by
+     carrying data-wf-pattern / data-wf-contains / data-wf-exclude —
+     used by the starting-letter strip and the "try it" presets in
+     the reference sections. */
+  function initWordFinderTriggers() {
+    document.addEventListener("click", function (e) {
+      var el = e.target.closest("[data-wf-pattern],[data-wf-contains],[data-wf-exclude],[data-wf-start]");
+      if (!el) return;
+      if (el.tagName === "A" && (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0)) return;
+      if (el.tagName === "A") e.preventDefault();
+      var query = {};
+      if (el.hasAttribute("data-wf-pattern")) query.pattern = el.getAttribute("data-wf-pattern");
+      if (el.hasAttribute("data-wf-start")) query.pattern = el.getAttribute("data-wf-start") + "????";
+      if (el.hasAttribute("data-wf-contains")) query.contains = el.getAttribute("data-wf-contains");
+      if (el.hasAttribute("data-wf-exclude")) query.exclude = el.getAttribute("data-wf-exclude");
+      setFinderQuery(query);
+    });
+  }
+
+  function initWordChipFill() {
+    /* Word chips across the page (data-fill="crane") load that exact
+       word into the live Word Finder and run a real search. Delegated
+       from the document so chips rendered later by the section
+       mini-games and live result lists work too. */
+    document.addEventListener("click", function (e) {
+      var chip = e.target.closest(".word-chip[data-fill]");
+      if (!chip) return;
+      if (chip.closest("#wf-results")) return; // already wired in initWordFinder
+      chip.classList.remove("is-picked");
+      void chip.offsetWidth;
+      chip.classList.add("is-picked");
+      setFinderQuery({ pattern: chip.getAttribute("data-fill") });
+    });
+  }
+
+  /* Live "starts with to" example — computed from the real
+     dictionary instead of a fixed list. */
+  function initStartsWithToExample() {
+    var list = qs("#to-example-results");
+    if (!list) return;
+    var matches = findMatches(["t", "o", null, null, null], "", "");
+    renderMatches(list, matches, { cap: 12 });
+  }
+
+  /* Anagram tiles (with-letters section) keep their own small
+     results strip, live-updated on every swap using the same
+     findMatches() engine — an anagram search is just "must contain
+     all 5 of these letters" on a 5-letter word. */
+  /* ============================================================
+     Section mini-games
+     Each reference section's showcase doubles as a small playable
+     demo of the idea that section explains. They all share the same
+     dictionary, the same findMatches() engine and the same tile /
+     chip vocabulary as the rest of the page.
+     ============================================================ */
+  var FINDER_SET = (function () {
+    var set = Object.create(null);
+    FINDER_DICTIONARY.forEach(function (w) { set[w] = true; });
+    return set;
+  }());
+  function isRealWord(w) { return !!FINDER_SET[w]; }
+  function mgPick(list) { return list[Math.floor(Math.random() * list.length)]; }
+  var VOWELS = "aeiou";
+  function isVowel(ch) { return VOWELS.indexOf(ch) !== -1; }
+
+  /* --- 1. What Are 5 Letter Words? -> spot the vowels --------- */
+  var vgWord = "", vgFound = [], vgMissed = false, vgDone = false, vgStreak = 0;
+
+  function dealVowelWord() {
+    var wrap = qs("#vowel-tiles");
+    if (!wrap) return;
+    vgWord = mgPick(FINDER_DICTIONARY);
+    vgFound = []; vgMissed = false; vgDone = false;
+    wrap.innerHTML = "";
+    vgWord.split("").forEach(function (ch, i) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "anatomy-letter is-tappable";
+      btn.setAttribute("data-i", String(i));
+      btn.setAttribute("aria-label", "Letter " + ch.toUpperCase());
+      btn.innerHTML = '<span class="letter">' + ch.toUpperCase() + '</span><span class="anatomy-tag"></span>';
+      wrap.appendChild(btn);
+    });
+    setFeedback("vowel-feedback", "", null);
+  }
+
+  function markVowelTile(btn, i, reveal) {
+    var vowel = isVowel(vgWord[i]);
+    var tag = btn.querySelector(".anatomy-tag");
+    tag.textContent = vowel ? "V" : "C";
+    tag.className = "anatomy-tag " + (vowel ? "is-v" : "is-c");
+    btn.classList.add(reveal ? "is-revealed" : (vowel ? "is-hit" : "is-miss"));
+  }
+
+  function initVowelGame() {
+    var wrap = qs("#vowel-tiles");
+    if (!wrap) return;
+    wrap.addEventListener("click", function (e) {
+      var btn = e.target.closest(".anatomy-letter");
+      if (!btn || vgDone) return;
+      var i = parseInt(btn.getAttribute("data-i"), 10);
+      if (btn.classList.contains("is-hit") || btn.classList.contains("is-miss")) return;
+      markVowelTile(btn, i, false);
+      if (isVowel(vgWord[i])) vgFound.push(i); else vgMissed = true;
+
+      var total = vgWord.split("").filter(isVowel).length;
+      if (vgFound.length < total) return;
+
+      vgDone = true;
+      qsa(".anatomy-letter", wrap).forEach(function (t, idx) {
+        if (!t.classList.contains("is-hit") && !t.classList.contains("is-miss")) markVowelTile(t, idx, true);
+      });
+      vgStreak = vgMissed ? 0 : vgStreak + 1;
+      var streakEl = qs("#vowel-streak");
+      if (streakEl) streakEl.textContent = vgStreak;
+      setFeedback("vowel-feedback",
+        vgWord.toUpperCase() + " runs " + total + (total === 1 ? " vowel" : " vowels") +
+        " against " + (5 - total) + " consonants." + (vgMissed ? " Watch the consonants next time." : ""),
+        !vgMissed);
+    });
+    var newBtn = qs("#vowel-new");
+    if (newBtn) newBtn.addEventListener("click", dealVowelWord);
+    dealVowelWord();
+  }
+
+  /* --- 2. Word Finder -> which word fits the pattern? --------- */
+  var pgPattern = null, pgAnswer = "", pgDone = false, pgStreak = 0;
+
+  function dealPatternRound() {
+    var row = qs("#pattern-game-row"), opts = qs("#pattern-game-options");
+    if (!row || !opts) return;
+    pgAnswer = mgPick(FINDER_DICTIONARY);
+    pgDone = false;
+
+    /* Keep two positions, blank the rest. */
+    var keep = shuffle([0, 1, 2, 3, 4]).slice(0, 2);
+    pgPattern = [null, null, null, null, null];
+    keep.forEach(function (i) { pgPattern[i] = pgAnswer[i]; });
+
+    var matching = findMatches(pgPattern, "", "");
+    var options = [pgAnswer];
+    var guard = 0;
+    while (options.length < 4 && guard++ < 400) {
+      var w = mgPick(FINDER_DICTIONARY);
+      if (matching.indexOf(w) === -1 && options.indexOf(w) === -1) options.push(w);
+    }
+
+    row.innerHTML = "";
+    pgPattern.forEach(function (ch) {
+      var cell = document.createElement("span");
+      cell.className = "letter" + (ch ? "" : " wildcard");
+      cell.textContent = ch ? ch.toUpperCase() : "?";
+      row.appendChild(cell);
+    });
+
+    opts.innerHTML = "";
+    shuffle(options).forEach(function (word) {
+      var li = document.createElement("li");
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "word-chip";
+      btn.textContent = word;
+      btn.setAttribute("data-pattern-option", word);
+      li.appendChild(btn);
+      opts.appendChild(li);
+    });
+    setFeedback("pattern-game-feedback", "", null);
+  }
+
+  function initPatternGame() {
+    var opts = qs("#pattern-game-options");
+    if (!opts) return;
+    opts.addEventListener("click", function (e) {
+      var chip = e.target.closest("[data-pattern-option]");
+      if (!chip || pgDone) return;
+      pgDone = true;
+      var picked = chip.getAttribute("data-pattern-option");
+      var right = picked === pgAnswer;
+      pgStreak = right ? pgStreak + 1 : 0;
+      var streakEl = qs("#pattern-streak");
+      if (streakEl) streakEl.textContent = pgStreak;
+      qsa("[data-pattern-option]", opts).forEach(function (c) {
+        var w = c.getAttribute("data-pattern-option");
+        if (w === pgAnswer) c.classList.add("is-right");
+        else if (w === picked) c.classList.add("is-wrong");
+      });
+      setFeedback("pattern-game-feedback",
+        right ? "Correct. Only " + pgAnswer.toUpperCase() + " fits those fixed slots."
+              : "Not quite. " + pgAnswer.toUpperCase() + " is the one that fits.", right);
+      setTimeout(dealPatternRound, 1600);
+    });
+    dealPatternRound();
+  }
+
+  /* --- 4. Starting letter -> beat the prefix ------------------ */
+  var pfLetter = "", pfScore = 0, pfFound = [];
+
+  function dealPrefix() {
+    var tiles = qs("#prefix-tiles");
+    if (!tiles) return;
+    var guard = 0;
+    do {
+      pfLetter = "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)];
+    } while (findMatches([pfLetter, null, null, null, null], "", "").length < 6 && guard++ < 60);
+    pfFound = [];
+    tiles.innerHTML = "";
+    for (var i = 0; i < 5; i++) {
+      var cell = document.createElement("span");
+      cell.className = "letter" + (i === 0 ? "" : " wildcard");
+      cell.textContent = i === 0 ? pfLetter.toUpperCase() : "?";
+      tiles.appendChild(cell);
+    }
+    setFeedback("prefix-feedback", "", null);
+    var input = qs("#prefix-input");
+    if (input) { input.value = ""; input.disabled = false; }
+  }
+
+  function submitPrefix() {
+    var input = qs("#prefix-input");
+    if (!input) return;
+    var guess = (input.value || "").toLowerCase().replace(/[^a-z]/g, "");
+    if (guess.length !== 5) {
+      setFeedback("prefix-feedback", "That needs to be exactly five letters.", false);
+      return;
+    }
+    if (guess[0] !== pfLetter) {
+      setFeedback("prefix-feedback", guess.toUpperCase() + " does not start with " + pfLetter.toUpperCase() + ".", false);
+      return;
+    }
+    if (pfFound.indexOf(guess) !== -1) {
+      setFeedback("prefix-feedback", "You already found " + guess.toUpperCase() + ". Try another.", false);
+      return;
+    }
+    if (!isRealWord(guess)) {
+      setFeedback("prefix-feedback", guess.toUpperCase() + " is not in our sample dictionary.", false);
+      return;
+    }
+    pfFound.push(guess);
+    pfScore++;
+    var scoreEl = qs("#prefix-score");
+    if (scoreEl) scoreEl.textContent = pfScore;
+    input.value = "";
+    setFeedback("prefix-feedback", guess.toUpperCase() + " counts. Keep going, or roll a new letter.", true);
+  }
+
+  function initPrefixGame() {
+    var input = qs("#prefix-input");
+    if (!input) return;
+    input.addEventListener("input", function () {
+      input.value = input.value.replace(/[^a-zA-Z]/g, "").slice(0, 5);
+    });
+    input.addEventListener("keydown", function (e) { if (e.key === "Enter") submitPrefix(); });
+    var submit = qs("#prefix-submit");
+    if (submit) submit.addEventListener("click", submitPrefix);
+    var newBtn = qs("#prefix-new");
+    if (newBtn) newBtn.addEventListener("click", dealPrefix);
+    dealPrefix();
+  }
+
+  /* --- 5. Word lists -> roll a list and explore it ------------ */
+  var LIST_FEATURES = [
+    { label: "Double letters", test: function (w) { return /(.)\1/.test(w); } },
+    { label: "No repeated letters", test: function (w) { return new Set(w.split("")).size === 5; } },
+    { label: "Three or more vowels", test: function (w) { return w.split("").filter(isVowel).length >= 3; } },
+    { label: "Ending in Y", test: function (w) { return w[4] === "y"; } },
+    { label: "Starting and ending on the same letter", test: function (w) { return w[0] === w[4]; } }
+  ];
+
+  function runListFilter(kind) {
+    var out = qs("#list-explorer-results");
+    var titleEl = qs("#list-explorer-title");
+    var countEl = qs("#list-explorer-count");
+    if (!out) return;
+    var words = [], title = "";
+
+    if (kind === "letter") {
+      var letter, guard = 0;
+      do { letter = "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)]; }
+      while (findMatches([letter, null, null, null, null], "", "").length < 6 && guard++ < 60);
+      words = findMatches([letter, null, null, null, null], "", "");
+      title = 'Five-letter words starting with "' + letter.toUpperCase() + '"';
+    } else if (kind === "pattern") {
+      var seed = mgPick(FINDER_DICTIONARY);
+      var keep = shuffle([0, 1, 2, 3, 4]).slice(0, 2);
+      var pat = [null, null, null, null, null];
+      keep.forEach(function (i) { pat[i] = seed[i]; });
+      words = findMatches(pat, "", "");
+      title = "Words matching " + pat.map(function (c) { return c ? c.toUpperCase() : "?"; }).join("");
+    } else {
+      var feature = mgPick(LIST_FEATURES);
+      words = FINDER_DICTIONARY.filter(feature.test);
+      title = feature.label;
+    }
+
+    if (titleEl) titleEl.textContent = title;
+    if (countEl) countEl.textContent = words.length + (words.length === 1 ? " word" : " words");
+    if (!words.length) {
+      out.innerHTML = '<li class="wf-empty">No words in our sample dictionary fit that one. Roll again.</li>';
+      return;
+    }
+    renderMatches(out, words, { cap: 24 });
+  }
+
+  function initListExplorer() {
+    var cards = qs("#list-explorer-cards");
+    if (!cards) return;
+    qsa("[data-list-filter]", cards).forEach(function (card) {
+      card.addEventListener("click", function () {
+        qsa("[data-list-filter]", cards).forEach(function (c) { c.setAttribute("aria-pressed", String(c === card)); });
+        runListFilter(card.getAttribute("data-list-filter"));
+      });
+    });
+  }
+
+  /* --- 6. Memory and brain skills -> memory flash ------------- */
+  var memWord = "", memStreak = 0, memTimer = null;
+
+  function paintMemoryTiles(text) {
+    var wrap = qs("#memory-tiles");
+    if (!wrap) return;
+    wrap.innerHTML = "";
+    for (var i = 0; i < 5; i++) {
+      var cell = document.createElement("span");
+      var ch = text ? text[i] : null;
+      cell.className = "letter" + (ch ? "" : " wildcard");
+      cell.textContent = ch ? ch.toUpperCase() : "?";
+      wrap.appendChild(cell);
+    }
+  }
+
+  function startMemoryRound() {
+    var row = qs("#memory-input-row");
+    var input = qs("#memory-input");
+    var startBtn = qs("#memory-start");
+    clearTimeout(memTimer);
+    memWord = mgPick(FINDER_DICTIONARY);
+    paintMemoryTiles(memWord);
+    if (row) row.hidden = true;
+    if (startBtn) startBtn.disabled = true;
+    setFeedback("memory-feedback", "Memorise it. The tiles clear in a moment.", null);
+    memTimer = setTimeout(function () {
+      paintMemoryTiles(null);
+      if (row) row.hidden = false;
+      if (input) { input.value = ""; input.focus(); }
+      if (startBtn) startBtn.disabled = false;
+      setFeedback("memory-feedback", "Now type the word you just saw.", null);
+    }, 2200);
+  }
+
+  function submitMemory() {
+    var input = qs("#memory-input");
+    if (!input || !memWord) return;
+    var guess = (input.value || "").toLowerCase().replace(/[^a-z]/g, "");
+    if (!guess) return;
+    var right = guess === memWord;
+    memStreak = right ? memStreak + 1 : 0;
+    var streakEl = qs("#memory-streak");
+    if (streakEl) streakEl.textContent = memStreak;
+    paintMemoryTiles(memWord);
+    setFeedback("memory-feedback",
+      right ? "Correct, it was " + memWord.toUpperCase() + ". Go again to build the streak."
+            : "It was " + memWord.toUpperCase() + ". Try another one.", right);
+    var row = qs("#memory-input-row");
+    if (row) row.hidden = true;
+  }
+
+  function initMemoryGame() {
+    var startBtn = qs("#memory-start");
+    if (!startBtn) return;
+    startBtn.addEventListener("click", startMemoryRound);
+    var submit = qs("#memory-submit");
+    if (submit) submit.addEventListener("click", submitMemory);
+    var input = qs("#memory-input");
+    if (input) {
+      input.addEventListener("input", function () {
+        input.value = input.value.replace(/[^a-zA-Z]/g, "").slice(0, 5);
+      });
+      input.addEventListener("keydown", function (e) { if (e.key === "Enter") submitMemory(); });
+    }
+  }
+
+  /* --- 7. Wordle -> a short, real guessing round -------------- */
+  var wgAnswer = "", wgTries = 3, wgOver = false;
+
+  function scoreWordleGuess(guess, answer) {
+    var result = ["incorrect", "incorrect", "incorrect", "incorrect", "incorrect"];
+    var pool = answer.split("");
+    var i;
+    for (i = 0; i < 5; i++) {
+      if (guess[i] === answer[i]) { result[i] = "correct"; pool[i] = null; }
+    }
+    for (i = 0; i < 5; i++) {
+      if (result[i] === "correct") continue;
+      var at = pool.indexOf(guess[i]);
+      if (at !== -1) { result[i] = "wrong-position"; pool[at] = null; }
+    }
+    return result;
+  }
+
+  function paintWordleBoard(word, colors) {
+    var board = qs("#wordle-board");
+    if (!board) return;
+    var tiles = qsa(".letter", board);
+    flipTiles(tiles, function (tile, i) {
+      tile.textContent = word ? word[i].toUpperCase() : "?";
+      tile.classList.remove("correct", "wrong-position", "incorrect", "wildcard");
+      if (!word) tile.classList.add("wildcard");
+      else if (colors && colors[i]) tile.classList.add(colors[i]);
+    }, 70);
+  }
+
+  function dealWordleRound() {
+    wgAnswer = mgPick(FINDER_DICTIONARY);
+    wgTries = 3;
+    wgOver = false;
+    paintWordleBoard(null, null);
+    var triesEl = qs("#wordle-tries");
+    if (triesEl) triesEl.textContent = wgTries;
+    var input = qs("#wordle-input");
+    if (input) { input.value = ""; input.disabled = false; }
+    setFeedback("wordle-feedback-text", "", null);
+    var out = qs("#wordle-narrow-results");
+    if (out) out.innerHTML = '<li class="wf-empty">Make a guess to see what it rules out.</li>';
+  }
+
+  function submitWordleGuess() {
+    var input = qs("#wordle-input");
+    if (!input || wgOver) return;
+    var guess = (input.value || "").toLowerCase().replace(/[^a-z]/g, "");
+    if (guess.length !== 5) {
+      setFeedback("wordle-feedback-text", "A guess has to be exactly five letters.", false);
+      return;
+    }
+    if (!isRealWord(guess)) {
+      setFeedback("wordle-feedback-text", guess.toUpperCase() + " is not in our sample dictionary.", false);
+      return;
+    }
+    var colors = scoreWordleGuess(guess, wgAnswer);
+    paintWordleBoard(guess, colors);
+    renderWordleNarrowing(guess.split(""), colors);
+    input.value = "";
+
+    if (guess === wgAnswer) {
+      wgOver = true;
+      input.disabled = true;
+      setFeedback("wordle-feedback-text", "Solved it. The word was " + wgAnswer.toUpperCase() + ".", true);
+      return;
+    }
+    wgTries--;
+    var triesEl = qs("#wordle-tries");
+    if (triesEl) triesEl.textContent = Math.max(0, wgTries);
+    if (wgTries <= 0) {
+      wgOver = true;
+      input.disabled = true;
+      setFeedback("wordle-feedback-text", "Out of tries. The word was " + wgAnswer.toUpperCase() + ".", false);
+    } else {
+      setFeedback("wordle-feedback-text", "Not it. The colours below narrow what is still possible.", null);
+    }
+  }
+
+  function initWordleGame() {
+    var board = qs("#wordle-board");
+    var input = qs("#wordle-input");
+    if (!board || !input) return;
+    input.addEventListener("input", function () {
+      input.value = input.value.replace(/[^a-zA-Z]/g, "").slice(0, 5);
+    });
+    input.addEventListener("keydown", function (e) { if (e.key === "Enter") submitWordleGuess(); });
+    var submit = qs("#wordle-submit");
+    if (submit) submit.addEventListener("click", submitWordleGuess);
+    var newBtn = qs("#wordle-new");
+    if (newBtn) newBtn.addEventListener("click", dealWordleRound);
+    var openers = qs("#wordle-openers");
+    if (openers) {
+      qsa(".opener-chip", openers).forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          if (wgOver) return;
+          qsa(".opener-chip", openers).forEach(function (c) { c.classList.remove("is-active"); });
+          chip.classList.add("is-active");
+          input.value = chip.getAttribute("data-word") || "";
+          submitWordleGuess();
+        });
+      });
+    }
+    dealWordleRound();
+  }
+
+  function renderAnagramMatches() {
+    var wrap = qs("#anagram-tiles");
+    var out = qs("#anagram-results");
+    if (!wrap || !out) return;
+    var tiles = qsa(".letter", wrap);
+    var letters = tiles.map(function (t) { return t.textContent.toLowerCase(); }).join("");
+    var matches = findMatches([null, null, null, null, null], letters, "");
+    if (!matches.length) {
+      out.innerHTML = '<li class="wf-empty">No word in our sample dictionary uses exactly these letters.</li>';
+    } else {
+      renderMatches(out, matches, { cap: 8 });
+    }
+
+    /* The tiles in their current order are the player's answer. */
+    var solved = isRealWord(letters);
+    tiles.forEach(function (t) { t.classList.toggle("is-solved", solved); });
+    if (solved && letters !== agLastSolved) {
+      agLastSolved = letters;
+      agScore++;
+      var scoreEl = qs("#anagram-score");
+      if (scoreEl) scoreEl.textContent = agScore;
+      setFeedback("anagram-feedback", letters.toUpperCase() + " is a real word. Deal new letters for another round.", true);
+    } else if (!solved) {
+      agLastSolved = "";
+      setFeedback("anagram-feedback", "", null);
+    }
+  }
+
+  var agScore = 0, agLastSolved = "";
+
+  function dealAnagramLetters() {
+    var wrap = qs("#anagram-tiles");
+    if (!wrap) return;
+    var tiles = qsa(".letter", wrap);
+    var source = mgPick(FINDER_DICTIONARY).split("");
+    var scrambled = shuffle(source);
+    var guard = 0;
+    while (scrambled.join("") === source.join("") && guard++ < 8) scrambled = shuffle(source);
+    tiles.forEach(function (t, i) {
+      t.textContent = (scrambled[i] || "").toUpperCase();
+      t.classList.remove("is-solved");
+    });
+    agLastSolved = "";
+    renderAnagramMatches();
   }
 
   function flipTiles(tiles, applyState, stagger) {
@@ -1079,26 +1969,40 @@
     });
   }
 
+  /* Wordle-color semantics -> a real findMatches() query. "Wrong
+     position" letters are folded into "contains"; "incorrect"
+     letters are excluded unless that same letter also shows up
+     correct/present elsewhere in the guess (repeated-letter case). */
+  function wordleQueryFor(word, colors) {
+    var pos = [null, null, null, null, null];
+    var contains = [];
+    var exclude = [];
+    var keepers = {};
+    word.forEach(function (ch, i) { if (colors[i] !== "incorrect") keepers[ch] = true; });
+    word.forEach(function (ch, i) {
+      if (colors[i] === "correct") pos[i] = ch;
+      else if (colors[i] === "wrong-position") contains.push(ch);
+      else if (colors[i] === "incorrect" && !keepers[ch]) exclude.push(ch);
+    });
+    return { pos: pos, contains: contains.join(""), exclude: exclude.join(""), guess: word.join("") };
+  }
+
+  function renderWordleNarrowing(word, colors) {
+    var out = qs("#wordle-narrow-results");
+    if (!out) return;
+    var q = wordleQueryFor(word, colors);
+    var matches = findMatches(q.pos, q.contains, q.exclude).filter(function (w) { return w !== q.guess; });
+    if (!matches.length) {
+      out.innerHTML = '<li class="wf-empty">No other matches in our sample dictionary.</li>';
+      return;
+    }
+    renderMatches(out, matches, { cap: 6 });
+  }
+
   function initWordleDemo() {
     var board = qs("#wordle-board");
-    var openers = qs("#wordle-openers");
-    if (!board || !openers) return;
+    if (!board) return;
     var tiles = qsa(".letter", board);
-
-    qsa(".opener-chip", openers).forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        if (chip.classList.contains("is-active")) return;
-        qsa(".opener-chip", openers).forEach(function (c) { c.classList.remove("is-active"); });
-        chip.classList.add("is-active");
-        var word = (chip.getAttribute("data-word") || "").split("");
-        var colors = (chip.getAttribute("data-colors") || "").split(",");
-        flipTiles(tiles, function (tile, i) {
-          tile.textContent = word[i] || "";
-          tile.classList.remove("correct", "wrong-position", "incorrect");
-          if (colors[i]) tile.classList.add(colors[i]);
-        }, 80);
-      });
-    });
 
     if (!("IntersectionObserver" in window)) return;
     var revealed = false;
@@ -1156,6 +2060,7 @@
           t.classList.add("is-flipping");
         });
       }
+      renderAnagramMatches();
     }
 
     tiles.forEach(function (tile, i) {
@@ -1182,6 +2087,11 @@
         }
       });
     });
+
+    var newBtn = qs("#anagram-new");
+    if (newBtn) newBtn.addEventListener("click", dealAnagramLetters);
+
+    renderAnagramMatches();
   }
 
   /* ---------------------------------------------------------
@@ -1384,7 +2294,7 @@
     if (val === wkWord[wkIndex]) {
       tile.textContent = val.toUpperCase();
       tile.setAttribute("data-state", "correct");
-      setFeedback("weekly-feedback", "Correct! The word was “" + wkWord.toUpperCase() + "”." + (isLiveWeek() ? " +150 XP banked." : " (Archived challenge — practice only.)"), true);
+      setFeedback("weekly-feedback", "Correct! The word was “" + wkWord.toUpperCase() + "”." + (isLiveWeek() ? " +150 XP banked." : " (Archived challenge, practice only.)"), true);
       input.disabled = true;
       qs("#weekly-submit").disabled = true;
       qs("#weekly-submit").textContent = "Solved!";
@@ -1396,7 +2306,7 @@
       (function (t) { setTimeout(function () { t.removeAttribute("data-state"); }, 500); })(tile);
       if (wkTriesLeft <= 0) {
         revealWeekly(false);
-        setFeedback("weekly-feedback", "Out of tries — it was “" + wkWord.toUpperCase() + "”. Back next week.", false);
+        setFeedback("weekly-feedback", "Out of tries. It was “" + wkWord.toUpperCase() + "”. Back next week.", false);
         input.disabled = true;
         qs("#weekly-submit").disabled = true;
         completeWeekly(false);
@@ -1433,7 +2343,7 @@
     if (isLiveWeek()) { bar.hidden = true; return; }
     bar.hidden = false;
     var textEl = qs("#archive-bar-text");
-    if (textEl) textEl.textContent = "Replaying archived challenges — Week of " + weekRangeLabel(viewingWeek) + ". Results here aren't saved.";
+    if (textEl) textEl.textContent = "Replaying archived challenges. Week of " + weekRangeLabel(viewingWeek) + ". Results here aren't saved.";
   }
 
   function initArchiveBar() {
@@ -1479,6 +2389,7 @@
       chip.addEventListener("click", function () {
         closeAllModals();
         loadWeek(wIndex);
+        if (selectChallengeSlide) selectChallengeSlide(PAST_CHALLENGE_TARGETS.indexOf(c));
         var target = qs(c.target);
         if (target) setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60);
       });
@@ -1508,7 +2419,7 @@
       wrap.appendChild(buildPastWeekRow(wIndex, wrap));
     }
     if (!wrap.children.length) {
-      wrap.innerHTML = '<p class="past-week-empty">No past weeks yet — check back after this week ends.</p>';
+      wrap.innerHTML = '<p class="past-week-empty">No past weeks yet. Check back after this week ends.</p>';
     }
   }
 
@@ -1519,33 +2430,6 @@
         openModal(qs("#past-challenges-modal"));
       });
     });
-  }
-
-  /* ============================================================
-     Marquee — repeats its one phrase-set enough times that the
-     track always spans well past any viewport width (no trailing
-     blank gap on wide screens), then duplicates that whole run
-     once more so a plain -50% translate loops seamlessly. Speed
-     is derived from the built width so it reads the same pace
-     regardless of how many repeats that took.
-     ============================================================ */
-  function initMarquee() {
-    var track = qs("#marquee-track");
-    if (!track) return;
-    var setHtml = track.innerHTML;
-    var minWidth = Math.max(window.innerWidth, document.documentElement.clientWidth) * 2.2;
-
-    track.innerHTML = setHtml;
-    var setWidth = track.scrollWidth || 1;
-    var repeats = Math.max(1, Math.ceil(minWidth / setWidth));
-
-    var run = "";
-    for (var i = 0; i < repeats; i++) run += setHtml;
-    track.innerHTML = run + run;
-
-    var runWidth = track.scrollWidth / 2;
-    var duration = Math.max(12, runWidth / 70);
-    track.style.animationDuration = duration + "s";
   }
 
   /* ============================================================
@@ -1653,6 +2537,72 @@
 
     track.scrollLeft = CLONE_COUNT * stepPx;
     updateDots();
+  }
+
+  var selectChallengeSlide = null;
+  function initChallengeCarousel() {
+    var shell = qs("#challenges");
+    var slides = qsa(".challenge-slide");
+    var dotsWrap = qs("#challenge-dots");
+    var label = qs("#challenge-slide-label");
+    var prev = qs("#challenge-prev");
+    var next = qs("#challenge-next");
+    if (!shell || !slides.length || !dotsWrap) return;
+
+    var names = ["Today's Challenge", "Unscramble", "Missing Letter", "Speed Round", "Weekly Challenge"];
+    var current = 0;
+    slides.forEach(function (slide, i) {
+      slide.setAttribute("role", "tabpanel");
+      slide.setAttribute("aria-labelledby", "challenge-tab-" + i);
+    });
+
+    function render(index, shouldScroll) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach(function (slide, i) {
+        var active = i === current;
+        slide.classList.toggle("is-active", active);
+        slide.setAttribute("aria-hidden", String(!active));
+        if (active) {
+          qsa("[data-reveal-item]", slide).forEach(function (item) {
+            item.classList.add("is-visible");
+            item.style.opacity = "1";
+            item.style.transform = "none";
+          });
+        }
+      });
+      if (label) label.textContent = "Challenge " + String(current + 1).padStart(2, "0") + " of " + slides.length + " · " + names[current];
+      qsa(".challenge-carousel-dot", dotsWrap).forEach(function (dot, i) {
+        var active = i === current;
+        dot.classList.toggle("is-active", active);
+        dot.setAttribute("aria-selected", String(active));
+        dot.tabIndex = active ? 0 : -1;
+      });
+      if (shouldScroll) slides[current].scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    dotsWrap.innerHTML = "";
+    slides.forEach(function (slide, i) {
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "challenge-carousel-dot";
+      dot.id = "challenge-tab-" + i;
+      dot.textContent = String(i + 1).padStart(2, "0");
+      dot.setAttribute("role", "tab");
+      dot.setAttribute("aria-label", "Show " + names[i]);
+      dot.setAttribute("aria-controls", slide.id);
+      dot.addEventListener("click", function () { render(i, true); });
+      dotsWrap.appendChild(dot);
+    });
+
+    if (prev) prev.addEventListener("click", function () { render(current - 1, true); });
+    if (next) next.addEventListener("click", function () { render(current + 1, true); });
+    shell.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") { e.preventDefault(); render(current - 1, true); }
+      if (e.key === "ArrowRight") { e.preventDefault(); render(current + 1, true); }
+    });
+
+    selectChallengeSlide = function (index, shouldScroll) { render(index, shouldScroll !== false); };
+    render(0, false);
   }
 
   /* ============================================================
@@ -1763,8 +2713,13 @@
      Boot
      ============================================================ */
   document.addEventListener("DOMContentLoaded", function () {
+    initWordFinder();
+    initWordFinderTriggers();
+    initStartsWithToExample();
     initLabels();
     initCtaScroll();
+    initHeroMore();
+    initHeroCta();
     initTopbar();
     initArchiveBar();
     initPastChallenges();
@@ -1774,8 +2729,7 @@
     initSpeedRound();
     initWeeklyChallenge();
     initAccordion();
-    initCarousel();
-    initMarquee();
+    initChallengeCarousel();
     renderChallenges();
     renderAchievements();
     updateStatsUI();
@@ -1785,14 +2739,14 @@
     initWordChipFill();
     initWordleDemo();
     initAnagramDrag();
-    initPatternCycler();
+    /* Section mini-games */
+    initVowelGame();
+    initPatternGame();
+    initPrefixGame();
+    initListExplorer();
+    initMemoryGame();
+    initWordleGame();
     initContentMotion();
     initScrollFX();
-
-    var marqueeResize = null;
-    window.addEventListener("resize", function () {
-      clearTimeout(marqueeResize);
-      marqueeResize = setTimeout(initMarquee, 200);
-    });
   });
 })();

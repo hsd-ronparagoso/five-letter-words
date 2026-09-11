@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>5 Letter Words Finder | UnscrambleX</title>
-<meta name="description" content="Find 5 letter words fast: search by the letters you know, the pattern you're missing, or the letter it starts with — then play today's five-letter puzzle and browse word lists for Wordle, crosswords, and vocabulary practice.">
+<meta name="description" content="Find 5 letter words instantly: type the letters you know into the position boxes, filter by what's included or excluded, and get real matches for Wordle, crosswords, Scrabble and more.">
 <meta name="theme-color" content="#e6f4ff">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,19 +22,18 @@
 <header class="topbar">
   <div class="wrap-game topbar-in">
     <div class="brand">
-      <img src="images/logo.png" alt="UnscrambleX" width="26" height="26">
-      <span class="brand-name">UnscrambleX</span>
+      <img src="images/logo.png" alt="5 Letter Words" width="120" height="40">
     </div>
     <nav class="site-nav" aria-label="Primary">
-      <button type="button" class="nav-link" data-scroll-to="#today-game">Play</button>
+      <button type="button" class="nav-link" data-scroll-to="#word-finder">Finder</button>
+      <button type="button" class="nav-link" data-scroll-to="#play">Play</button>
       <button type="button" class="nav-link" data-scroll-to="#challenges">Challenges</button>
-      <button type="button" class="nav-link" data-scroll-to="#achievements">Achievements</button>
       <button type="button" class="nav-link" data-scroll-to="#how-to-play">Guide</button>
     </nav>
     <div class="top-actions">
-      <a class="btn-primary nav-cta" href="https://unscramblex.com/" target="_blank" rel="noopener noreferrer">
-        Try the Word Finder
-      </a>
+      <button class="btn-primary nav-cta" type="button" data-scroll-to="#word-finder">
+        Full Dictionary Search
+      </button>
       <div class="streak-chip" id="streak-chip" title="Current daily streak">
         <i class="ph-fill ph-fire flame" aria-hidden="true"></i>
         <span id="streak-val">0</span>
@@ -52,7 +51,7 @@
   </div>
 </header>
 
-<!-- ============ Archive banner — shown only while replaying a past week ============ -->
+<!-- ============ Archive banner: shown only while replaying a past week ============ -->
 <div class="archive-bar" id="archive-bar" hidden>
   <div class="wrap-hero archive-bar-in">
     <span class="archive-bar-text" id="archive-bar-text"></span>
@@ -60,188 +59,102 @@
   </div>
 </div>
 
-<!-- ============ Hero (H1) — the centerpiece ============ -->
+<!-- ============ Hero (H1) + Word Finder: one composition ============ -->
 <section class="hero" id="hero">
   <div class="wrap-hero">
-    <div class="hero-grid">
+    <div class="hero-copy" data-hero-in>
+      <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Free instant word finder</p>
+      <h1>5 Letter Words Finder</h1>
 
-      <!-- Copy column -->
-      <div class="hero-copy" data-hero-in>
-        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Daily 5-letter puzzle</p>
-        <h1>5 Letter Words Finder</h1>
-        <p class="hero-lede">
-          Find 5 letter words by the letters you know, the pattern you're missing, or the letter
-          they start with — then drag the tiles into place and prove it on today's challenge. A
-          brand-new set of five-letter words every day, four ways to play, and a finder that never
-          runs out of ideas.
-        </p>
-        <div class="hero-cta-row">
-          <button class="btn-primary" type="button" data-scroll-to="#today-game">
-            Play Today's Challenge
-            <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
-          </button>
-          <button class="btn-ghost" type="button" data-scroll-to="#challenges">
-            Try Another Challenge
-          </button>
-        </div>
-        <div class="hero-tags">
-          <span class="tag-item"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>New puzzle every day</span>
-          <span class="tag-item"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>4 games, one streak</span>
-          <span class="tag-item"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>No sign-up, ever</span>
-        </div>
-      </div>
-
-      <!-- Game column: real drag-and-drop Scrabble-tile board -->
-      <div class="hero-game-col" data-hero-in data-hero-delay="1">
-        <div class="game-card" id="today-game">
-          <div class="game-card-head">
-            <span class="game-card-title"><span class="dot live" aria-hidden="true"></span> Today's Challenge</span>
-            <span class="game-card-day" id="today-label">&nbsp;</span>
-          </div>
-          <p class="drag-instructions">Drag the tiles into the answer row to spell today's word &mdash; or tap a tile to place it.</p>
-
-          <p class="drag-row-label">Answer</p>
-          <div class="answer-row" id="answer-row" role="group" aria-label="Answer slots"></div>
-
-          <p class="drag-row-label">Available letters</p>
-          <div class="tray-row" id="tray-row" role="group" aria-label="Available letters"></div>
-
-          <p class="drag-feedback" id="drag-feedback" aria-live="polite">Fill all five slots, then submit your answer.</p>
-
-          <div class="mg-actions">
-            <button class="btn-secondary" type="button" id="drag-shuffle">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h4l3 4M21 6h-4l-3 4M3 18h4l3-4M21 18h-4l-3-4"/></svg>
-              Shuffle
-            </button>
-            <button class="btn-secondary" type="button" id="drag-clear">Clear</button>
-            <button class="btn-primary" type="button" id="drag-submit" disabled>Submit Answer</button>
+      <div class="hero-lede-wrap">
+        <div class="hero-lede-stack">
+          <p class="hero-lede" id="hero-lede">
+            Type the letters you know and get real five-letter matches instantly.
+          </p>
+          <div class="hero-lede-more" id="hero-lede-extra" data-open="false">
+            <div class="hero-lede-more-inner">
+              <p class="hero-lede">Use position boxes, contains, and excludes to solve Wordle, crossword, and Scrabble clues without a page reload.</p>
+            </div>
           </div>
         </div>
+        <button class="hero-expand" id="hero-expand" type="button" aria-controls="hero-lede-extra" aria-expanded="false" aria-label="Show more about the word finder" title="Show more about the word finder">
+          <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+        </button>
       </div>
+
+      <div class="hero-cta-row">
+        <button class="btn-primary btn-hero-primary" id="hero-cta" type="button">
+          Start Finding Words
+          <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <ul class="hero-stats">
+        <li class="hero-stat">
+          <span class="hero-stat-num" id="hero-stat-words">1,100+</span>
+          <span class="hero-stat-label">words searchable</span>
+        </li>
+        <li class="hero-stat">
+          <span class="hero-stat-num">3</span>
+          <span class="hero-stat-label">ways to filter</span>
+        </li>
+        <li class="hero-stat">
+          <span class="hero-stat-num">5</span>
+          <span class="hero-stat-label">word games to play</span>
+        </li>
+      </ul>
     </div>
 
-    <!-- ============ Marquee ============ -->
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee-track" id="marquee-track">
-        <span>Play</span><span class="dot-sep">&bull;</span><span>Solve</span><span class="dot-sep">&bull;</span><span>Unscramble</span><span class="dot-sep">&bull;</span><span>Earn XP</span><span class="dot-sep">&bull;</span><span>Win</span><span class="dot-sep">&bull;</span>
-      </div>
-    </div>
+    <!-- Word Finder tool: always visible, same backdrop and container as the hero copy -->
+    <div class="hero-tool-col">
+      <div class="wf-card" id="word-finder">
+        <div class="wf-card-head">
+          <span class="wf-card-title"><span class="dot live" aria-hidden="true"></span> Word Finder</span>
+          <span class="wf-card-sub">Updates as you type</span>
+        </div>
 
-    <!-- ============ Game modes carousel ============ -->
-    <div class="modes-carousel-wrap" data-reveal-item>
-      <p class="modes-kicker">Choose your game</p>
-      <div class="carousel" id="modes-carousel">
-        <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Previous game mode">&#8249;</button>
-        <div class="carousel-track" id="modes-track">
-          <div class="carousel-card">
-            <span class="carousel-icon" aria-hidden="true"><i class="ph-fill ph-target"></i></span>
-            <p class="carousel-name">Today's Challenge</p>
-            <p class="carousel-desc">Drag Scrabble tiles into place to spell the daily word.</p>
-            <button class="btn-ghost carousel-cta" type="button" data-scroll-to="#today-game">Start Playing</button>
+        <p class="wf-label">Letters you know, by position</p>
+        <div class="wf-positions" role="group" aria-label="Letter positions">
+          <input class="wf-pos" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Letter 1" placeholder="?">
+          <input class="wf-pos" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Letter 2" placeholder="?">
+          <input class="wf-pos" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Letter 3" placeholder="?">
+          <input class="wf-pos" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Letter 4" placeholder="?">
+          <input class="wf-pos" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Letter 5" placeholder="?">
+        </div>
+
+        <div class="wf-filters">
+          <div class="wf-field">
+            <label class="wf-field-label" for="wf-contains">Contains letters</label>
+            <input class="wf-field-input" id="wf-contains" type="text" placeholder="e.g. rst" autocomplete="off" spellcheck="false">
           </div>
-          <div class="carousel-card">
-            <span class="carousel-icon" aria-hidden="true"><i class="ph-fill ph-shuffle"></i></span>
-            <p class="carousel-name">Unscramble</p>
-            <p class="carousel-desc">Drag or tap tiles to put scrambled letters back in order.</p>
-            <button class="btn-ghost carousel-cta" type="button" data-scroll-to="#unscramble-game">Unscramble Now</button>
-          </div>
-          <div class="carousel-card">
-            <span class="carousel-icon" aria-hidden="true"><i class="ph-fill ph-question"></i></span>
-            <p class="carousel-name">Missing Letter</p>
-            <p class="carousel-desc">One letter is hidden. Figure out what completes the word.</p>
-            <button class="btn-ghost carousel-cta" type="button" data-scroll-to="#missing-letter-game">Try the Challenge</button>
-          </div>
-          <div class="carousel-card">
-            <span class="carousel-icon" aria-hidden="true"><i class="ph-fill ph-timer"></i></span>
-            <p class="carousel-name">Speed Round</p>
-            <p class="carousel-desc">Solve as many words as you can in 60 seconds flat.</p>
-            <button class="btn-ghost carousel-cta" type="button" data-scroll-to="#speed-round-game">Challenge Yourself</button>
-          </div>
-          <div class="carousel-card">
-            <span class="carousel-icon" aria-hidden="true"><i class="ph-fill ph-trophy"></i></span>
-            <p class="carousel-name">Weekly Challenge</p>
-            <p class="carousel-desc">A tougher word, new every week, worth bonus XP.</p>
-            <button class="btn-ghost carousel-cta" type="button" data-scroll-to="#weekly-challenge-game">Take the Weekly Challenge</button>
+          <div class="wf-field">
+            <label class="wf-field-label" for="wf-excludes">Excludes letters</label>
+            <input class="wf-field-input" id="wf-excludes" type="text" placeholder="e.g. xz" autocomplete="off" spellcheck="false">
           </div>
         </div>
-        <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Next game mode">&#8250;</button>
-      </div>
-      <div class="carousel-dots" id="modes-dots"></div>
-    </div>
 
-    <!-- ============ Today's Challenges strip ============ -->
-    <div class="challenges-strip" id="challenges" data-hero-in data-hero-delay="2">
-      <div class="challenges-head">
-        <div>
-          <p class="challenges-title">Let&rsquo;s Try This Week&rsquo;s Challenges</p>
-          <p class="challenges-sub" id="week-range-label">&nbsp;</p>
+        <div class="wf-actions">
+          <button class="btn-secondary" type="button" id="wf-clear">Clear</button>
+          <span class="wf-count" id="wf-count" aria-live="polite">Ready when you are</span>
         </div>
-        <p class="challenges-progress"><span id="challenges-done">0</span> / 4 Completed</p>
+
+        <ul class="wf-results word-tiles" id="wf-results" aria-live="polite"></ul>
       </div>
-      <div class="challenges-track" id="challenges-track">
-        <button class="challenge-chip" type="button" data-challenge="today" data-scroll-to="#today-game">
-          <span class="challenge-num">01</span>
-          <span class="challenge-icon" aria-hidden="true"><i class="ph-fill ph-target"></i></span>
-          <span class="challenge-name">Today's Challenge</span>
-          <span class="challenge-state" data-state="pending"><i class="ph-bold ph-check"></i></span>
-        </button>
-        <button class="challenge-chip" type="button" data-challenge="unscramble" data-scroll-to="#unscramble-game">
-          <span class="challenge-num">02</span>
-          <span class="challenge-icon" aria-hidden="true"><i class="ph-fill ph-shuffle"></i></span>
-          <span class="challenge-name">Unscramble</span>
-          <span class="challenge-state" data-state="pending"><i class="ph-bold ph-check"></i></span>
-        </button>
-        <button class="challenge-chip" type="button" data-challenge="missing" data-scroll-to="#missing-letter-game">
-          <span class="challenge-num">03</span>
-          <span class="challenge-icon" aria-hidden="true"><i class="ph-fill ph-question"></i></span>
-          <span class="challenge-name">Missing Letter</span>
-          <span class="challenge-state" data-state="pending"><i class="ph-bold ph-check"></i></span>
-        </button>
-        <button class="challenge-chip" type="button" data-challenge="speed" data-scroll-to="#speed-round-game">
-          <span class="challenge-num">04</span>
-          <span class="challenge-icon" aria-hidden="true"><i class="ph-fill ph-timer"></i></span>
-          <span class="challenge-name">Speed Round</span>
-          <span class="challenge-state" data-state="pending"><i class="ph-bold ph-check"></i></span>
-        </button>
+
+      <!-- Quick searches: real, one-tap queries into the tool above -->
+      <div class="hero-quick">
+        <span class="hero-quick-label">Popular searches</span>
+        <div class="hero-quick-row">
+          <button type="button" class="word-chip" data-wf-start="s">starts with S</button>
+          <button type="button" class="word-chip" data-wf-contains="ing">contains "ing"</button>
+          <button type="button" class="word-chip" data-wf-pattern="????y">ends in Y</button>
+          <button type="button" class="word-chip" data-wf-pattern="c?a?e">c?a?e pattern</button>
+          <button type="button" class="word-chip" data-wf-contains="qu">contains "qu"</button>
+        </div>
       </div>
-      <button class="weekly-teaser" type="button" data-scroll-to="#weekly-challenge-game" id="weekly-label">
-        <i class="ph-fill ph-trophy"></i>
-        <span>&nbsp;</span>
-        <i class="ph-bold ph-arrow-right"></i>
-      </button>
-      <button class="past-challenges-cta" type="button" data-open-past-challenges>
-        <i class="ph-bold ph-clock-counter-clockwise" aria-hidden="true"></i>
-        Try Past Challenges
-      </button>
     </div>
   </div>
 </section>
-
-<!-- ============ Live stat strip (your own play, tracked on this device) ============ -->
-<div class="stat-strip" id="stat-strip">
-  <div class="wrap-hero stat-strip-in" data-reveal-group>
-    <div data-reveal-item>
-      <div class="stat-num" id="stat-games" data-count-target="0">0</div>
-      <div class="stat-label">Games played</div>
-    </div>
-    <div data-reveal-item>
-      <div class="stat-num" id="stat-words" data-count-target="0">0</div>
-      <div class="stat-label">Words solved</div>
-    </div>
-    <div data-reveal-item>
-      <div class="stat-num" id="stat-success" data-count-target="0" data-suffix="%">0%</div>
-      <div class="stat-label">Success rate</div>
-    </div>
-    <div data-reveal-item>
-      <div class="stat-num" id="stat-xp" data-count-target="0">0</div>
-      <div class="stat-label">XP earned</div>
-    </div>
-    <div data-reveal-item>
-      <div class="stat-num" id="stat-level" data-count-target="1">1</div>
-      <div class="stat-label">Level</div>
-    </div>
-  </div>
-</div>
 
 <!-- ============ Stats modal ============ -->
 <div class="modal-backdrop" id="stats-modal" hidden>
@@ -251,10 +164,22 @@
     <p class="sub">Across every game mode, stored on this device.</p>
 
     <div class="stat-grid">
-      <div class="stat-cell"><div class="stat-num" id="stat-played-modal">0</div><div class="stat-label">Played</div></div>
-      <div class="stat-cell"><div class="stat-num" id="stat-winpct-modal">0</div><div class="stat-label">Win %</div></div>
-      <div class="stat-cell"><div class="stat-num" id="stat-streak-modal">0</div><div class="stat-label">Streak</div></div>
-      <div class="stat-cell"><div class="stat-num" id="stat-max-modal">0</div><div class="stat-label">Best</div></div>
+      <div class="stat-cell" tabindex="0">
+        <div class="stat-num" id="stat-played-modal">0</div><div class="stat-label">Played</div>
+        <p class="stat-tip"><span>Every challenge you've started, across every game mode.</span></p>
+      </div>
+      <div class="stat-cell" tabindex="0">
+        <div class="stat-num" id="stat-winpct-modal">0</div><div class="stat-label">Win %</div>
+        <p class="stat-tip"><span>Games solved correctly, divided by games played.</span></p>
+      </div>
+      <div class="stat-cell" tabindex="0">
+        <div class="stat-num" id="stat-streak-modal">0</div><div class="stat-label">Streak</div>
+        <p class="stat-tip"><span>Days in a row with at least one challenge completed.</span></p>
+      </div>
+      <div class="stat-cell" tabindex="0">
+        <div class="stat-num" id="stat-max-modal">0</div><div class="stat-label">Best</div>
+        <p class="stat-tip"><span>Your longest streak ever, on this device.</span></p>
+      </div>
     </div>
 
     <p class="dist-title">Achievements unlocked</p>
@@ -271,24 +196,24 @@
 
     <div class="help-row">
       <i class="ph-fill ph-target help-icon" aria-hidden="true"></i>
-      <p><strong>Today's Challenge</strong> &mdash; drag the Scrabble tiles into the answer row to spell the daily word, then submit.</p>
+      <p><strong>Today's Challenge:</strong> drag the Scrabble tiles into the answer row to spell the daily word, then submit.</p>
     </div>
     <div class="help-row">
       <i class="ph-fill ph-shuffle help-icon" aria-hidden="true"></i>
-      <p><strong>Unscramble</strong> &mdash; drag or tap two tiles to swap them until the scrambled letters are back in order.</p>
+      <p><strong>Unscramble:</strong> drag or tap two tiles to swap them until the scrambled letters are back in order.</p>
     </div>
     <div class="help-row">
       <i class="ph-fill ph-question help-icon" aria-hidden="true"></i>
-      <p><strong>Missing Letter</strong> &mdash; one letter is hidden from the word. Type the letter that completes it.</p>
+      <p><strong>Missing Letter:</strong> one letter is hidden from the word. Type the letter that completes it.</p>
     </div>
     <div class="help-row">
       <i class="ph-fill ph-timer help-icon" aria-hidden="true"></i>
-      <p><strong>Speed Round</strong> &mdash; solve as many missing-letter words as you can before the 60-second clock runs out.</p>
+      <p><strong>Speed Round:</strong> solve as many missing-letter words as you can before the 60-second clock runs out.</p>
     </div>
 
     <p style="font-size:12px;color:var(--absent-key);margin:14px 0 0;">
       Every challenge you complete earns XP and counts toward your daily streak. A fresh set of
-      words &mdash; and a tougher Weekly Challenge &mdash; arrives every Monday.
+      words, and a tougher Weekly Challenge, arrives every Monday.
     </p>
   </div>
 </div>
@@ -305,162 +230,7 @@
 
 <main>
 
-  <!-- ============ How to Play: numbered step tiles ============ -->
-  <section class="mini-game-section" id="how-to-play">
-    <div class="wrap-hero">
-      <div class="mg-head" data-reveal-item>
-        <span class="kicker">Before you play</span>
-        <h2 class="mg-title">How It Works</h2>
-        <p class="mg-sub">Four game modes, one streak. Here's how each one is scored.</p>
-      </div>
-
-      <div class="how-grid">
-        <div class="how-card" data-reveal-item>
-          <div class="how-card-top">
-            <span class="how-num">01</span>
-            <span class="how-icon"><i class="ph-fill ph-target" aria-hidden="true"></i></span>
-          </div>
-          <h3 class="how-card-title">Today's Challenge</h3>
-          <p class="how-card-text">Drag the Scrabble-style tiles from the tray into the five answer slots, rearrange them as many times as you like, then hit Submit Answer. Solve it to earn XP and lock in today's streak.</p>
-        </div>
-        <div class="how-card" data-reveal-item>
-          <div class="how-card-top">
-            <span class="how-num">02</span>
-            <span class="how-icon"><i class="ph-fill ph-trend-up" aria-hidden="true"></i></span>
-          </div>
-          <h3 class="how-card-title">XP &amp; Levels</h3>
-          <p class="how-card-text">Every challenge you finish earns XP &mdash; more for a correct solve, a little for trying. XP adds up into your level, shown in the stats strip below. There's no cap, so every game you play moves the needle.</p>
-        </div>
-        <div class="how-card" data-reveal-item>
-          <div class="how-card-top">
-            <span class="how-num">03</span>
-            <span class="how-icon"><i class="ph-fill ph-fire" aria-hidden="true"></i></span>
-          </div>
-          <h3 class="how-card-title">Daily Streak</h3>
-          <p class="how-card-text">Complete at least one challenge today and your streak continues; miss a full day and it resets. The flame in the top bar always shows your current streak, stored on this device.</p>
-        </div>
-        <div class="how-card" data-reveal-item>
-          <div class="how-card-top">
-            <span class="how-num">04</span>
-            <span class="how-icon"><i class="ph-fill ph-trophy" aria-hidden="true"></i></span>
-          </div>
-          <h3 class="how-card-title">Weekly Challenge</h3>
-          <p class="how-card-text">A tougher five-letter word that changes once a week instead of once a day. Solve it for a bigger XP bonus &mdash; find it near the bottom of the challenge carousel above.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ Mini-game 2: Unscramble ============ -->
-  <section class="mini-game-section" id="unscramble-game">
-    <div class="wrap-hero">
-      <div class="mg-head" data-reveal-item>
-        <span class="kicker">Challenge 02 &middot; Unscramble</span>
-        <h2 class="mg-title">Unscramble Today's Word</h2>
-        <p class="mg-sub">Drag two tiles to swap them, or tap one then tap another. Put the letters in order before you run out of moves.</p>
-      </div>
-
-      <div class="mg-card" data-reveal-item>
-        <div class="unscramble-stage">
-          <p class="unscramble-clue" id="unscramble-clue">Loading today's word&hellip;</p>
-          <div class="unscramble-tiles" id="unscramble-tiles" role="group" aria-label="Scrambled letters"></div>
-          <p class="unscramble-feedback" id="unscramble-feedback" aria-live="polite">Drag a tile onto another to swap them.</p>
-        </div>
-        <div class="mg-actions">
-          <button class="btn-secondary" type="button" id="unscramble-shuffle">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h4l3 4M21 6h-4l-3 4M3 18h4l3-4M21 18h-4l-3-4"/></svg>
-            Shuffle
-          </button>
-          <button class="btn-secondary" type="button" id="unscramble-reset">Reset</button>
-          <button class="btn-primary" type="button" id="unscramble-submit">Unscramble Now</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ Mini-game 3: Missing Letter ============ -->
-  <section class="mini-game-section on-wash" id="missing-letter-game">
-    <div class="wrap-hero">
-      <div class="mg-head" data-reveal-item>
-        <span class="kicker">Challenge 03 &middot; Missing Letter</span>
-        <h2 class="mg-title">Find the Missing Letter</h2>
-        <p class="mg-sub">One letter is hidden from today's word. Type the letter that completes it.</p>
-      </div>
-
-      <div class="mg-card" data-reveal-item>
-        <div class="missing-stage">
-          <div class="missing-tiles" id="missing-tiles" aria-label="Word with a missing letter"></div>
-          <div class="missing-input-row">
-            <input class="missing-input" id="missing-input" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Missing letter">
-            <button class="btn-primary" type="button" id="missing-submit">Submit Letter</button>
-          </div>
-          <p class="missing-feedback" id="missing-feedback" aria-live="polite">You have 3 tries.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ Mini-game 4: Speed Round ============ -->
-  <section class="mini-game-section" id="speed-round-game">
-    <div class="wrap-hero">
-      <div class="mg-head" data-reveal-item>
-        <span class="kicker">Challenge 04 &middot; Speed Round</span>
-        <h2 class="mg-title">60-Second Speed Round</h2>
-        <p class="mg-sub">Solve as many missing-letter words as you can before the clock runs out.</p>
-      </div>
-
-      <div class="mg-card" data-reveal-item>
-        <div class="speed-stage">
-          <div class="speed-hud">
-            <div class="speed-timer" id="speed-timer">60</div>
-            <div class="speed-score">Score <span id="speed-score">0</span></div>
-          </div>
-          <div class="missing-tiles" id="speed-tiles" aria-label="Word with a missing letter"></div>
-          <div class="missing-input-row">
-            <input class="missing-input" id="speed-input" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Missing letter" disabled>
-            <button class="btn-primary" type="button" id="speed-start">Challenge Yourself</button>
-          </div>
-          <p class="missing-feedback" id="speed-feedback" aria-live="polite">Press start when you're ready — the clock starts immediately.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ Weekly Challenge ============ -->
-  <section class="mini-game-section on-wash" id="weekly-challenge-game">
-    <div class="wrap-hero">
-      <div class="mg-head" data-reveal-item>
-        <span class="kicker"><i class="ph-fill ph-trophy" aria-hidden="true"></i> Weekly Challenge</span>
-        <h2 class="mg-title">This Week's Harder Word</h2>
-        <p class="mg-sub">A tougher five-letter word, new every week. Find the missing letter for a bonus XP payout.</p>
-      </div>
-
-      <div class="mg-card" data-reveal-item>
-        <div class="missing-stage">
-          <div class="missing-tiles" id="weekly-tiles" aria-label="Word with a missing letter"></div>
-          <div class="missing-input-row">
-            <input class="missing-input" id="weekly-input" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Missing letter">
-            <button class="btn-primary" type="button" id="weekly-submit">Take the Weekly Challenge</button>
-          </div>
-          <p class="missing-feedback" id="weekly-feedback" aria-live="polite">You have 3 tries. Solve it for +150 XP.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ Progress &amp; achievements ============ -->
-  <section class="mini-game-section on-wash" id="achievements">
-    <div class="wrap-hero">
-      <div class="mg-head" data-reveal-item>
-        <span class="kicker">Your progress</span>
-        <h2 class="mg-title">Achievements</h2>
-        <p class="mg-sub">Unlocked automatically as you play — stored on this device, no account needed.</p>
-      </div>
-      <div class="achv-grid" id="achv-grid" data-reveal-item></div>
-    </div>
-  </section>
-
-  <!-- ============ Reference content ============ -->
+  <!-- ============ Reference content: Finder → Filters → Results → Word-Game Info → SEO ============ -->
   <div class="content">
   <div class="wrap">
 
@@ -473,7 +243,7 @@
         <div class="split-main">
           <div class="prose">
             <p>
-              A 5 letter word is any word made of exactly five letters — no more, no fewer. Length is
+              A 5 letter word is any word made of exactly five letters, no more, no fewer. Length is
               the only rule: <span class="w">bread</span>, <span class="w">quiet</span> and
               <span class="w">stone</span> all qualify regardless of what they mean, because each one
               is built from five alphabetic characters.
@@ -482,27 +252,28 @@
               That length sits in a useful middle band. Four-letter words flip into something
               unrelated after a single swapped letter, while seven- and eight-letter words carry so
               much information that a puzzle can only offer a handful of them. Five letters leaves
-              room for a recognizable vowel-consonant skeleton — usually two vowels against three
-              consonants — which is exactly what makes a five-letter word guessable from partial
-              information.
+              room for a recognizable vowel-consonant skeleton, usually two vowels against three
+              consonants, which is exactly what makes a five-letter word guessable from partial
+              information, and exactly what the Word Finder above is built to search.
             </p>
           </div>
         </div>
         <div class="split-aside">
-          <div class="anatomy-card">
-            <span class="kicker">Anatomy of a 5-letter word</span>
-            <div class="tile-row anatomy-row">
-              <div class="anatomy-letter"><span class="letter">B</span><span class="anatomy-tag is-c">C</span></div>
-              <div class="anatomy-letter"><span class="letter">R</span><span class="anatomy-tag is-c">C</span></div>
-              <div class="anatomy-letter"><span class="letter">E</span><span class="anatomy-tag is-v">V</span></div>
-              <div class="anatomy-letter"><span class="letter">A</span><span class="anatomy-tag is-v">V</span></div>
-              <div class="anatomy-letter"><span class="letter">D</span><span class="anatomy-tag is-c">C</span></div>
+          <div class="anatomy-card" id="vowel-game">
+            <div class="mini-head">
+              <span class="kicker">Anatomy of a 5-letter word</span>
+              <span class="mini-score">Streak <strong id="vowel-streak">0</strong></span>
             </div>
+            <p class="mini-instruction">Tap every vowel in the word below.</p>
+            <div class="tile-row anatomy-row" id="vowel-tiles" role="group" aria-label="Tap the vowels"></div>
+            <p class="anatomy-caption mini-feedback" id="vowel-feedback" aria-live="polite"></p>
             <p class="anatomy-caption">
-              A typical five-letter skeleton: two vowels against three consonants —
               <span class="anatomy-legend"><i class="dot is-v"></i>vowel</span>
               <span class="anatomy-legend"><i class="dot is-c"></i>consonant</span>
             </p>
+            <div class="mini-actions">
+              <button class="btn-secondary" type="button" id="vowel-new">New word</button>
+            </div>
           </div>
         </div>
       </div>
@@ -513,7 +284,8 @@
           <p>
             You meet 5 letter words constantly in ordinary writing and speech. That same balance of
             length and structure is why Wordle, crossword grids, Scrabble racks and spelling drills
-            all lean on this band so heavily.
+            all lean on this band so heavily. Tap any word below to load it straight into the Word
+            Finder above.
           </p>
         </div>
 
@@ -548,7 +320,7 @@
               <p>
                 The common words above double as reliable word-game vocabulary. They use high-frequency
                 letters, follow ordinary vowel-consonant patterns, and appear often enough in a
-                dictionary that a solver can lean on them as safe openers or fallback guesses — in
+                dictionary that a solver can lean on them as safe openers or fallback guesses, in
                 Wordle, in a crossword grid, or on a Scrabble rack when you need a dependable five-tile
                 play.
               </p>
@@ -563,7 +335,7 @@
                 <li><button type="button" class="word-chip" data-fill="plant">plant</button></li>
                 <li><button type="button" class="word-chip" data-fill="stone">stone</button></li>
               </ul>
-              <p class="mini-card-text">Dependable openers — common letters, no rare tiles.</p>
+              <p class="mini-card-text">Dependable openers: common letters, no rare tiles.</p>
             </div>
           </div>
         </div>
@@ -579,28 +351,33 @@
         <div class="split-main">
           <div class="prose">
             <p>
-              A word finder turns the letters you already have into a finished shortlist. Type what
-              you know into the box, and <a href="https://unscramblex.com/" rel="noopener">UnscrambleX</a>
-              checks its full game dictionary and returns every five-letter word that fits — grouped
-              so the five-letter results are visible without scrolling.
+              A word finder turns the letters you already know into a finished shortlist. Type them
+              into the Word Finder at the top of this page and it checks a real five-letter word list,
+              returning every match the instant you stop typing: no submit button, no page reload.
+              Need the complete dictionary, including proper nouns and rarer entries? The full
+              <a href="https://unscramblex.com/" rel="noopener">UnscrambleX word finder</a> covers those too.
             </p>
           </div>
         </div>
         <div class="split-aside">
-          <form class="finder-box finder-box--inline" action="https://unscramblex.com/" method="get">
-            <label class="finder-label" for="finder-input-2">Letters you know, or a pattern</label>
-            <div class="finder-row">
-              <input class="finder-input" id="finder-input-2" name="q" type="text" maxlength="5"
-                     placeholder="e.g. cr?ne" autocomplete="off" spellcheck="false">
-              <button class="finder-go" type="submit">
-                Find words
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-              </button>
+          <div class="demo-card">
+            <span class="kicker">Try it above ↑</span>
+            <p class="demo-card-text">Tap a pattern to load it straight into the Word Finder and see real matches.</p>
+            <div class="word-tiles">
+              <button type="button" class="word-chip" data-wf-pattern="c?a?e">c?a?e</button>
+              <button type="button" class="word-chip" data-wf-pattern="t????">t????</button>
+              <button type="button" class="word-chip" data-wf-contains="ing">contains &ldquo;ing&rdquo;</button>
             </div>
-          </form>
-          <div class="pattern-cycler" id="pattern-cycler" aria-hidden="true">
-            <p class="pattern-cycler-label"><span class="pulse-dot"></span>Searching&hellip;</p>
-            <div class="pattern-cycler-row" id="pattern-cycler-row"></div>
+          </div>
+          <div class="demo-card" id="pattern-game">
+            <div class="mini-head">
+              <span class="kicker">Mini-game: which word fits?</span>
+              <span class="mini-score">Streak <strong id="pattern-streak">0</strong></span>
+            </div>
+            <p class="mini-instruction">Only one of the four words fits the fixed letters. Tap it.</p>
+            <div class="tile-row" id="pattern-game-row"></div>
+            <ul class="word-tiles word-tiles--grid" id="pattern-game-options" role="group" aria-label="Pick the matching word"></ul>
+            <p class="demo-card-text mini-feedback" id="pattern-game-feedback" aria-live="polite"></p>
           </div>
         </div>
       </div>
@@ -610,8 +387,8 @@
         <div class="prose">
           <p>
             A five-letter word finder checks every entry in a dictionary against the constraints
-            you give it, then returns only the matches. The five steps below are what the box
-            above runs through on UnscrambleX.
+            you give it, then returns only the matches. Here's what the tool above is doing, step by
+            step.
           </p>
         </div>
 
@@ -622,39 +399,31 @@
               <span class="how-icon"><i class="ph-fill ph-keyboard" aria-hidden="true"></i></span>
             </div>
             <h4 class="how-card-title">Enter the letters you know</h4>
-            <p class="how-card-text">Type your confirmed letters in. Order matters when you know the positions, so enter them where they actually sit in the word.</p>
+            <p class="how-card-text">Type each confirmed letter into its position box. Order matters, so enter a letter where it actually sits in the word.</p>
           </div>
           <div class="how-card">
             <div class="how-card-top">
               <span class="how-num">02</span>
               <span class="how-icon"><i class="ph-fill ph-question" aria-hidden="true"></i></span>
             </div>
-            <h4 class="how-card-title">Use wildcards for the gaps</h4>
-            <p class="how-card-text">Replace each unknown position with a question mark. Searching <span class="w">c?a?e</span> returns crane, chase, clave and every other word matching that exact shape.</p>
+            <h4 class="how-card-title">Leave the gaps blank</h4>
+            <p class="how-card-text">Any position you don't know yet just stays empty. Filling in <span class="w">c_a_e</span> returns crane, chase, clave and every other word matching that shape.</p>
           </div>
           <div class="how-card">
             <div class="how-card-top">
               <span class="how-num">03</span>
               <span class="how-icon"><i class="ph-fill ph-funnel" aria-hidden="true"></i></span>
             </div>
-            <h4 class="how-card-title">Filter by pattern</h4>
-            <p class="how-card-text">Narrow further with <em>starts with</em>, <em>ends with</em> and <em>contains letters</em>. Combining a known first letter with a known ending usually leaves only a few candidates.</p>
+            <h4 class="how-card-title">Add contains &amp; excludes</h4>
+            <p class="how-card-text">Know a letter is somewhere in the word but not where? Add it to "contains." Know it's not in the word at all? Add it to "excludes."</p>
           </div>
           <div class="how-card">
             <div class="how-card-top">
               <span class="how-num">04</span>
-              <span class="how-icon"><i class="ph-fill ph-books" aria-hidden="true"></i></span>
-            </div>
-            <h4 class="how-card-title">Pick the right dictionary</h4>
-            <p class="how-card-text">Switch between Scrabble US, Scrabble UK and Words with Friends so the results match the game you are actually playing.</p>
-          </div>
-          <div class="how-card">
-            <div class="how-card-top">
-              <span class="how-num">05</span>
               <span class="how-icon"><i class="ph-fill ph-list-numbers" aria-hidden="true"></i></span>
             </div>
-            <h4 class="how-card-title">Read the results by length</h4>
-            <p class="how-card-text">Results arrive grouped by word length with a score beside each entry, so you can jump straight to the five-letter block and take the highest-scoring play.</p>
+            <h4 class="how-card-title">Read the results instantly</h4>
+            <p class="how-card-text">Every matching five-letter word appears below the fields as you type. Tap any result to load it back into the finder.</p>
           </div>
         </div>
 
@@ -663,11 +432,11 @@
             <h4>Can You Find 5 Letter Words Using Specific Letters?</h4>
             <div class="prose">
               <p>
-                Yes. A finder built around a game dictionary lets you search two ways at once: by the
-                exact letters you know are in the word, and by the ones you know are not. Marking a
-                letter as included tells the finder every result must contain it; marking one as
-                excluded removes every result that does. Combined, those two filters usually collapse
-                a five-letter search to a short, workable list.
+                Yes. The Word Finder searches two ways at once: by the exact letters you know are in
+                the word, and by the ones you know are not. Marking a letter as included tells the
+                finder every result must contain it; marking one as excluded removes every result that
+                does. Combined, those two filters usually collapse a five-letter search to a short,
+                workable list.
               </p>
             </div>
           </div>
@@ -675,8 +444,8 @@
             <div class="mini-card">
               <span class="kicker">Two filters at once</span>
               <div class="callout-chips">
-                <span class="callout-chip is-include"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i>include "r"</span>
-                <span class="callout-chip is-exclude"><i class="ph-bold ph-minus-circle" aria-hidden="true"></i>exclude "x"</span>
+                <button type="button" class="callout-chip is-include" data-wf-contains="r"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i>include "r"</button>
+                <button type="button" class="callout-chip is-exclude" data-wf-exclude="x"><i class="ph-bold ph-minus-circle" aria-hidden="true"></i>exclude "x"</button>
               </div>
               <p class="mini-card-text">Combine include and exclude filters to collapse a search fast.</p>
             </div>
@@ -695,24 +464,28 @@
           <div class="prose">
             <p>
               "5 letter words with these letters" is an anagram-style search: you hold a set of
-              letters — a Scrabble rack, a Wordle guess, a set of tiles — and want every five-letter
-              word that can be built from them, regardless of order. A finder built for this treats
-              your letters as a pool rather than a fixed sequence.
+              letters (a Scrabble rack, a Wordle guess, a set of tiles) and want every five-letter
+              word that can be built from them, regardless of order. The Word Finder's "contains"
+              field treats your letters as a pool rather than a fixed sequence.
             </p>
           </div>
           <h3>How Can You Search for 5 Letter Words Containing Certain Letters?</h3>
           <div class="prose">
             <p>
-              Enter the letters you hold and let the finder solve for every valid word that uses
-              some or all of them, sorted by length. This is the natural fit for a Scrabble rack or
-              a leftover set of tiles, where position is not yet fixed and order doesn't matter —
-              you just need to know what five-letter word your letters can make.
+              Enter the letters you hold into "contains" and the finder solves for every valid word
+              that uses all of them. This is the natural fit for a Scrabble rack or a leftover set of
+              tiles, where position is not yet fixed and order doesn't matter: you just need to know
+              what five-letter word your letters can make.
             </p>
           </div>
         </div>
         <div class="split-aside">
-          <div class="demo-card">
-            <span class="kicker">Anagram search — any order</span>
+          <div class="demo-card" id="anagram-game">
+            <div class="mini-head">
+              <span class="kicker">Mini-game: make a real word</span>
+              <span class="mini-score">Solved <strong id="anagram-score">0</strong></span>
+            </div>
+            <p class="mini-instruction">Tap one tile then another to swap them, until they spell a real word.</p>
             <div class="tile-row" id="anagram-tiles">
               <button type="button" class="letter is-loose">R</button>
               <button type="button" class="letter is-loose">C</button>
@@ -720,10 +493,15 @@
               <button type="button" class="letter is-loose">N</button>
               <button type="button" class="letter is-loose">A</button>
             </div>
-            <p class="demo-card-text">A pool of letters, no fixed order — every match that can be built from them. Drag a tile onto another to swap them, or tap one then tap another.</p>
+            <p class="demo-card-text mini-feedback" id="anagram-feedback" aria-live="polite"></p>
+            <p class="demo-card-caption">Words this pool can make</p>
+            <ul class="word-tiles" id="anagram-results"></ul>
+            <div class="mini-actions">
+              <button class="btn-secondary" type="button" id="anagram-new">New letters</button>
+            </div>
           </div>
           <div class="demo-card demo-card--pattern">
-            <span class="kicker">Pattern search — fixed slots</span>
+            <span class="kicker">Pattern search: fixed slots</span>
             <div class="tile-row">
               <span class="letter">C</span>
               <span class="letter wildcard">?</span>
@@ -733,12 +511,12 @@
             </div>
             <h4>Can You Search for 5 Letter Words With Letters in Specific Positions?</h4>
             <p class="demo-card-text">
-              Yes — write known letters into their positions and leave the rest blank, so a known
-              first and fourth letter becomes <span class="w">c???e</span>. A position-aware finder
-              like UnscrambleX's supports both at once: hold your letters as a pool for an anagram
-              search, or lock them into slots for a pattern search, whichever matches the clue you
-              actually have.
+              Yes: write known letters into their positions and leave the rest blank, so a known
+              first and fourth letter becomes <span class="w">c___e</span>. The Word Finder supports
+              both at once: hold your letters as a pool in "contains" for an anagram search, or lock
+              them into position boxes for a pattern search, whichever matches the clue you have.
             </p>
+            <button type="button" class="btn-ghost" data-wf-pattern="c?a?e">Try c?a?e in the finder ↑</button>
           </div>
         </div>
       </div>
@@ -749,8 +527,8 @@
             <tr><th>Search type</th><th>What you provide</th><th>Order matters?</th><th>Best for</th></tr>
           </thead>
           <tbody>
-            <tr><th scope="row">Anagram search</th><td>A pool of letters</td><td>No</td><td>A Scrabble rack or leftover tiles</td></tr>
-            <tr><th scope="row">Pattern search</th><td>Letters in fixed slots</td><td>Yes</td><td>A Wordle guess or crossword clue</td></tr>
+            <tr><th scope="row">Anagram search</th><td>Letters in "contains"</td><td>No</td><td>A Scrabble rack or leftover tiles</td></tr>
+            <tr><th scope="row">Pattern search</th><td>Letters in position boxes</td><td>Yes</td><td>A Wordle guess or crossword clue</td></tr>
           </tbody>
         </table>
       </div>
@@ -768,8 +546,9 @@
               Browsing
               <a href="https://unscramblex.com/words-start-with" rel="noopener">5 letter words starting with</a>
               a known first letter is often the fastest route into a puzzle, because a crossword clue
-              or a Wordle guess frequently confirms the opening letter before anything else. Once that
-              letter is fixed, the remaining search space shrinks fast.
+              or a Wordle guess frequently confirms the opening letter before anything else. Tap any
+              letter below to search it instantly in the Word Finder above, or follow the link to
+              browse the complete A–Z list.
             </p>
           </div>
         </div>
@@ -777,32 +556,32 @@
           <div class="letter-strip-wrap">
             <span class="kicker">Browse by starting letter</span>
             <div class="letter-strip">
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/a">A</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/b">B</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/c">C</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/d">D</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/e">E</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/f">F</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/g">G</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/h">H</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/i">I</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/j">J</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/k">K</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/l">L</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/m">M</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/n">N</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/o">O</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/p">P</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/q">Q</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/r">R</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/s">S</a>
-              <a class="letter-chip is-active" href="https://unscramblex.com/words-start-with/t">T</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/u">U</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/v">V</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/w">W</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/x">X</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/y">Y</a>
-              <a class="letter-chip" href="https://unscramblex.com/words-start-with/z">Z</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/a" data-wf-start="a">A</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/b" data-wf-start="b">B</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/c" data-wf-start="c">C</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/d" data-wf-start="d">D</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/e" data-wf-start="e">E</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/f" data-wf-start="f">F</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/g" data-wf-start="g">G</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/h" data-wf-start="h">H</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/i" data-wf-start="i">I</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/j" data-wf-start="j">J</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/k" data-wf-start="k">K</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/l" data-wf-start="l">L</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/m" data-wf-start="m">M</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/n" data-wf-start="n">N</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/o" data-wf-start="o">O</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/p" data-wf-start="p">P</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/q" data-wf-start="q">Q</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/r" data-wf-start="r">R</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/s" data-wf-start="s">S</a>
+              <a class="letter-chip is-active" href="https://unscramblex.com/words-start-with/t" data-wf-start="t">T</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/u" data-wf-start="u">U</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/v" data-wf-start="v">V</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/w" data-wf-start="w">W</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/x" data-wf-start="x">X</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/y" data-wf-start="y">Y</a>
+              <a class="letter-chip" href="https://unscramblex.com/words-start-with/z" data-wf-start="z">Z</a>
             </div>
           </div>
         </div>
@@ -814,23 +593,28 @@
             <h3>How Do You Find 5 Letter Words That Start With Specific Letters?</h3>
             <div class="prose">
               <p>
-                Set the starting letter as a fixed first position and let everything else stay open.
-                On UnscrambleX that means using the <em>starts with</em> filter directly, or writing the
-                letter followed by four wildcards — <span class="w">t????</span> — into the finder
-                above. Either way, the results are every five-letter word that opens with that letter,
-                ready to narrow further with a second known letter or ending.
+                Set the starting letter in the first position box and leave the rest open. Either tap
+                a letter in the strip above, or type it directly into position 1 of the Word Finder.
+                Either way, the results are every five-letter word that opens with that letter, ready
+                to narrow further with a second known letter or an ending.
               </p>
             </div>
           </div>
           <div class="split-aside">
-            <div class="demo-card">
-              <span class="kicker">Locked first letter</span>
-              <div class="tile-row">
-                <span class="letter">T</span>
-                <span class="letter wildcard">?</span>
-                <span class="letter wildcard">?</span>
-                <span class="letter wildcard">?</span>
-                <span class="letter wildcard">?</span>
+            <div class="demo-card" id="prefix-game">
+              <div class="mini-head">
+                <span class="kicker">Mini-game: locked first letter</span>
+                <span class="mini-score">Found <strong id="prefix-score">0</strong></span>
+              </div>
+              <p class="mini-instruction">Type a five-letter word that starts with the letter shown, then hit Check.</p>
+              <div class="tile-row" id="prefix-tiles"></div>
+              <div class="missing-input-row">
+                <input class="missing-input missing-input--word" id="prefix-input" type="text" maxlength="5" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Your five-letter word">
+                <button class="btn-primary" type="button" id="prefix-submit">Check</button>
+              </div>
+              <p class="demo-card-text mini-feedback" id="prefix-feedback" aria-live="polite"></p>
+              <div class="mini-actions">
+                <button class="btn-secondary" type="button" id="prefix-new">New letter</button>
               </div>
             </div>
           </div>
@@ -839,10 +623,11 @@
         <h4>Can You Find 5 Letter Words That Start With &ldquo;TO&rdquo;?</h4>
         <div class="prose">
           <p>
-            Yes — searching
+            Yes, searching
             <a href="https://unscramblex.com/words-start-with/to" rel="noopener">5 letter words starting with to</a>
             returns a short, dependable list. It's a common two-letter opener in English, which
-            makes it a useful pattern to know by heart for both guessing games and crosswords.
+            makes it a useful pattern to know by heart for both guessing games and crosswords. The
+            list below is computed live from the same dictionary as the tool above.
           </p>
         </div>
 
@@ -853,18 +638,8 @@
           </div>
           <div class="mock-finder-results">
             <p class="chip-panel-title">5 letter words starting with "to"</p>
-            <ul class="word-tiles word-tiles--grid">
-              <li><button type="button" class="word-chip" data-fill="today">today</button></li>
-              <li><button type="button" class="word-chip" data-fill="tonic">tonic</button></li>
-              <li><button type="button" class="word-chip" data-fill="toxic">toxic</button></li>
-              <li><button type="button" class="word-chip" data-fill="torch">torch</button></li>
-              <li><button type="button" class="word-chip" data-fill="total">total</button></li>
-              <li><button type="button" class="word-chip" data-fill="touch">touch</button></li>
-              <li><button type="button" class="word-chip" data-fill="tours">tours</button></li>
-              <li><button type="button" class="word-chip" data-fill="towel">towel</button></li>
-              <li><button type="button" class="word-chip" data-fill="tower">tower</button></li>
-              <li><button type="button" class="word-chip" data-fill="toast">toast</button></li>
-            </ul>
+            <ul class="word-tiles word-tiles--grid" id="to-example-results"></ul>
+            <button type="button" class="btn-ghost" data-wf-pattern="to???">Open in Word Finder ↑</button>
           </div>
         </div>
       </div>
@@ -880,7 +655,7 @@
           <div class="prose">
             <p>
               A <a href="#word-list" rel="noopener">5 letter words list</a> is a pre-sorted reference
-              you can scan instead of search — useful when you want to browse a whole category at once
+              you can scan instead of search, useful when you want to browse a whole category at once
               rather than run a single lookup.
             </p>
           </div>
@@ -905,22 +680,35 @@
           </p>
         </div>
 
-        <div class="icon-cards">
-          <div class="icon-card">
+        <p class="mini-instruction">Tap a list type to build a live list of matching words.</p>
+
+        <div class="icon-cards" id="list-explorer-cards">
+          <button class="icon-card" type="button" data-list-filter="letter" aria-pressed="false">
             <span class="icon-card-icon"><i class="ph-fill ph-sort-ascending" aria-hidden="true"></i></span>
             <p class="icon-card-title">By starting or ending letter</p>
-            <p class="icon-card-text">Every five-letter word that opens or closes on a given letter — the fastest list to scan once a clue confirms one end of the word.</p>
-          </div>
-          <div class="icon-card">
+            <p class="icon-card-text">Every five-letter word that opens or closes on a given letter, the fastest list to scan once a clue confirms one end of the word.</p>
+            <span class="icon-card-cue">Tap to roll a letter</span>
+          </button>
+          <button class="icon-card" type="button" data-list-filter="pattern" aria-pressed="false">
             <span class="icon-card-icon"><i class="ph-fill ph-squares-four" aria-hidden="true"></i></span>
             <p class="icon-card-title">By letter pattern</p>
             <p class="icon-card-text">Words matching a fixed shape, such as a known second and fourth letter, for when a puzzle gives you scattered confirmed positions.</p>
-          </div>
-          <div class="icon-card">
+            <span class="icon-card-cue">Tap to roll a pattern</span>
+          </button>
+          <button class="icon-card" type="button" data-list-filter="feature" aria-pressed="false">
             <span class="icon-card-icon"><i class="ph-fill ph-sparkle" aria-hidden="true"></i></span>
             <p class="icon-card-title">By special feature</p>
-            <p class="icon-card-text">Double letters, no vowels, or palindromes — categories that break the ordinary five-letter rhythm and are worth memorizing outright.</p>
+            <p class="icon-card-text">Double letters, no vowels, or palindromes: categories that break the ordinary five-letter rhythm and are worth memorizing outright.</p>
+            <span class="icon-card-cue">Tap to roll a feature</span>
+          </button>
+        </div>
+
+        <div class="chip-panel" id="list-explorer">
+          <div class="chip-panel-head">
+            <p class="chip-panel-title" id="list-explorer-title">Pick a list type above to build a live list</p>
+            <span class="mini-score" id="list-explorer-count">&nbsp;</span>
           </div>
+          <ul class="word-tiles word-tiles--grid" id="list-explorer-results" aria-live="polite"></ul>
         </div>
 
         <div class="split">
@@ -929,16 +717,16 @@
             <div class="prose">
               <p>
                 A list turns recall into recognition. Instead of generating a word from memory, you
-                scan a short, pre-filtered set and pick the one that fits — faster than a live search
+                scan a short, pre-filtered set and pick the one that fits, faster than a live search
                 when you already know roughly which category the answer falls into, and a good warm-up
-                for building the vocabulary a live finder later confirms.
+                for building the vocabulary the Word Finder later confirms.
               </p>
             </div>
           </div>
           <div class="split-aside">
             <div class="callout callout--icon">
               <i class="ph-fill ph-brain" aria-hidden="true"></i>
-              <p>Recognition beats recall under time pressure — a good list is a shortcut, not a shortcut around learning.</p>
+              <p>Recognition beats recall under time pressure: a good list is a shortcut, not a shortcut around learning.</p>
             </div>
           </div>
         </div>
@@ -956,28 +744,39 @@
             <p>
               Fixed-length word games are a form of everyday
               <a href="#memory" rel="noopener"><strong>brain exercises and games to improve memory</strong></a>: recalling a five-letter
-              word under a constraint — a known letter, a used-up guess, a ticking clock — exercises
+              word under a constraint (a known letter, a used-up guess, a ticking clock) exercises
               working memory and word retrieval the same way a deliberate memory drill does, just
               disguised as play.
             </p>
             <p>
               Because every answer is the same length, the constraint is fixed and the effort goes into
-              retrieval rather than figuring out how long the word even is — which is precisely what
+              retrieval rather than figuring out how long the word even is, which is precisely what
               keeps the exercise light enough to repeat daily.
             </p>
           </div>
         </div>
         <div class="split-aside">
-          <div class="demo-card demo-card--center">
-            <span class="kicker">Same 5 slots, every time</span>
-            <div class="tile-row" style="justify-content:center;">
+          <div class="demo-card demo-card--center" id="memory-game">
+            <div class="mini-head mini-head--center">
+              <span class="kicker">Mini-game: memory flash</span>
+              <span class="mini-score">Streak <strong id="memory-streak">0</strong></span>
+            </div>
+            <p class="mini-instruction">The word shows for two seconds. Memorise it, then type it back.</p>
+            <div class="tile-row" id="memory-tiles" style="justify-content:center;">
               <span class="letter wildcard">?</span>
               <span class="letter wildcard">?</span>
               <span class="letter wildcard">?</span>
               <span class="letter wildcard">?</span>
               <span class="letter wildcard">?</span>
             </div>
-            <p class="demo-card-text">A fixed constraint keeps the drill quick enough to repeat daily.</p>
+            <div class="missing-input-row" id="memory-input-row" hidden>
+              <input class="missing-input missing-input--word" id="memory-input" type="text" maxlength="5" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Type the word you saw">
+              <button class="btn-primary" type="button" id="memory-submit">Check</button>
+            </div>
+            <p class="demo-card-text mini-feedback" id="memory-feedback" aria-live="polite"></p>
+            <div class="mini-actions mini-actions--center">
+              <button class="btn-primary" type="button" id="memory-start">Show me a word</button>
+            </div>
           </div>
         </div>
       </div>
@@ -998,7 +797,7 @@
               <span class="how-icon"><i class="ph-fill ph-stack" aria-hidden="true"></i></span>
             </div>
             <h4 class="how-card-title">Learn in families, not singles</h4>
-            <p class="how-card-text">Group words that share a shape — <span class="w">crane</span>, <span class="w">crate</span>, <span class="w">crave</span> — so one pattern carries several meanings.</p>
+            <p class="how-card-text">Group words that share a shape, like <span class="w">crane</span>, <span class="w">crate</span> and <span class="w">crave</span>, so one pattern carries several meanings.</p>
           </div>
           <div class="how-card">
             <div class="how-card-top">
@@ -1023,9 +822,9 @@
             <h4>Can Creative Thinking Activities Improve Word Game Skills?</h4>
             <div class="prose">
               <p>
-                Yes. <a href="#memory" rel="noopener"><strong>Creative thinking activities</strong></a> — inventing alternate words that fit
+                Yes. <a href="#memory" rel="noopener"><strong>Creative thinking activities</strong></a>, like inventing alternate words that fit
                 a pattern, building sentences around a day's answer, or brainstorming every word you
-                can think of that starts with a given letter — build the same flexible letter
+                can think of that starts with a given letter, build the same flexible letter
                 association a puzzle rewards, and they train pattern recognition from a different angle
                 than straight memorization does.
               </p>
@@ -1060,31 +859,45 @@
           <div class="prose">
             <p>
               An opener that tests common, distinct letters gathers the most information from a
-              single guess. Tap a word to preview it on the board:
+              single guess. Tap a word to preview it on the board. The Word Finder-powered list
+              below updates to show what those clues actually narrow the answer down to.
             </p>
           </div>
         </div>
         <div class="split-aside">
-          <div class="wordle-demo">
+          <div class="wordle-demo" id="wordle-game">
+            <div class="mini-head mini-head--center">
+              <span class="kicker">Mini-game: guess the word</span>
+              <span class="mini-score">Tries left <strong id="wordle-tries">3</strong></span>
+            </div>
+            <p class="mini-instruction">You get three tries. Type a guess or tap an opener, then use the tile colours to pick your next one.</p>
             <div class="wordle-board" id="wordle-board">
-              <span class="letter correct">C</span>
-              <span class="letter wrong-position">R</span>
-              <span class="letter incorrect">A</span>
-              <span class="letter incorrect">N</span>
-              <span class="letter correct">E</span>
+              <span class="letter wildcard">?</span>
+              <span class="letter wildcard">?</span>
+              <span class="letter wildcard">?</span>
+              <span class="letter wildcard">?</span>
+              <span class="letter wildcard">?</span>
             </div>
             <div class="wordle-legend">
               <span class="wordle-legend-item"><i class="dot correct"></i>correct spot</span>
               <span class="wordle-legend-item"><i class="dot present"></i>wrong spot</span>
               <span class="wordle-legend-item"><i class="dot absent"></i>not in word</span>
             </div>
+            <div class="missing-input-row">
+              <input class="missing-input missing-input--word" id="wordle-input" type="text" maxlength="5" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Your guess">
+              <button class="btn-primary" type="button" id="wordle-submit">Guess</button>
+            </div>
+            <p class="demo-card-text mini-feedback" id="wordle-feedback-text" aria-live="polite"></p>
             <div class="wordle-openers" id="wordle-openers">
-              <button type="button" class="opener-chip is-active" data-word="crane" data-colors="correct,wrong-position,incorrect,incorrect,correct">crane</button>
-              <button type="button" class="opener-chip" data-word="slate" data-colors="incorrect,correct,wrong-position,incorrect,correct">slate</button>
-              <button type="button" class="opener-chip" data-word="adieu" data-colors="wrong-position,incorrect,incorrect,correct,incorrect">adieu</button>
-              <button type="button" class="opener-chip" data-word="arose" data-colors="correct,incorrect,wrong-position,incorrect,correct">arose</button>
-              <button type="button" class="opener-chip" data-word="irate" data-colors="incorrect,correct,incorrect,wrong-position,correct">irate</button>
-              <button type="button" class="opener-chip" data-word="stare" data-colors="correct,incorrect,correct,wrong-position,incorrect">stare</button>
+              <button type="button" class="opener-chip" data-word="crane">crane</button>
+              <button type="button" class="opener-chip" data-word="slate">slate</button>
+              <button type="button" class="opener-chip" data-word="adieu">adieu</button>
+              <button type="button" class="opener-chip" data-word="arose">arose</button>
+              <button type="button" class="opener-chip" data-word="irate">irate</button>
+              <button type="button" class="opener-chip" data-word="stare">stare</button>
+            </div>
+            <div class="mini-actions mini-actions--center">
+              <button class="btn-secondary" type="button" id="wordle-new">New word</button>
             </div>
           </div>
         </div>
@@ -1097,9 +910,9 @@
             <div class="prose">
               <p>
                 Yes. After a guess, Wordle marks each letter correct, present or absent. Feed those
-                results into the finder at the top of this page as known letters, excluded letters and
-                a pattern of confirmed positions, and it returns every remaining word that still fits —
-                turning the guesses left into a shortlist instead of a guess.
+                results into the Word Finder at the top of this page as known letters, excluded
+                letters and a pattern of confirmed positions, and it returns every remaining word
+                that still fits, turning the guesses left into a shortlist instead of a guess.
               </p>
             </div>
           </div>
@@ -1113,11 +926,7 @@
                 <span class="letter correct">E</span>
               </div>
               <i class="ph-bold ph-arrow-right mock-narrow-arrow" aria-hidden="true"></i>
-              <ul class="word-tiles">
-                <li><span class="word-chip word-chip--static">crest</span></li>
-                <li><span class="word-chip word-chip--static">creed</span></li>
-                <li><span class="word-chip word-chip--static">chose</span></li>
-              </ul>
+              <ul class="word-tiles" id="wordle-narrow-results"></ul>
             </div>
           </div>
         </div>
@@ -1126,6 +935,270 @@
 
   </div>
   </div>
+
+  <!-- ============ Play & Practice: games, challenges, achievements ============ -->
+  <section class="mini-game-section" id="play">
+    <div class="wrap-hero">
+      <p class="modes-kicker">Play &amp; practice</p>
+      <div class="mg-head" style="margin-top:-8px;">
+        <h2 class="mg-title">Turn What You Found Into a Win</h2>
+        <p class="mg-sub">Four daily challenges and a tougher weekly one, every word finder skill above, gamified.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ Live stat strip (your own play, tracked on this device) ============ -->
+  <div class="stat-strip" id="stat-strip">
+    <div class="wrap-hero stat-strip-in" data-reveal-group>
+      <div class="stat-cell" data-reveal-item tabindex="0">
+        <div class="stat-num" id="stat-games" data-count-target="0">0</div>
+        <div class="stat-label">Games played</div>
+        <p class="stat-tip"><span>Every challenge you've started, across every game mode.</span></p>
+      </div>
+      <div class="stat-cell" data-reveal-item tabindex="0">
+        <div class="stat-num" id="stat-words" data-count-target="0">0</div>
+        <div class="stat-label">Words solved</div>
+        <p class="stat-tip"><span>Correct answers only, counted the moment you solve them.</span></p>
+      </div>
+      <div class="stat-cell" data-reveal-item tabindex="0">
+        <div class="stat-num" id="stat-success" data-count-target="0" data-suffix="%">0%</div>
+        <div class="stat-label">Success rate</div>
+        <p class="stat-tip"><span>Words solved divided by games played.</span></p>
+      </div>
+      <div class="stat-cell" data-reveal-item tabindex="0">
+        <div class="stat-num" id="stat-xp" data-count-target="0">0</div>
+        <div class="stat-label">XP earned</div>
+        <p class="stat-tip"><span>Earned on every attempt, more for a correct solve.</span></p>
+      </div>
+      <div class="stat-cell" data-reveal-item tabindex="0">
+        <div class="stat-num" id="stat-level" data-count-target="1">1</div>
+        <div class="stat-label">Level</div>
+        <p class="stat-tip"><span>Goes up every 150 XP. No cap; keep playing to climb.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ How to Play: numbered step tiles ============ -->
+  <section class="mini-game-section on-wash" id="how-to-play">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Before you play</span>
+        <h2 class="mg-title">How It Works</h2>
+        <p class="mg-sub">Four game modes, one streak. Here's how each one is scored.</p>
+      </div>
+
+      <div class="how-grid">
+        <div class="how-card" data-reveal-item>
+          <div class="how-card-top">
+            <span class="how-num">01</span>
+            <span class="how-icon"><i class="ph-fill ph-target" aria-hidden="true"></i></span>
+          </div>
+          <h3 class="how-card-title">Today's Challenge</h3>
+          <p class="how-card-text">Drag the Scrabble-style tiles from the tray into the five answer slots, rearrange them as many times as you like, then hit Submit Answer. Solve it to earn XP and lock in today's streak.</p>
+        </div>
+        <div class="how-card" data-reveal-item>
+          <div class="how-card-top">
+            <span class="how-num">02</span>
+            <span class="how-icon"><i class="ph-fill ph-trend-up" aria-hidden="true"></i></span>
+          </div>
+          <h3 class="how-card-title">XP &amp; Levels</h3>
+          <p class="how-card-text">Every challenge you finish earns XP: more for a correct solve, a little for trying. XP adds up into your level, shown in the stats strip above. There's no cap, so every game you play moves the needle.</p>
+        </div>
+        <div class="how-card" data-reveal-item>
+          <div class="how-card-top">
+            <span class="how-num">03</span>
+            <span class="how-icon"><i class="ph-fill ph-fire" aria-hidden="true"></i></span>
+          </div>
+          <h3 class="how-card-title">Daily Streak</h3>
+          <p class="how-card-text">Complete at least one challenge today and your streak continues; miss a full day and it resets. The flame in the top bar always shows your current streak, stored on this device.</p>
+        </div>
+        <div class="how-card" data-reveal-item>
+          <div class="how-card-top">
+            <span class="how-num">04</span>
+            <span class="how-icon"><i class="ph-fill ph-trophy" aria-hidden="true"></i></span>
+          </div>
+          <h3 class="how-card-title">Weekly Challenge</h3>
+          <p class="how-card-text">A tougher five-letter word that changes once a week instead of once a day. Solve it for a bigger XP bonus. Find it in the challenge carousel below.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ This Week's Challenges carousel ============ -->
+  <section class="challenge-carousel-section" id="challenges">
+    <div class="wrap-hero">
+      <div class="challenge-carousel-shell" data-reveal-item>
+        <div class="challenge-carousel-head">
+          <div>
+            <p class="challenges-title">This week&rsquo;s challenges</p>
+            <p class="challenges-sub" id="week-range-label">&nbsp;</p>
+          </div>
+          <div class="challenge-carousel-status">
+            <span id="challenge-slide-label">Challenge 01 of 05</span>
+            <span class="challenges-progress"><span id="challenges-done">0</span> / 4 completed</span>
+          </div>
+        </div>
+        <div class="challenge-carousel-controls" aria-label="Challenge carousel controls">
+          <button class="carousel-arrow" id="challenge-prev" type="button" aria-label="Previous challenge">
+            <i class="ph-bold ph-arrow-left" aria-hidden="true"></i>
+          </button>
+          <div class="challenge-carousel-dots" id="challenge-dots" role="tablist" aria-label="Choose a challenge"></div>
+          <button class="carousel-arrow" id="challenge-next" type="button" aria-label="Next challenge">
+            <i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+        <button class="past-challenges-cta" type="button" data-open-past-challenges>
+          <i class="ph-bold ph-clock-counter-clockwise" aria-hidden="true"></i>
+          Try Past Challenges
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Mini-game 1: Today's Challenge ============ -->
+  <section class="mini-game-section challenge-slide is-active" id="today-game-section" data-challenge-slide="0" aria-hidden="false">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Challenge 01 &middot; Today's Challenge</span>
+        <h2 class="mg-title">Play Today's Challenge</h2>
+        <p class="mg-sub">Drag the tiles into the answer row to spell today's word, or tap a tile to place it.</p>
+      </div>
+
+      <div class="mg-card" id="today-game" data-reveal-item>
+        <div class="game-card-head">
+          <span class="game-card-title"><span class="dot live" aria-hidden="true"></span> Today's Challenge</span>
+          <span class="game-card-day" id="today-label">&nbsp;</span>
+        </div>
+
+        <p class="drag-row-label">Answer</p>
+        <div class="answer-row" id="answer-row" role="group" aria-label="Answer slots"></div>
+
+        <p class="drag-row-label">Available letters</p>
+        <div class="tray-row" id="tray-row" role="group" aria-label="Available letters"></div>
+
+        <p class="drag-feedback" id="drag-feedback" aria-live="polite">Fill all five slots, then submit your answer.</p>
+
+        <div class="mg-actions">
+          <button class="btn-secondary" type="button" id="drag-shuffle">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h4l3 4M21 6h-4l-3 4M3 18h4l3-4M21 18h-4l-3-4"/></svg>
+            Shuffle
+          </button>
+          <button class="btn-secondary" type="button" id="drag-clear">Clear</button>
+          <button class="btn-primary" type="button" id="drag-submit" disabled>Submit Answer</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Mini-game 2: Unscramble ============ -->
+  <section class="mini-game-section on-wash challenge-slide" id="unscramble-game" data-challenge-slide="1" aria-hidden="true">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Challenge 02 &middot; Unscramble</span>
+        <h2 class="mg-title">Unscramble Today's Word</h2>
+        <p class="mg-sub">Drag two tiles to swap them, or tap one then tap another. Put the letters in order before you run out of moves.</p>
+      </div>
+
+      <div class="mg-card" data-reveal-item>
+        <div class="unscramble-stage">
+          <p class="unscramble-clue" id="unscramble-clue">Loading today's word&hellip;</p>
+          <div class="unscramble-tiles" id="unscramble-tiles" role="group" aria-label="Scrambled letters"></div>
+          <p class="unscramble-feedback" id="unscramble-feedback" aria-live="polite">Drag a tile onto another to swap them.</p>
+        </div>
+        <div class="mg-actions">
+          <button class="btn-secondary" type="button" id="unscramble-shuffle">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h4l3 4M21 6h-4l-3 4M3 18h4l3-4M21 18h-4l-3-4"/></svg>
+            Shuffle
+          </button>
+          <button class="btn-secondary" type="button" id="unscramble-reset">Reset</button>
+          <button class="btn-primary" type="button" id="unscramble-submit">Unscramble Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Mini-game 3: Missing Letter ============ -->
+  <section class="mini-game-section challenge-slide" id="missing-letter-game" data-challenge-slide="2" aria-hidden="true">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Challenge 03 &middot; Missing Letter</span>
+        <h2 class="mg-title">Find the Missing Letter</h2>
+        <p class="mg-sub">One letter is hidden from today's word. Type the letter that completes it.</p>
+      </div>
+
+      <div class="mg-card" data-reveal-item>
+        <div class="missing-stage">
+          <div class="missing-tiles" id="missing-tiles" aria-label="Word with a missing letter"></div>
+          <div class="missing-input-row">
+            <input class="missing-input" id="missing-input" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Missing letter">
+            <button class="btn-primary" type="button" id="missing-submit">Submit Letter</button>
+          </div>
+          <p class="missing-feedback" id="missing-feedback" aria-live="polite">You have 3 tries.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Mini-game 4: Speed Round ============ -->
+  <section class="mini-game-section on-wash challenge-slide" id="speed-round-game" data-challenge-slide="3" aria-hidden="true">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Challenge 04 &middot; Speed Round</span>
+        <h2 class="mg-title">60-Second Speed Round</h2>
+        <p class="mg-sub">Solve as many missing-letter words as you can before the clock runs out.</p>
+      </div>
+
+      <div class="mg-card" data-reveal-item>
+        <div class="speed-stage">
+          <div class="speed-hud">
+            <div class="speed-timer" id="speed-timer">60</div>
+            <div class="speed-score">Score <span id="speed-score">0</span></div>
+          </div>
+          <div class="missing-tiles" id="speed-tiles" aria-label="Word with a missing letter"></div>
+          <div class="missing-input-row">
+            <input class="missing-input" id="speed-input" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Missing letter" disabled>
+            <button class="btn-primary" type="button" id="speed-start">Challenge Yourself</button>
+          </div>
+          <p class="missing-feedback" id="speed-feedback" aria-live="polite">Press start when you're ready. The clock starts immediately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Weekly Challenge ============ -->
+  <section class="mini-game-section challenge-slide" id="weekly-challenge-game" data-challenge-slide="4" aria-hidden="true">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker"><i class="ph-fill ph-trophy" aria-hidden="true"></i> Weekly Challenge</span>
+        <h2 class="mg-title">This Week's Harder Word</h2>
+        <p class="mg-sub">A tougher five-letter word, new every week. Find the missing letter for a bonus XP payout.</p>
+      </div>
+
+      <div class="mg-card" data-reveal-item>
+        <div class="missing-stage">
+          <div class="missing-tiles" id="weekly-tiles" aria-label="Word with a missing letter"></div>
+          <div class="missing-input-row">
+            <input class="missing-input" id="weekly-input" type="text" maxlength="1" inputmode="text" autocomplete="off" spellcheck="false" aria-label="Missing letter">
+            <button class="btn-primary" type="button" id="weekly-submit">Take the Weekly Challenge</button>
+          </div>
+          <p class="missing-feedback" id="weekly-feedback" aria-live="polite">You have 3 tries. Solve it for +150 XP.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Progress &amp; achievements ============ -->
+  <section class="mini-game-section on-wash" id="achievements">
+    <div class="wrap-hero">
+      <div class="mg-head" data-reveal-item>
+        <span class="kicker">Your progress</span>
+        <h2 class="mg-title">Achievements</h2>
+        <p class="mg-sub">Unlocked automatically as you play, stored on this device, no account needed.</p>
+      </div>
+      <div class="achv-grid" id="achv-grid" data-reveal-item></div>
+    </div>
+  </section>
 
 </main>
 
